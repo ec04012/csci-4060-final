@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         Button registerButton = findViewById( R.id.register_button );
 
         signInButton.setOnClickListener( new SignInButtonClickListener() );
-        //registerButton.setOnClickListener( new RegisterButtonClickListener() );
+        registerButton.setOnClickListener( new RegisterButtonClickListener() );
     } // MainActivity onCreate()
 
     // A button listener class to start a Firebase sign-in process
@@ -120,6 +120,15 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
     } // onSignInResult()
+
+    private class RegisterButtonClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            // start the user registration activity
+            Intent intent = new Intent(view.getContext(), RegisterActivity.class);
+            view.getContext().startActivity(intent);
+        } // RegisterButtonClickListener.onClick()
+    } // RegisterButtonClickListener
 
     // These activity callback methods are not needed and are for edational purposes only
     @Override
