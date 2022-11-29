@@ -35,6 +35,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final String DEBUG_TAG = "MainActivity";
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText( getApplicationContext(),
                     "Sign-in successful:\nresponse.getEmail(): " + response.getEmail(),
                     Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, HomeActivity.class);
+            this.startActivity(intent);
             // Change this as needed
             // after a successful sign in, start the job leads management activity
             //Intent intent = new Intent( this, JobLeadManagementActivity.class );
