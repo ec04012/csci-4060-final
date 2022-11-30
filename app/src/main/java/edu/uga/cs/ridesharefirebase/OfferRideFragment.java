@@ -61,39 +61,29 @@ public class OfferRideFragment extends Fragment {
         }
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_offer_ride, container, false);
-
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Instantiate View variables
         EditText offerCity, offerState, offerCar;
         CalendarView calendarView;
         Button  offerSubmit;
         String cityString, stateString, carString;
 
-
-
-
+        // Get references to Views
         offerCity = view.findViewById(R.id.offerCity);
         offerState = view.findViewById(R.id.offerState);
         offerCar = view.findViewById(R.id.offerCar);
         calendarView = view.findViewById(R.id.calendarView);
         offerSubmit = view.findViewById(R.id.offerSubmit);
-
-
-
-
-
-
 
         calendarView.setMinDate(System.currentTimeMillis()-1000);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -124,21 +114,9 @@ public class OfferRideFragment extends Fragment {
                 else {
                     Toast.makeText(view.getContext(), "Everything is good", Toast.LENGTH_SHORT).show();
                     Toast.makeText(view.getContext(), "City: " + offerCity.getText().toString() + "\n"+  offerState.getText().toString() + "\n" + "Car: " + offerCar.getText().toString() + "\n" + "State: "  , Toast.LENGTH_SHORT).show();
+                } // if-else
+            } // onClick()
+        }); // offerSubmit Button .setOnClickListener()
+    } // OfferRideFragment.onViewCreated()
 
-
-                }
-
-            }
-        });
-
-
-
-
-
-
-
-
-    }
-
-
-}
+} // OfferRideFragment

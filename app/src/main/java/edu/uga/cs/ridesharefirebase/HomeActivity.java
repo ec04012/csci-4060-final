@@ -30,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -65,7 +66,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 //Toast.makeText(HomeActivity.this, "clicked on "+item.getItemId(), Toast.LENGTH_SHORT).show();
-
                 switch(item.getItemId()) {
                     case R.id.nav_profile:
                     {
@@ -98,12 +98,12 @@ public class HomeActivity extends AppCompatActivity {
                         //replaceFragment(new ProfileFragment());
                         break;
                     }
-                }
+                } // switch statement, to handle every item in navigation drawer
                 return false;
-            }
-        });
+            } // // onNavigationItemSelected()
+        }); // navigationView.setNavigationItemSelectedListener()
+    } // HomeActivity.onViewCreated()
 
-    }
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -114,14 +114,11 @@ public class HomeActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-
-
     private void replaceFragment(Fragment fragment ) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout,fragment);
         fragmentTransaction.commit();
-
     }
 
-}
+} // HomeActivity
