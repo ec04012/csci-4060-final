@@ -5,26 +5,40 @@ package edu.uga.cs.ridesharefirebase;
  */
 public class Ride {
 
-        private String driver;;
-        private String sourceCity;
-        private String sourceState;
-        private String sourceZip;
-        private String destinationCity;
-        private String destinationState;
-        private String destinationZip;
-        private String car;
+    private String driver;;
+    private String sourceCity;
+    private String sourceState;
+    private String sourceZip;
+    private String destinationCity;
+    private String destinationState;
+    private String destinationZip;
+    private String car;
 
-        public Ride()
-        {
-            this.driver = null;
-            this.sourceCity = null;
-            this.sourceState = null;
-            this.sourceZip = null;
-            this.destinationCity = null;
-            this.destinationState = null;
-            this.destinationZip = null;
-            this.car = null;
-        }
+    public Ride()
+    {
+        this.driver = null;
+        this.sourceCity = null;
+        this.sourceState = null;
+        this.sourceZip = null;
+        this.destinationCity = null;
+        this.destinationState = null;
+        this.destinationZip = null;
+        this.car = null;
+    }
+
+    @Override
+    public String toString() {
+        return "Ride{" +
+                "driver='" + driver + '\'' +
+                ", sourceCity='" + sourceCity + '\'' +
+                ", sourceState='" + sourceState + '\'' +
+                ", sourceZip='" + sourceZip + '\'' +
+                ", destinationCity='" + destinationCity + '\'' +
+                ", destinationState='" + destinationState + '\'' +
+                ", destinationZip='" + destinationZip + '\'' +
+                ", car='" + car + '\'' +
+                '}';
+    }
 
     public String getDriver() {
         return driver;
