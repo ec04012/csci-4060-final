@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -84,6 +83,7 @@ public class HomeActivity extends AppCompatActivity {
                     {
                         Toast.makeText(HomeActivity.this, "offer", Toast.LENGTH_SHORT).show();
                         //replaceFragment(new ProfileFragment());
+                        replaceFragment(new OfferRideFragment());
                         break;
                     }
                     case R.id.nav_browse:
