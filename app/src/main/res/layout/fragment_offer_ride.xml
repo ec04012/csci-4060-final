@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OfferRideFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="64dp"
+            android:layout_height="21dp"
+            android:text="Offer Ride"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.09" />
+
+        <EditText
+            android:id="@+id/offerCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="28dp"
+            android:ems="10"
+            android:hint="Albany"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <EditText
+            android:id="@+id/offerState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Georgia"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.86"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/offerCity"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <EditText
+            android:id="@+id/offerCar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="28dp"
+            android:ems="10"
+            android:hint="Black Audi Sedan"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/offerState" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="36dp"
+            android:text="State:"
+            app:layout_constraintEnd_toStartOf="@+id/offerState"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Car Type"
+            app:layout_constraintEnd_toStartOf="@+id/offerCar"
+            app:layout_constraintHorizontal_bias="0.777"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="84dp"
+            android:layout_marginTop="56dp"
+            android:text="City:"
+            app:layout_constraintEnd_toStartOf="@+id/offerCity"
+            app:layout_constraintHorizontal_bias="0.225"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="359dp"
+            android:layout_height="309dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.48"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/offerCar"
+            app:layout_constraintVertical_bias="0.129" />
+
+        <Button
+            android:id="@+id/offerSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

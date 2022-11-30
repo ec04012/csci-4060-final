@@ -103,14 +103,12 @@ public class MainActivity extends AppCompatActivity {
 
             //Log.d( DEBUG_TAG, "MainActivity.onSignInResult: Signed in as: " + user.getEmail() );
 
-            // For now, just log and toast
+            // Show Toast and start HomeActivity
             Toast.makeText( getApplicationContext(),
                     "Sign-in successful:\nresponse.getEmail(): " + response.getEmail(),
                     Toast.LENGTH_SHORT).show();
-            // Change this as needed
-            // after a successful sign in, start the job leads management activity
-            //Intent intent = new Intent( this, JobLeadManagementActivity.class );
-            //startActivity( intent );
+            Intent intent = new Intent(this, HomeActivity.class);
+            this.startActivity(intent);
         }
         else {
             Log.d( DEBUG_TAG, "MainActivity.onSignInResult: Failed to sign in" );
