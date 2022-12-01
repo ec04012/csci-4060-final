@@ -1,6 +1,18 @@
 package edu.uga.cs.ridesharefirebase;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +24,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -19,12 +33,16 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link OfferRideFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OfferRideFragment extends Fragment {
+public class OfferRideFragment extends Fragment implements LocationListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,7 +57,9 @@ public class OfferRideFragment extends Fragment {
     private EditText offerCity, offerState, offerCar;
     private CalendarView calendarView;
     private Button  offerSubmit;
-    private String cityString, stateString, carString, date;
+    private String fromState, fromCity, date;
+
+    LocationManager locationManager;
 
     public OfferRideFragment() {
         // Required empty public constructor
@@ -84,11 +104,15 @@ public class OfferRideFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Get references to Views
+        grantPermission();
         offerCity = view.findViewById(R.id.offerCity);
         offerState = view.findViewById(R.id.offerState);
         offerCar = view.findViewById(R.id.offerCar);
         calendarView = view.findViewById(R.id.calendarView);
         offerSubmit = view.findViewById(R.id.offerSubmit);
+        checkLocationIsEnabledOrNot();
+        getLocation();
+
 
         // Setup calendar select view
         calendarView.setMinDate(System.currentTimeMillis()-1000);
@@ -103,6 +127,84 @@ public class OfferRideFragment extends Fragment {
         // set listener for submit button
         offerSubmit.setOnClickListener( new SubmitClickListener() );
     } // OfferRideFragment.onViewCreated()
+
+    private void getLocation() {
+        try {
+            locationManager = (LocationManager) this.getContext().getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,500, 5 , (LocationListener) this);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void checkLocationIsEnabledOrNot() {
+        LocationManager lm = (LocationManager) this.getContext().getSystemService(Context.LOCATION_SERVICE);
+        boolean gpsEnabled = false;
+        boolean networkEnabled = false;
+
+        try{
+            gpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            networkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+        }catch (Exception e ) {
+            e.printStackTrace();
+        }
+
+        if (!gpsEnabled && !networkEnabled) {
+            new AlertDialog.Builder(this.getContext())
+                    .setTitle("Enable GPS Service")
+                    .setCancelable(false)
+                    .setPositiveButton("Enable", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //this intent redirect us to the location settings when the user has gps disabled
+                            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        }
+                    }).setNegativeButton("cancel", null).show();
+
+        }
+    }
+
+
+
+    private void grantPermission() {
+        if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+      ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)  {
+
+            ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
+        }
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+        try {
+            Geocoder geocoder = new Geocoder(this.getContext(), Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            fromCity = addresses.get(0).getLocality();
+            fromState = addresses.get(0).getAdminArea();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Override
+    public void onProviderEnabled(@NonNull String provider) {
+        LocationListener.super.onProviderEnabled(provider);
+    }
+
+    @Override
+    public void onProviderDisabled(@NonNull String provider) {
+        LocationListener.super.onProviderDisabled(provider);
+    }
 
     private class SubmitClickListener implements View.OnClickListener {
         /**
@@ -129,8 +231,10 @@ public class OfferRideFragment extends Fragment {
                 return;
             }
             else {
-                Toast.makeText(getActivity(), "Everything is good", Toast.LENGTH_SHORT).show();
-                Toast.makeText(getActivity(), "City: " + offerCity.getText().toString() + "\n"+  offerState.getText().toString() + "\n" + "Car: " + offerCar.getText().toString() + "\n" + "State: "  , Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Everything is good", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "City: " + offerCity.getText().toString() + "\n"+  offerState.getText().toString() + "\n" + "Car: " + offerCar.getText().toString() + "\n" + "State: "  , Toast.LENGTH_SHORT).show();
+
+                //Toast.makeText(getActivity(), "From City:\n " + fromCity + "\nFrom State:  \n " + fromState, Toast.LENGTH_LONG).show();
                 addRideToFirebase();
             } // if-else
         } // SubmitClickListener.onClick()
@@ -150,6 +254,8 @@ public class OfferRideFragment extends Fragment {
         newRide.setDestinationCity(city);
         newRide.setDestinationState(state);
         newRide.setCar(car);
+        newRide.setSourceState(fromState);
+        newRide.setSourceCity(fromCity);
 
         // Add a new element (Ride) to the list of job leads in Firebase.
         FirebaseDatabase database = FirebaseDatabase.getInstance();
