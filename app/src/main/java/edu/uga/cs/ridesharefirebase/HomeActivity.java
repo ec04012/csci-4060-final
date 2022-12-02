@@ -61,6 +61,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        replaceFragment(new OfferRideFragment());
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -110,9 +111,16 @@ public class HomeActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
         else{
+            Toast.makeText(this, "Are you sure you want to log out?",Toast.LENGTH_SHORT).show();
+
+
+
+            // TODO: need to implement the log out feature. I guess in theory you can just do the super.onBackPressed.
+
+
             super.onBackPressed();
         }
-        super.onBackPressed();
+        //super.onBackPressed();
     }
 
     private void replaceFragment(Fragment fragment ) {
@@ -120,6 +128,11 @@ public class HomeActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout,fragment);
         fragmentTransaction.commit();
+    }
+
+
+    private void logOffNotif() {
+
     }
 
 } // HomeActivity
