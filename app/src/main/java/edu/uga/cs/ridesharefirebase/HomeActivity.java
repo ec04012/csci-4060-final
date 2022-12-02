@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,7 +63,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        replaceFragment(new OfferRideFragment());
+        //replaceFragment(new OfferRideFragment());
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -116,9 +118,11 @@ public class HomeActivity extends AppCompatActivity {
 
 
             // TODO: need to implement the log out feature. I guess in theory you can just do the super.onBackPressed.
+            LogOutDialog logOutDialog = new LogOutDialog();
+            logOutDialog.show(getSupportFragmentManager(), "dialog");
 
 
-            super.onBackPressed();
+            //super.onBackPressed();
         }
         //super.onBackPressed();
     }
@@ -132,7 +136,24 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void logOffNotif() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Log Out")
+                .setMessage("Are you Sure you want to log out?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        HomeActivity.super.onBackPressed();
 
+                    }
+                })
+
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+         builder.create();
     }
 
 } // HomeActivity
