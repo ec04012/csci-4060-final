@@ -57,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+        replaceFragment(new ProfileFragment());
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

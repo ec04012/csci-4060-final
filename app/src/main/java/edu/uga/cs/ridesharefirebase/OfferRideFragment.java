@@ -2,6 +2,7 @@ package edu.uga.cs.ridesharefirebase;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,7 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +37,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,7 +46,7 @@ import java.util.Locale;
  * Use the {@link OfferRideFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OfferRideFragment extends Fragment implements LocationListener {
+public class OfferRideFragment extends Fragment implements LocationListener, DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,11 +57,25 @@ public class OfferRideFragment extends Fragment implements LocationListener {
     private String mParam1;
     private String mParam2;
 
+
+    int day = 0;
+    int month = 0;
+    int year = 0;
+    int hour = 0;
+    int minuite = 0;
+
+    int savedDay = 0;
+    int Savedmonth = 0;
+    int Savedyear = 0;
+    int Savedhour = 0;
+    int Savedminuite = 0;
+
     // Instantiate View variables
-    private EditText offerCity, offerState, offerCar;
+    private EditText destCity, destState, startState, startCity, offerCar, dateView;
     private CalendarView calendarView;
     private Button  offerSubmit;
     private String fromState, fromCity, date;
+    private Button gpsButton, gpsButton2, datePicker;
 
     LocationManager locationManager;
 
@@ -104,16 +122,66 @@ public class OfferRideFragment extends Fragment implements LocationListener {
         super.onViewCreated(view, savedInstanceState);
 
         // Get references to Views
-        grantPermission();
-        offerCity = view.findViewById(R.id.offerCity);
-        offerState = view.findViewById(R.id.offerState);
+        destCity = view.findViewById(R.id.destCity);
+        destState = view.findViewById(R.id.destState);
+        startCity = view.findViewById(R.id.startCity);
+        startState = view.findViewById(R.id.startState);
         offerCar = view.findViewById(R.id.offerCar);
-        calendarView = view.findViewById(R.id.calendarView);
+        //calendarView = view.findViewById(R.id.calendarView);
         offerSubmit = view.findViewById(R.id.offerSubmit);
-        checkLocationIsEnabledOrNot();
-        getLocation();
+        gpsButton = view.findViewById(R.id.gpsButton);
+        gpsButton2 = view.findViewById(R.id.gpsButton2);
+        datePicker = view.findViewById(R.id.datePicker);
+        dateView = view.findViewById(R.id.editTextDate);
+
+        //if the user clicks the gps button under the starting destination
+        gpsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                grantPermission();
+                checkLocationIsEnabledOrNot();
+                getLocation();
+                startCity.setText(fromCity);
+                startState.setText(fromState);
+            }
+        });
+
+        //if the user clicks the gps button under the destination
+        gpsButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                grantPermission();
+                checkLocationIsEnabledOrNot();
+                getLocation();
+                destCity.setText(fromCity);
+                destState.setText(fromState);
+            }
+        });
+
+        //if the user clicks the date picker
+        datePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+
+                        date= (i1 + 1) + "/" + i2 + "/" + i;
+                        //getDateTimeCalendar();
+                        dateView.setText(date);
+                    }
+                }, year, month, day);
+
+                datePickerDialog.getDatePicker().setMinDate((System.currentTimeMillis()-1000));
+                datePickerDialog.show();
+            }
+        });
 
 
+
+
+/*
         // Setup calendar select view
         calendarView.setMinDate(System.currentTimeMillis()-1000);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -124,10 +192,19 @@ public class OfferRideFragment extends Fragment implements LocationListener {
             } // onSelectedDayChange()
         }); // calendarView.setOnDateChangeListener()
 
+
+ */
         // set listener for submit button
         offerSubmit.setOnClickListener( new SubmitClickListener() );
+
+
+
+
+
     } // OfferRideFragment.onViewCreated()
 
+
+    //gets the location
     private void getLocation() {
         try {
             locationManager = (LocationManager) this.getContext().getSystemService(Context.LOCATION_SERVICE);
@@ -138,6 +215,7 @@ public class OfferRideFragment extends Fragment implements LocationListener {
 
     }
 
+    //checks to see if location setting is enabled
     private void checkLocationIsEnabledOrNot() {
         LocationManager lm = (LocationManager) this.getContext().getSystemService(Context.LOCATION_SERVICE);
         boolean gpsEnabled = false;
@@ -172,7 +250,7 @@ public class OfferRideFragment extends Fragment implements LocationListener {
     }
 
 
-
+    //asks permission
     private void grantPermission() {
         if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
       ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)  {
@@ -181,6 +259,8 @@ public class OfferRideFragment extends Fragment implements LocationListener {
         }
     }
 
+
+    //on location change
     @Override
     public void onLocationChanged(@NonNull Location location) {
         try {
@@ -206,6 +286,38 @@ public class OfferRideFragment extends Fragment implements LocationListener {
         LocationListener.super.onProviderDisabled(provider);
     }
 
+
+
+    /*
+    private void getDateTimeCalendar() {
+        Calendar cal = Calendar.getInstance();
+        day = cal.get(Calendar.DAY_OF_MONTH);
+        month = cal.get(Calendar.MONTH);
+        year = cal.get(Calendar.YEAR);
+        hour = cal.get(Calendar.HOUR);
+        minuite = cal.get(Calendar.MINUTE);
+
+
+
+
+    }
+
+     */
+
+
+    @Override
+    public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTimeChanged(TimePicker timePicker, int i, int i1) {
+
+    }
+
+
+
+    //when the user clicks submit do a simple if check
     private class SubmitClickListener implements View.OnClickListener {
         /**
          * A class that listens for when the user clicks the submit button.
@@ -218,22 +330,33 @@ public class OfferRideFragment extends Fragment implements LocationListener {
             We probably have to add some fields to the form, and using an if statement
             makes it hard to do that.
             */
-            if(TextUtils.isEmpty(offerCity.getText().toString()) ) {
-                offerCity.setError("Please type in the City you are traveling to.");
+            if(TextUtils.isEmpty(startCity.getText().toString()) ) {
+                startCity.setError("Please type in the City you are starting from.");
                 return;
             }
-            if(TextUtils.isEmpty(offerState.getText().toString()) ) {
-                offerState.setError("Please type in the City you are traveling to.");
+            if(TextUtils.isEmpty(startState.getText().toString()) ) {
+                startState.setError("Please type in the State you are starting from.");
+                return;
+            }
+            if(TextUtils.isEmpty(destState.getText().toString()) ) {
+                destState.setError("Please type in the state you are traveling to .");
+                return;
+            }
+            if(TextUtils.isEmpty(destCity.getText().toString()) ) {
+                destCity.setError("Please type in the city you are traveling to.");
                 return;
             }
             if(TextUtils.isEmpty(offerCar.getText().toString()) ) {
-                offerCar.setError("Please type in the City you are traveling to.");
+                offerCar.setError("Please type in a car description");
+                return;
+            }
+            if(TextUtils.isEmpty(dateView.getText().toString()) ) {
+                dateView.setError("Please type in a date or use the button below");
                 return;
             }
             else {
                 //Toast.makeText(getActivity(), "Everything is good", Toast.LENGTH_SHORT).show();
                 //Toast.makeText(getActivity(), "City: " + offerCity.getText().toString() + "\n"+  offerState.getText().toString() + "\n" + "Car: " + offerCar.getText().toString() + "\n" + "State: "  , Toast.LENGTH_SHORT).show();
-
                 //Toast.makeText(getActivity(), "From City:\n " + fromCity + "\nFrom State:  \n " + fromState, Toast.LENGTH_LONG).show();
                 addRideToFirebase();
             } // if-else
@@ -245,17 +368,25 @@ public class OfferRideFragment extends Fragment implements LocationListener {
      */
     private void addRideToFirebase() {
         // Get references to Views
-        String city = offerCity.getText().toString();
-        String state = offerState.getText().toString();
+        String destcityString = destCity.getText().toString();
+        String deststateString = destState.getText().toString();
+        String sourcecityString = startCity.getText().toString();
+        String sourcestateString = startState.getText().toString();
         String car = offerCar.getText().toString();
 
         // Create Ride Object
         Ride newRide = new Ride();
-        newRide.setDestinationCity(city);
-        newRide.setDestinationState(state);
+        newRide.setDestinationCity(destcityString);
+        newRide.setDestinationState(deststateString);
+        newRide.setSourceCity(sourcecityString);
+        newRide.setSourceState(sourcestateString);
         newRide.setCar(car);
         newRide.setSourceState(fromState);
         newRide.setSourceCity(fromCity);
+        //when its added it would be
+        /*
+        newRide.setDate(date);
+         */
 
         // Add a new element (Ride) to the list of job leads in Firebase.
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -274,8 +405,11 @@ public class OfferRideFragment extends Fragment implements LocationListener {
                     Toast.makeText(getActivity().getApplicationContext(), "Ride Created", Toast.LENGTH_SHORT).show();
                     // Clear the EditTexts for next use.
                     offerCar.setText("");
-                    offerCity.setText("");
-                    offerState.setText("");
+                    destCity.setText("");
+                    destState.setText("");
+                    startCity.setText("");
+                    startState.setText("");
+                    //dateView.setText("");
                 }
             })
             .addOnFailureListener( new OnFailureListener() {
