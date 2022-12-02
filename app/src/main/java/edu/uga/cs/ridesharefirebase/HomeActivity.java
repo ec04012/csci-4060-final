@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Random;
+
 public class HomeActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -77,6 +79,14 @@ public class HomeActivity extends AppCompatActivity {
                     {
                         Toast.makeText(HomeActivity.this, "selected Rides", Toast.LENGTH_SHORT).show();
                         //replaceFragment(new ProfileFragment());
+                        // Test UpdateRides using random floats
+                        Random r = new Random();
+                        Ride updatedRide = new Ride();
+                        updatedRide.setKey("-NIKADSzEFkzmthbxpTZ");
+                        updatedRide.setCar("testUpdateRide");
+                        updatedRide.setDestinationCity(String.valueOf(r.nextFloat()));
+                        updatedRide.setDestinationState(String.valueOf(r.nextFloat()));
+                        FirebaseUtil.updateRide(updatedRide);
                         break;
                     }
                     case R.id.nav_offer:
@@ -90,6 +100,7 @@ public class HomeActivity extends AppCompatActivity {
                     {
                         Toast.makeText(HomeActivity.this, "browse", Toast.LENGTH_SHORT).show();
                         //replaceFragment(new ProfileFragment());
+                        // Test getAllRides
                         FirebaseUtil.getAllRides();
                         break;
                     }

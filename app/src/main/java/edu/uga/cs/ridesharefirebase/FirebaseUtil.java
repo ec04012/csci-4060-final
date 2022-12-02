@@ -1,7 +1,11 @@
 package edu.uga.cs.ridesharefirebase;
 
 import android.util.Log;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -13,7 +17,7 @@ import java.util.List;
 
 public class FirebaseUtil {
     private static String DEBUG_TAG = "FirebaseUtil";
-    private static FirebaseDatabase database;
+    private static FirebaseDatabase database = FirebaseDatabase.getInstance();;
 
     /**
      * Returns a list of every ride in the Firebase.
@@ -23,7 +27,6 @@ public class FirebaseUtil {
         List<Ride> rideList = new ArrayList<>();
 
         // get a Firebase DB instance reference
-        database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("rides");
 
         // Set up a listener (event handler) to receive a value for the database reference.
@@ -56,4 +59,44 @@ public class FirebaseUtil {
         } ); // DatabaseReference.addValueEventListener()
         return rideList;
     } //getRide
+
+    /**
+     * Edit an existing Ride in the Firebase.
+     * @param ride a Java object representing the updated Ride.
+     */
+    public static void updateRide( Ride ride ) {
+        Log.d( DEBUG_TAG, "Updating Ride: " + ride.getKey() );
+
+        // Update the recycler view to show the changes in the updated job lead in that view
+        //recyclerAdapter.notifyItemChanged( position );
+
+        // Update this job lead in Firebase
+        // Note that we are using a specific key (one child in the list)
+        DatabaseReference ref = database
+                .getReference()
+                .child( "rides" )
+                .child( ride.getKey() );
+
+        // This listener will be invoked asynchronously, hence no need for an AsyncTask class, as in the previous apps
+        // to maintain job leads.
+        ref.addListenerForSingleValueEvent( new ValueEventListener() {
+            @Override
+            public void onDataChange( @NonNull DataSnapshot dataSnapshot ) {
+                dataSnapshot.getRef().setValue( ride ).addOnSuccessListener( new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d( DEBUG_TAG, "updated ride: " + ride.getKey() );
+                        //Toast.makeText(getApplicationContext(), "Job lead updated for ", Toast.LENGTH_SHORT).show();
+                    } // onSuccess()
+                }); // onSuccessListener()
+            } // onDataChange()
+
+            @Override
+            public void onCancelled( @NonNull DatabaseError databaseError ) {
+                Log.d( DEBUG_TAG, "failed to update ride: " + ride.getKey() );
+                //Toast.makeText(getApplicationContext(), "Failed to update ride", Toast.LENGTH_SHORT).show();
+            } // onCancelled()
+        }); // DatabaseReference ref.addListenerForSingleValueEvent
+    } // updateRide()
+
 } // FirebaseUtil
