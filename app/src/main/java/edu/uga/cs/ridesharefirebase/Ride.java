@@ -5,7 +5,8 @@ package edu.uga.cs.ridesharefirebase;
  */
 public class Ride {
 
-    private String driver;;
+    private String key; /* A unique key representing the ride form the database */
+    private String driver;
     private String sourceCity;
     private String sourceState;
     private String sourceZip;
@@ -29,15 +30,24 @@ public class Ride {
     @Override
     public String toString() {
         return "Ride{" +
-                "driver='" + driver + '\'' +
-                ", sourceCity='" + sourceCity + '\'' +
-                ", sourceState='" + sourceState + '\'' +
-                ", sourceZip='" + sourceZip + '\'' +
-                ", destinationCity='" + destinationCity + '\'' +
-                ", destinationState='" + destinationState + '\'' +
-                ", destinationZip='" + destinationZip + '\'' +
-                ", car='" + car + '\'' +
+                "key='" + key + "\'" +
+                ",\n driver='" + driver + '\'' +
+                ",\n sourceCity='" + sourceCity + '\'' +
+                ",\n sourceState='" + sourceState + '\'' +
+                ",\n sourceZip='" + sourceZip + '\'' +
+                ",\n destinationCity='" + destinationCity + '\'' +
+                ",\n destinationState='" + destinationState + '\'' +
+                ",\n destinationZip='" + destinationZip + '\'' +
+                ",\n car='" + car + '\'' +
                 '}';
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getDriver() {
