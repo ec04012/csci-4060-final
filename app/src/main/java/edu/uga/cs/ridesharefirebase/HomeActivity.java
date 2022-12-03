@@ -9,13 +9,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
+import java.util.Random;
 
 public class HomeActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
@@ -57,9 +63,11 @@ public class HomeActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+        replaceFragment(new ProfileFragment());
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //replaceFragment(new OfferRideFragment());
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -73,10 +81,24 @@ public class HomeActivity extends AppCompatActivity {
                         replaceFragment(new ProfileFragment());
                         break;
                     }
+                    case R.id.nav_logout:
+                    {
+                        LogOutDialog logOutDialog = new LogOutDialog();
+                        logOutDialog.show(getSupportFragmentManager(), "dialog");
+                        break;
+                    }
                     case R.id.nav_selectedRides:
                     {
                         Toast.makeText(HomeActivity.this, "selected Rides", Toast.LENGTH_SHORT).show();
                         //replaceFragment(new ProfileFragment());
+                        // Test UpdateRides using random floats
+                        Random r = new Random();
+                        Ride updatedRide = new Ride();
+                        updatedRide.setKey("-NIKADSzEFkzmthbxpTZ");
+                        updatedRide.setCar("testUpdateRide");
+                        updatedRide.setDestinationCity(String.valueOf(r.nextFloat()));
+                        updatedRide.setDestinationState(String.valueOf(r.nextFloat()));
+                        FirebaseUtil.updateRide(updatedRide);
                         break;
                     }
                     case R.id.nav_offer:
@@ -86,16 +108,31 @@ public class HomeActivity extends AppCompatActivity {
                         replaceFragment(new OfferRideFragment());
                         break;
                     }
-                    case R.id.nav_browse:
+                    case R.id.nav_browse_offer:
                     {
+                        Toast.makeText(HomeActivity.this, "browse offer", Toast.LENGTH_SHORT).show();
+                        replaceFragment(new BrowseRideOfferFragment());
+                        break;
+                    }
+                    case R.id.nav_browse_request:
+                    {
+                        Toast.makeText(HomeActivity.this, "browse request", Toast.LENGTH_SHORT).show();
+                        replaceFragment(new BrowseRideRequestFragment());
                         Toast.makeText(HomeActivity.this, "browse", Toast.LENGTH_SHORT).show();
                         //replaceFragment(new ProfileFragment());
+                        // Test getAllRides
+                        //FirebaseUtil.getAllRides();
                         break;
                     }
                     case R.id.nav_request:
                     {
                         Toast.makeText(HomeActivity.this, "request", Toast.LENGTH_SHORT).show();
+                        replaceFragment(new RequestRideFragment());
                         //replaceFragment(new ProfileFragment());
+                        // Test Delete ride
+                        Ride ride = new Ride();
+                        ride.setKey("-NIKSLXJZK4cOGyCnjr_");
+                        FirebaseUtil.deleteRide(ride);
                         break;
                     }
                 } // switch statement, to handle every item in navigation drawer
@@ -109,9 +146,18 @@ public class HomeActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
         else{
-            super.onBackPressed();
+            //Toast.makeText(this, "Are you sure you want to log out?",Toast.LENGTH_SHORT).show();
+
+
+
+            // TODO: need to implement the log out feature. I guess in theory you can just do the super.onBackPressed.
+            LogOutDialog logOutDialog = new LogOutDialog();
+            logOutDialog.show(getSupportFragmentManager(), "dialog");
+
+
+            //super.onBackPressed();
         }
-        super.onBackPressed();
+        //super.onBackPressed();
     }
 
     private void replaceFragment(Fragment fragment ) {
@@ -120,5 +166,7 @@ public class HomeActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frameLayout,fragment);
         fragmentTransaction.commit();
     }
+
+
 
 } // HomeActivity

@@ -12,21 +12,6 @@
         android:layout_height="match_parent">
 
         <EditText
-            android:id="@+id/offerCar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Car Type (Audi Black)"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.467" />
-
-        <EditText
             android:id="@+id/destState"
             android:layout_width="191dp"
             android:layout_height="wrap_content"
@@ -149,10 +134,13 @@
             android:ems="10"
             android:hint="month/day/year"
             android:inputType="date"
+            android:minHeight="48dp"
             app:layout_constraintBottom_toTopOf="@+id/datePicker"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/offerCar" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <Button
             android:id="@+id/gpsButton2"
