@@ -47,7 +47,7 @@ import java.util.Locale;
  * Use the {@link OfferRideFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OfferRideFragment extends Fragment implements LocationListener, DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener {
+public class RequestRideFragment extends Fragment implements LocationListener, DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,7 +72,7 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
     int Savedminuite = 0;
 
     // Instantiate View variables
-    private EditText destCity, destState, startState, startCity, offerCar, dateView;
+    private EditText destCity, destState, startState, startCity,  dateView;
     private CalendarView calendarView;
     private Button  offerSubmit;
     private String fromState, fromCity, date;
@@ -80,7 +80,7 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
 
     LocationManager locationManager;
 
-    public OfferRideFragment() {
+    public RequestRideFragment() {
         // Required empty public constructor
     }
 
@@ -93,8 +93,8 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
      * @return A new instance of fragment BlankFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OfferRideFragment newInstance(String param1, String param2) {
-        OfferRideFragment fragment = new OfferRideFragment();
+    public static RequestRideFragment newInstance(String param1, String param2) {
+        RequestRideFragment fragment = new RequestRideFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -115,7 +115,7 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_offer_ride, container, false);
+        return inflater.inflate(R.layout.fragment_request_ride, container, false);
     } // OfferRideFragment.onCreateView()
 
     @Override
@@ -127,7 +127,7 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
         destState = view.findViewById(R.id.destState);
         startCity = view.findViewById(R.id.startCity);
         startState = view.findViewById(R.id.startState);
-        offerCar = view.findViewById(R.id.offerCar);
+        //offerCar = view.findViewById(R.id.offerCar);
         //calendarView = view.findViewById(R.id.calendarView);
         offerSubmit = view.findViewById(R.id.offerSubmit);
         gpsButton = view.findViewById(R.id.gpsButton);
@@ -182,19 +182,7 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
 
 
 
-/*
-        // Setup calendar select view
-        calendarView.setMinDate(System.currentTimeMillis()-1000);
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
-                date= (i1 + 1) + "/" + i2 + "/" + i;
-                Toast.makeText(getActivity(), date, Toast.LENGTH_SHORT).show();
-            } // onSelectedDayChange()
-        }); // calendarView.setOnDateChangeListener()
 
-
- */
         // set listener for submit button
         offerSubmit.setOnClickListener( new SubmitClickListener() );
 
@@ -254,7 +242,7 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
     //asks permission
     private void grantPermission() {
         if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-      ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)  {
+                ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)  {
 
             ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
         }
@@ -287,23 +275,6 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
         LocationListener.super.onProviderDisabled(provider);
     }
 
-
-
-    /*
-    private void getDateTimeCalendar() {
-        Calendar cal = Calendar.getInstance();
-        day = cal.get(Calendar.DAY_OF_MONTH);
-        month = cal.get(Calendar.MONTH);
-        year = cal.get(Calendar.YEAR);
-        hour = cal.get(Calendar.HOUR);
-        minuite = cal.get(Calendar.MINUTE);
-
-
-
-
-    }
-
-     */
 
 
     @Override
@@ -347,10 +318,13 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
                 destCity.setError("Please type in the city you are traveling to.");
                 return;
             }
+            /*
             if(TextUtils.isEmpty(offerCar.getText().toString()) ) {
                 offerCar.setError("Please type in a car description");
                 return;
             }
+
+             */
             if(TextUtils.isEmpty(dateView.getText().toString()) ) {
                 dateView.setError("Please type in a date or use the button below");
                 return;
@@ -375,7 +349,7 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
         String deststateString = destState.getText().toString();
         String sourcecityString = startCity.getText().toString();
         String sourcestateString = startState.getText().toString();
-        String car = offerCar.getText().toString();
+        //String car = offerCar.getText().toString();
 
         // Create Ride Object
         Ride newRide = new Ride();
@@ -383,7 +357,7 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
         newRide.setDestinationState(deststateString);
         newRide.setSourceCity(sourcecityString);
         newRide.setSourceState(sourcestateString);
-        newRide.setCar(car);
+
         //when its added it would be
         /*
         TODO: methods to implment below these should work just need the database to be updated to take these info.
@@ -401,28 +375,28 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
         // This listener will be invoked asynchronously, as no need for an AsyncTask, as in
         // the previous apps to maintain job leads.
         myRef.push().setValue( newRide )
-            .addOnSuccessListener( new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    // Show a quick confirmation
-                    FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-                    Toast.makeText(getActivity().getApplicationContext(), "Ride Created" + "UID = " + mFirebaseAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
-                    // Clear the EditTexts for next use.
-                    offerCar.setText("");
-                    destCity.setText("");
-                    destState.setText("");
-                    startCity.setText("");
-                    startState.setText("");
-                    //dateView.setText("");
+                .addOnSuccessListener( new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Show a quick confirmation
+                        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+                        Toast.makeText(getActivity().getApplicationContext(), "Ride Created" + "UID = " + mFirebaseAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+                        // Clear the EditTexts for next use.
+                        //offerCar.setText("");
+                        destCity.setText("");
+                        destState.setText("");
+                        startCity.setText("");
+                        startState.setText("");
+                        //dateView.setText("");
 
-                }
-            })
-            .addOnFailureListener( new OnFailureListener() {
-                @Override
-                public void onFailure( @NonNull Exception e ) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Failed to create Ride", Toast.LENGTH_SHORT).show();
-                }
-            }); // .addOnSuccessListener()
+                    }
+                })
+                .addOnFailureListener( new OnFailureListener() {
+                    @Override
+                    public void onFailure( @NonNull Exception e ) {
+                        Toast.makeText(getActivity().getApplicationContext(), "Failed to create Ride", Toast.LENGTH_SHORT).show();
+                    }
+                }); // .addOnSuccessListener()
     } // addRideToFirebase()
 
-} // OfferRideFragment
+} // RequestRideFragment

@@ -90,16 +90,22 @@ public class HomeActivity extends AppCompatActivity {
                         replaceFragment(new OfferRideFragment());
                         break;
                     }
-                    case R.id.nav_browse:
+                    case R.id.nav_browse_offer:
                     {
-                        Toast.makeText(HomeActivity.this, "browse", Toast.LENGTH_SHORT).show();
-                        //replaceFragment(new ProfileFragment());
+                        Toast.makeText(HomeActivity.this, "browse offer", Toast.LENGTH_SHORT).show();
+                        replaceFragment(new BrowseRideOfferFragment());
+                        break;
+                    }
+                    case R.id.nav_browse_request:
+                    {
+                        Toast.makeText(HomeActivity.this, "browse request", Toast.LENGTH_SHORT).show();
+                        replaceFragment(new BrowseRideRequestFragment());
                         break;
                     }
                     case R.id.nav_request:
                     {
                         Toast.makeText(HomeActivity.this, "request", Toast.LENGTH_SHORT).show();
-                        //replaceFragment(new ProfileFragment());
+                        replaceFragment(new RequestRideFragment());
                         break;
                     }
                 } // switch statement, to handle every item in navigation drawer
