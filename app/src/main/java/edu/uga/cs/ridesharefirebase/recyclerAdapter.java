@@ -43,8 +43,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ride =  rideArrayList.get(position);
-        holder.rideIdview.setText(ride.getRideId());
-        holder.rideIdview.setText(ride.getRideId());
+        holder.rideIdview.setText(ride.getKey());
         holder.rideSourceCity.setText(ride.getSourceCity());
         holder.rideSourceState.setText(ride.getSourceState());
         holder.rideDestCity.setText(ride.getDestinationCity());
@@ -104,10 +103,10 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
                     for (int i = 0 ; i < fbRideList.size(); i++) {
 
                         //meaning the list of ride's rid matches what we clicked
-                        if(fbRideList.get(i).getRideId() == rideIdview.getText()) {
+                        if(fbRideList.get(i).getKey() == rideIdview.getText()) {
                             reserveRide = fbRideList.get(i);
 
-                            Toast.makeText(view.getContext(), "resrveRide rid = " + reserveRide.getRideId(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(view.getContext(), "resrveRide rid = " + reserveRide.getKey(), Toast.LENGTH_SHORT).show();
 
                             //meaning its a request
                             if (reserveRide.getDriver() == "") {

@@ -5,11 +5,9 @@ package edu.uga.cs.ridesharefirebase;
  */
 public class Ride {
 
-    private String rideId;
     private String driver;
     private String rider;;
     private String key; /* A unique key representing the ride form the database */
-    private String driver;
     private String sourceCity;
     private String sourceState;
     private String sourceZip;
@@ -21,7 +19,7 @@ public class Ride {
 
     public Ride()
     {
-        this.rideId = null;
+        this.key= null;
         this.driver = null;
         this.rider = null;
         this.sourceCity = null;

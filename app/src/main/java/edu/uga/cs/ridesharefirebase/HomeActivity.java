@@ -121,7 +121,7 @@ public class HomeActivity extends AppCompatActivity {
                         Toast.makeText(HomeActivity.this, "browse", Toast.LENGTH_SHORT).show();
                         //replaceFragment(new ProfileFragment());
                         // Test getAllRides
-                        FirebaseUtil.getAllRides();
+                        //FirebaseUtil.getAllRides();
                         break;
                     }
                     case R.id.nav_request:

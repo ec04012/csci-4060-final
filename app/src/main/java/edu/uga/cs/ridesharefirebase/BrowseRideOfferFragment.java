@@ -30,6 +30,7 @@ public class BrowseRideOfferFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private RecyclerView recyclerView;
+    private recyclerAdapter myAdapter;
     private ArrayList<Ride> rideArrayList;
     private ArrayList<Ride> RequestList;
 
@@ -104,7 +105,7 @@ public class BrowseRideOfferFragment extends Fragment {
 
 
 
-        recyclerAdapter myAdapter = new recyclerAdapter(getContext(),RequestList);
+         myAdapter = new recyclerAdapter(getContext(),RequestList);
         recyclerView.setAdapter(myAdapter);
         myAdapter.notifyDataSetChanged();
     }
@@ -114,12 +115,19 @@ public class BrowseRideOfferFragment extends Fragment {
 
 
 
+       // rideArrayList = FirebaseUtil.getAllRides(myAdapter);
+
+
+
+
+
         Ride rideOffer = new Ride();
         Ride rideRequest = new Ride();
         Ride rideOffer2 = new Ride();
         Ride rideRequest2 = new Ride();
+        FirebaseUtil.getAllRides();
 
-        rideOffer.setRideId("1");
+        rideOffer.setKey("1");
         rideOffer.setDriver("Corey");
         rideOffer.setRider("");
         rideOffer.setSourceCity("Athens");
@@ -129,7 +137,7 @@ public class BrowseRideOfferFragment extends Fragment {
         rideOffer.setCar("Black Audi A4");
         rideOffer.setDate("12/1/2022");
 
-        rideOffer2.setRideId("2");
+        rideOffer2.setKey("2");
         rideOffer2.setDriver("Corey");
         rideOffer2.setRider("");
         rideOffer2.setSourceCity("New York City");
@@ -139,7 +147,7 @@ public class BrowseRideOfferFragment extends Fragment {
         rideOffer2.setCar("Black Audi A4");
         rideOffer2.setDate("12/1/2022");
 
-        rideRequest.setRideId("3");
+        rideRequest.setKey("3");
         rideRequest.setDriver("");
         rideRequest.setRider("Corey");
         rideRequest.setSourceCity("Source State REquest ");
@@ -149,7 +157,7 @@ public class BrowseRideOfferFragment extends Fragment {
         rideRequest.setCar("");
         rideRequest.setDate("12/1/2022");
 
-        rideRequest2.setRideId("4");
+        rideRequest2.setKey("4");
         rideRequest2.setDriver("");
         rideRequest2.setRider("Corey");
         rideRequest2.setSourceCity("Source State REquest2  ");
@@ -163,6 +171,8 @@ public class BrowseRideOfferFragment extends Fragment {
         rideArrayList.add(rideOffer2);
         rideArrayList.add(rideRequest);
         rideArrayList.add(rideRequest2);
+
+
 
 
     }

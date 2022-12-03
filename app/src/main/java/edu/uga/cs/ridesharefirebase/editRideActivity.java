@@ -48,7 +48,7 @@ public class editRideActivity extends AppCompatActivity {
         for (int i = 0 ; i < arrayRideList.size(); i++) {
 
             //if the ride id of the list of rides matches the rid of the one we selected
-            if (arrayRideList.get(i).getRideId() == rideId) {
+            if (arrayRideList.get(i).getKey() == rideId) {
                 editingRide = arrayRideList.get(i);
                 Toast.makeText(this, editingRide.getDestinationCity(), Toast.LENGTH_SHORT).show();
             }
@@ -99,7 +99,7 @@ public class editRideActivity extends AppCompatActivity {
         Ride rideOffer2 = new Ride();
         Ride rideRequest2 = new Ride();
 
-        rideOffer.setRideId("1");
+        rideOffer.setKey("1");
         rideOffer.setSourceCity("Athens");
         rideOffer.setSourceState("Georgia");
         rideOffer.setDestinationCity("Atlanta");
@@ -107,7 +107,7 @@ public class editRideActivity extends AppCompatActivity {
         rideOffer.setCar("Black Audi A4");
         rideOffer.setDate("12/1/2022");
 
-        rideOffer2.setRideId("2");
+        rideOffer2.setKey("2");
         rideOffer2.setSourceCity("New York City");
         rideOffer2.setSourceState("New York");
         rideOffer2.setDestinationCity("Atlanta");
@@ -115,7 +115,7 @@ public class editRideActivity extends AppCompatActivity {
         rideOffer2.setCar("Black Audi A4");
         rideOffer2.setDate("12/1/2022");
 
-        rideRequest.setRideId("3");
+        rideRequest.setKey("3");
         rideRequest.setSourceCity("Source State REquest ");
         rideRequest.setSourceState("Source Georgia");
         rideRequest.setDestinationCity("Source Atlanta");
@@ -123,7 +123,7 @@ public class editRideActivity extends AppCompatActivity {
         rideRequest.setCar("");
         rideRequest.setDate("12/1/2022");
 
-        rideRequest2.setRideId("4");
+        rideRequest2.setKey("4");
         rideRequest2.setSourceCity("Source State REquest2  ");
         rideRequest2.setSourceState("Source Georgia 2");
         rideRequest2.setDestinationCity("Source Atlanta 2 ");

@@ -26,8 +26,8 @@ public class FirebaseUtil {
      * returns its data.
      * @return a list containing every ride in the Firebase.
      */
-    public static List<Ride> getAllRides() {
-        List<Ride> rideList = new ArrayList<>();
+    public static ArrayList<Ride> getAllRides() {
+        ArrayList<Ride> rideList = new ArrayList<>();
 
         // get a Firebase DB instance reference
         DatabaseReference myRef = database.getReference("rides");
