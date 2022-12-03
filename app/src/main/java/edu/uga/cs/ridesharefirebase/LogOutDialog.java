@@ -20,23 +20,24 @@ public class LogOutDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder((getActivity()));
         builder.setTitle("Log Out")
-                .setMessage("Are you Sure you want to log out?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        mFirebaseAuth.signOut();
-                        Intent intent = new Intent(getContext(), MainActivity.class);
-                        startActivity(intent);
-                        getActivity().finish();
+            .setMessage("Are you Sure you want to log out?")
+            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    mFirebaseAuth.signOut();
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
 
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                } // .setPositiveButton().onClick()
+            }) // .setPositiveButton()
+            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
 
-                    }
-                });
-                return builder.create();
-    }
-}
+                } // .setNegativeButton().onClick()
+            }); // .setNegativeButton()
+            return builder.create();
+    } // onCreateDialog()
+
+} // LogOutDialog()

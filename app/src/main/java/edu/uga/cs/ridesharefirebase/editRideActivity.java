@@ -38,23 +38,19 @@ public class editRideActivity extends AppCompatActivity {
         editRid = this.findViewById(R.id.editrid);
         editRid.setText(rideId);
 
-
-
-
         //do somekind of initalization from db get the and set to arrayRideList
         dataInitialize();
 
         //do some kind of iteration of the list to check the ride id
         for (int i = 0 ; i < arrayRideList.size(); i++) {
-
             //if the ride id of the list of rides matches the rid of the one we selected
             if (arrayRideList.get(i).getKey() == rideId) {
                 editingRide = arrayRideList.get(i);
                 Toast.makeText(this, editingRide.getDestinationCity(), Toast.LENGTH_SHORT).show();
-            }
-        }
+            } // if ride is the ride we are editing
+        } // for every ride
 
-/*
+        /*
         editdestCity = this.findViewById(R.id. editdestCity);
         editdestState = this.findViewById(R.id. editdestState);
         editstartCity = this.findViewById(R.id. editstartCity);
@@ -67,32 +63,17 @@ public class editRideActivity extends AppCompatActivity {
         datePicker = this.findViewById(R.id. editdatePicker);
         editdateView = this.findViewById(R.id. editeditTextDate);
 
-
         editdestCity.setText(editingRide.getDestinationCity());
         editdestState.setText(editingRide.getDestinationState());
         editstartCity.setText(editingRide.getSourceCity());
         editstartState.setText(editingRide.getSourceState());
         editofferCar.setText(editingRide.getCar());
-
- */
-
-
-
-
-
-
-
-
-
-
-
+        */
     }
 
 
     private void dataInitialize() {
         arrayRideList = new ArrayList<Ride>();
-
-
 
         Ride rideOffer = new Ride();
         Ride rideRequest = new Ride();
@@ -135,7 +116,5 @@ public class editRideActivity extends AppCompatActivity {
         arrayRideList.add(rideOffer2);
         arrayRideList.add(rideRequest);
         arrayRideList.add(rideRequest2);
-
-
-    }
-}
+    } // dataInitialize()
+} // editRideActivity

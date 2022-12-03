@@ -54,7 +54,7 @@ public class BrowseRideOfferFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
+    } // newInstance()
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,31 +64,21 @@ public class BrowseRideOfferFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         dataInitialize();
-    }
+    } //  onCreate()
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_browse_ride, container, false);
-
-
-
-
-    }
+    } // onCreateView()
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
-
         recyclerView = view.findViewById(R.id.recyclierview);
         recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
-
-
-
 
         RequestList = new ArrayList<Ride>();
         for (int i = 0 ; i < rideArrayList.size(); i++) {
@@ -96,30 +86,17 @@ public class BrowseRideOfferFragment extends Fragment {
             if (!(rideArrayList.get(i).getDriver() == "") && (rideArrayList.get(i).getRider() == "")) {
                 RequestList.add(rideArrayList.get(i));
 
-            } else {
+            } // if ride is rider offer
+        } // for every ride return from firebase
 
-            }
-        }
-
-
-
-
-
-         myAdapter = new recyclerAdapter(getContext(),RequestList);
+        myAdapter = new recyclerAdapter(getContext(),RequestList);
         recyclerView.setAdapter(myAdapter);
         myAdapter.notifyDataSetChanged();
-    }
+    } // onViewCreated()
 
     private void dataInitialize() {
         rideArrayList = new ArrayList<Ride>();
-
-
-
        // rideArrayList = FirebaseUtil.getAllRides(myAdapter);
-
-
-
-
 
         Ride rideOffer = new Ride();
         Ride rideRequest = new Ride();
@@ -171,9 +148,5 @@ public class BrowseRideOfferFragment extends Fragment {
         rideArrayList.add(rideOffer2);
         rideArrayList.add(rideRequest);
         rideArrayList.add(rideRequest2);
-
-
-
-
-    }
-}
+    } // dataInitialize
+} // BrowseRideOfferFragment

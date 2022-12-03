@@ -34,11 +34,9 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View v   = LayoutInflater.from(context).inflate(R.layout.list_rides, parent,false);
         return new MyViewHolder(v);
-
-    }
+    } // onCreateViewHolder()
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
@@ -50,7 +48,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         holder.rideDestState.setText(ride.getDestinationState());
         //holder.rideDate.setText(ride.getDate());
 
-        //bascially a tsudo check to see if the ride is an request since they dont need a car
+        //bascially a pseudo check to see if the ride is an request since they dont need a car
         // would instead on final check to see if driver is null/false/no UID
         if(ride.getCar() == "") {
             holder.carTitle.setVisibility(View.INVISIBLE);
@@ -58,10 +56,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         } else {
             holder.rideCar.setText(ride.getCar());
         }
-
-
-
-    }
+    } // onBindViewHolder()
 
     @Override
     public int getItemCount() {
@@ -74,7 +69,6 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         Button reserve;
         String rideId;
 
-
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             rideSourceCity = itemView.findViewById(R.id.rideSourceCity);
@@ -86,7 +80,6 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
             carTitle = itemView.findViewById(R.id.carTitle);
             rideDate = itemView.findViewById(R.id.rideDate);
             reserve = itemView.findViewById(R.id.reserve);
-
 
             reserve.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -101,7 +94,6 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
                     fbRideList = rideArrayList;
 
                     for (int i = 0 ; i < fbRideList.size(); i++) {
-
                         //meaning the list of ride's rid matches what we clicked
                         if(fbRideList.get(i).getKey() == rideIdview.getText()) {
                             reserveRide = fbRideList.get(i);
@@ -115,21 +107,15 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
                                 reserveRide.setDriver(mFirebaseAuth.getCurrentUser().getUid());
 
                                 Toast.makeText(view.getContext(), reserveRide.toString(), Toast.LENGTH_LONG).show();
-                            }
-
+                            } // if ride is a request
                             //meaning this is a offer
                             else {
                                 Toast.makeText(view.getContext(), "set a new rider ", Toast.LENGTH_SHORT).show();
                                 reserveRide.setRider(mFirebaseAuth.getCurrentUser().getUid());
                                 Toast.makeText(view.getContext(), reserveRide.toString(), Toast.LENGTH_LONG).show();
-                            }
-
-
-
-
-                        }
-
-                    }
+                            } // if ride is an offer
+                        } // if ride is the ride that we've have clicked
+                    } // for every ride
 
 
                     //bad way but simple fix atm we pass the ride's id from databse here and hide it from user and store into rideId this way we know what the ride id is
@@ -144,15 +130,9 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
                     view.getContext().startActivity(myIntent);
 
                      */
+                } // .onClick()
+            }); // reserveButton.setOnClickListener()
+        } // MyViewHolder() constructor
+    } // MyViewHolder
 
-
-                }
-            });
-
-        }
-    }
-
-
-
-
-}
+} // recyclerAdapter
