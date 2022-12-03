@@ -92,18 +92,13 @@ public class BrowseRideRequestFragment extends Fragment {
         RequestList = new ArrayList<Ride>();
         for (int i = 0 ; i < rideArrayList.size(); i++) {
             //in the future this will be if !DRIVE UID == "" but for now if there is no car it means its a request
-            if (rideArrayList.get(i).getCar() == "") {
+            if (!(rideArrayList.get(i).getRider() == "") && (rideArrayList.get(i).getDriver() == "")) {
                 RequestList.add(rideArrayList.get(i));
+
             } else {
 
             }
         }
-
-
-
-
-
-
 
 
         recyclerAdapter myAdapter = new recyclerAdapter(getContext(),RequestList);
@@ -119,29 +114,46 @@ public class BrowseRideRequestFragment extends Fragment {
         Ride rideRequest = new Ride();
         Ride rideOffer2 = new Ride();
         Ride rideRequest2 = new Ride();
+
+        rideOffer.setRideId("1");
+        rideOffer.setDriver("Corey");
+        rideOffer.setRider("");
         rideOffer.setSourceCity("Athens");
         rideOffer.setSourceState("Georgia");
         rideOffer.setDestinationCity("Atlanta");
         rideOffer.setDestinationState("Georgia");
         rideOffer.setCar("Black Audi A4");
+        rideOffer.setDate("12/1/2022");
 
+        rideOffer2.setRideId("2");
+        rideOffer2.setDriver("Corey");
+        rideOffer2.setRider("");
         rideOffer2.setSourceCity("New York City");
         rideOffer2.setSourceState("New York");
         rideOffer2.setDestinationCity("Atlanta");
         rideOffer2.setDestinationState("Georgia");
         rideOffer2.setCar("Black Audi A4");
+        rideOffer2.setDate("12/1/2022");
 
+        rideRequest.setRideId("3");
+        rideRequest.setDriver("");
+        rideRequest.setRider("Corey");
         rideRequest.setSourceCity("Source State REquest ");
         rideRequest.setSourceState("Source Georgia");
         rideRequest.setDestinationCity("Source Atlanta");
         rideRequest.setDestinationState("Source Georgia");
         rideRequest.setCar("");
+        rideRequest.setDate("12/1/2022");
 
+        rideRequest2.setRideId("4");
+        rideRequest2.setDriver("");
+        rideRequest2.setRider("Corey");
         rideRequest2.setSourceCity("Source State REquest2  ");
         rideRequest2.setSourceState("Source Georgia 2");
         rideRequest2.setDestinationCity("Source Atlanta 2 ");
         rideRequest2.setDestinationState("Source Georgia 2 ");
         rideRequest2.setCar("");
+        rideRequest2.setDate("12/1/2022");
 
         rideArrayList.add(rideOffer);
         rideArrayList.add(rideOffer2);

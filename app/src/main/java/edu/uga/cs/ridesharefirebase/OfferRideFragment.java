@@ -77,6 +77,7 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
     private Button  offerSubmit;
     private String fromState, fromCity, date;
     private Button gpsButton, gpsButton2, datePicker;
+    FirebaseAuth mFirebaseAuth;
 
     LocationManager locationManager;
 
@@ -384,6 +385,10 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
         newRide.setSourceCity(sourcecityString);
         newRide.setSourceState(sourcestateString);
         newRide.setCar(car);
+        newRide.setDate(date);
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        newRide.setDriver(mFirebaseAuth.getCurrentUser().getUid());
+        newRide.setRider("");
         //when its added it would be
         /*
         TODO: methods to implment below these should work just need the database to be updated to take these info.
@@ -405,7 +410,7 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
                 @Override
                 public void onSuccess(Void aVoid) {
                     // Show a quick confirmation
-                    FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+                    //FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
                     Toast.makeText(getActivity().getApplicationContext(), "Ride Created" + "UID = " + mFirebaseAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
                     // Clear the EditTexts for next use.
                     offerCar.setText("");
@@ -413,7 +418,7 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
                     destState.setText("");
                     startCity.setText("");
                     startState.setText("");
-                    //dateView.setText("");
+                    dateView.setText("");
 
                 }
             })

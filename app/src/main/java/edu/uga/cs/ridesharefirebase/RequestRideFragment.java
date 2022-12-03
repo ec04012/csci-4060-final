@@ -77,6 +77,7 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
     private Button  offerSubmit;
     private String fromState, fromCity, date;
     private Button gpsButton, gpsButton2, datePicker;
+    FirebaseAuth mFirebaseAuth;
 
     LocationManager locationManager;
 
@@ -351,12 +352,18 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
         String sourcestateString = startState.getText().toString();
         //String car = offerCar.getText().toString();
 
+
         // Create Ride Object
         Ride newRide = new Ride();
+        newRide.setCar("");
         newRide.setDestinationCity(destcityString);
         newRide.setDestinationState(deststateString);
         newRide.setSourceCity(sourcecityString);
         newRide.setSourceState(sourcestateString);
+        newRide.setDate(date);
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        newRide.setDriver("");
+        newRide.setRider(mFirebaseAuth.getCurrentUser().getUid());
 
         //when its added it would be
         /*
