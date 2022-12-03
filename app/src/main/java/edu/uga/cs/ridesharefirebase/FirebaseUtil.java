@@ -21,6 +21,9 @@ public class FirebaseUtil {
 
     /**
      * Returns a list of every ride in the Firebase.
+     * Currently, this method does not correctly return the list because
+     * it is asychronous. The method returns rideList before the firebase
+     * returns its data.
      * @return a list containing every ride in the Firebase.
      */
     public static List<Ride> getAllRides() {
@@ -57,6 +60,7 @@ public class FirebaseUtil {
                 System.out.println( "ValueEventListener: reading failed: " + databaseError.getMessage() );
             } // onCancelled()
         } ); // DatabaseReference.addValueEventListener()
+        Log.d(DEBUG_TAG, "rideList size: " + String.valueOf(rideList.size()));
         return rideList;
     } //getRide
 
@@ -98,5 +102,37 @@ public class FirebaseUtil {
             } // onCancelled()
         }); // DatabaseReference ref.addListenerForSingleValueEvent
     } // updateRide()
+
+    public static void deleteRide (Ride ride) {
+        Log.d( DEBUG_TAG, "Deleting ride: " + ride.getKey() );
+
+        // Delete this job lead in Firebase.
+        // Note that we are using a specific key (one child in the list)
+        DatabaseReference ref = database
+                .getReference()
+                .child( "rides" )
+                .child( ride.getKey() );
+
+        // This listener will be invoked asynchronously, hence no need for an AsyncTask class, as in the previous apps
+        // to maintain job leads.
+        ref.addListenerForSingleValueEvent( new ValueEventListener() {
+            @Override
+            public void onDataChange( @NonNull DataSnapshot dataSnapshot ) {
+                dataSnapshot.getRef().removeValue().addOnSuccessListener( new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d( DEBUG_TAG, "ride deleted: " + ride.getKey() );
+                        //Toast.makeText(getApplicationContext(), "ride deleted: " + ride.getKey(), Toast.LENGTH_SHORT).show();
+                    } // onSuccess()
+                }); // addOnSuccessListener()
+            } // onDataChange()
+
+            @Override
+            public void onCancelled( @NonNull DatabaseError databaseError ) {
+                Log.d( DEBUG_TAG, "failed to delete ride: " + ride.getKey() );
+                //Toast.makeText(getApplicationContext(), "Failed to delete ride", Toast.LENGTH_SHORT).show();
+            } // onCancelled()
+        }); // DatabaseReference ref.addListenerForSingleValueEvent
+    } // deleteRide()
 
 } // FirebaseUtil

@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.List;
 import java.util.Random;
 
 public class HomeActivity extends AppCompatActivity {
@@ -108,6 +110,10 @@ public class HomeActivity extends AppCompatActivity {
                     {
                         Toast.makeText(HomeActivity.this, "request", Toast.LENGTH_SHORT).show();
                         //replaceFragment(new ProfileFragment());
+                        // Test Delete ride
+                        Ride ride = new Ride();
+                        ride.setKey("-NIKSLXJZK4cOGyCnjr_");
+                        FirebaseUtil.deleteRide(ride);
                         break;
                     }
                 } // switch statement, to handle every item in navigation drawer
