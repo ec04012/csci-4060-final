@@ -8,6 +8,8 @@ public class Ride {
     private String rideId;
     private String driver;
     private String rider;;
+    private String key; /* A unique key representing the ride form the database */
+    private String driver;
     private String sourceCity;
     private String sourceState;
     private String sourceZip;
@@ -35,28 +37,27 @@ public class Ride {
     @Override
     public String toString() {
         return "Ride{" +
-                "rideId='" + rideId + '\'' +
-                ", driver='" + driver + '\'' +
-                ", rider='" + rider + '\'' +
-                ", sourceCity='" + sourceCity + '\'' +
-                ", sourceState='" + sourceState + '\'' +
-                ", sourceZip='" + sourceZip + '\'' +
-                ", destinationCity='" + destinationCity + '\'' +
-                ", destinationState='" + destinationState + '\'' +
-                ", destinationZip='" + destinationZip + '\'' +
-                ", date='" + date + '\'' +
-                ", car='" + car + '\'' +
+                "key='" + key + "\'" +
+                ",\n driver='" + driver + '\'' +
+                ",\n rider='" + rider + '\'' +
+                ",\n sourceCity='" + sourceCity + '\'' +
+                ",\n sourceState='" + sourceState + '\'' +
+                ",\n sourceZip='" + sourceZip + '\'' +
+                ",\n destinationCity='" + destinationCity + '\'' +
+                ",\n destinationState='" + destinationState + '\'' +
+                ",\n destinationZip='" + destinationZip + '\'' +
+                ",\n car='" + car + '\'' +
                 '}';
     }
 
-    public void setRideId(String rideId) {
-        this.rideId = rideId;
-
+    public String getKey() {
+        return key;
     }
 
-    public String getRideId() {
-        return rideId;
+    public void setKey(String key) {
+        this.key = key;
     }
+
     public String getDriver() {
         return driver;
     }
