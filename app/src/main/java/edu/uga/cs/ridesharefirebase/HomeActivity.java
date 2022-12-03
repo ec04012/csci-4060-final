@@ -77,6 +77,12 @@ public class HomeActivity extends AppCompatActivity {
                         replaceFragment(new ProfileFragment());
                         break;
                     }
+                    case R.id.nav_logout:
+                    {
+                        LogOutDialog logOutDialog = new LogOutDialog();
+                        logOutDialog.show(getSupportFragmentManager(), "dialog");
+                        break;
+                    }
                     case R.id.nav_selectedRides:
                     {
                         Toast.makeText(HomeActivity.this, "selected Rides", Toast.LENGTH_SHORT).show();
@@ -119,7 +125,7 @@ public class HomeActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
         else{
-            Toast.makeText(this, "Are you sure you want to log out?",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Are you sure you want to log out?",Toast.LENGTH_SHORT).show();
 
 
 
@@ -141,25 +147,5 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    private void logOffNotif() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Log Out")
-                .setMessage("Are you Sure you want to log out?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        HomeActivity.super.onBackPressed();
-
-                    }
-                })
-
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        });
-         builder.create();
-    }
 
 } // HomeActivity
