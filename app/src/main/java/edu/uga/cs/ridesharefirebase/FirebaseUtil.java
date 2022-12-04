@@ -37,21 +37,21 @@ public class FirebaseUtil {
         // This listener will be invoked asynchronously, as no need for an AsyncTask, as in
         // the previous apps to maintain job leads.
         myRef.push().setValue( user )
-                .addOnSuccessListener( new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        // Show a quick confirmation
-                        //FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-                        //Toast.makeText(getActivity().getApplicationContext(), "User Created" + "UID = " + mFirebaseAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
-                        // Clear the EditTexts for next use.
-                    }
-                })
-                .addOnFailureListener( new OnFailureListener() {
-                    @Override
-                    public void onFailure( @NonNull Exception e ) {
-                        // do nothing
-                    }
-                }); // .addOnSuccessListener()
+            .addOnSuccessListener( new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    // Show a quick confirmation
+                    //FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+                    //Toast.makeText(getActivity().getApplicationContext(), "User Created" + "UID = " + mFirebaseAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+                    // Clear the EditTexts for next use.
+                } // onSucess()
+            }) // .addOnSuccessListener()
+            .addOnFailureListener( new OnFailureListener() {
+                @Override
+                public void onFailure( @NonNull Exception e ) {
+                    // do nothing
+                } // onFailure()
+            }); // .addOnSuccessListener()
     } // addUserToFirebase()
 
     /**

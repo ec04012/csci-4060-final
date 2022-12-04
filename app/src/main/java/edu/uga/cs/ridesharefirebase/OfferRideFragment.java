@@ -157,7 +157,7 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
                 getLocation();
                 destCity.setText(fromCity);
                 destState.setText(fromState);
-            } // .setOnClock()
+            } // .setOnClick()
         }); //gpsButton2.setOnClickListener()
 
         //if the user clicks the date picker
