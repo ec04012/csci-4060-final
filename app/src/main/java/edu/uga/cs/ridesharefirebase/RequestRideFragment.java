@@ -58,7 +58,6 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
     private String mParam1;
     private String mParam2;
 
-
     int day = 0;
     int month = 0;
     int year = 0;
@@ -101,7 +100,7 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
+    } // newInstance()
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,7 +108,7 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-        } // if
+        } // if arguments are not null
     } // OfferRideFragment.onCreate()
 
     @Override
@@ -145,8 +144,8 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
                 getLocation();
                 startCity.setText(fromCity);
                 startState.setText(fromState);
-            }
-        });
+            } // onClick()
+        }); // gpsButton.setOnClickListener()
 
         //if the user clicks the gps button under the destination
         gpsButton2.setOnClickListener(new View.OnClickListener() {
@@ -157,8 +156,8 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
                 getLocation();
                 destCity.setText(fromCity);
                 destState.setText(fromState);
-            }
-        });
+            } // onClick()
+        }); // gpsButton2.setOnClickListener()
 
         //if the user clicks the date picker
         datePicker.setOnClickListener(new View.OnClickListener() {
@@ -173,24 +172,15 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
                         //getDateTimeCalendar();
                         dateView.setText(date);
                     }
-                }, year, month, day);
+                }, year, month, day); // onDateSet()
 
                 datePickerDialog.getDatePicker().setMinDate((System.currentTimeMillis()-1000));
                 datePickerDialog.show();
-            }
-        });
-
-
-
-
+            } // onClick()
+        }); // datePicker.setOnClickListener
 
         // set listener for submit button
         offerSubmit.setOnClickListener( new SubmitClickListener() );
-
-
-
-
-
     } // OfferRideFragment.onViewCreated()
 
 
@@ -201,9 +191,8 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,500, 5 , (LocationListener) this);
         } catch (SecurityException e) {
             e.printStackTrace();
-        }
-
-    }
+        } // try catch
+    } // getLocation()
 
     //checks to see if location setting is enabled
     private void checkLocationIsEnabledOrNot() {
@@ -215,29 +204,28 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
             gpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        } // try catch
 
         try {
             networkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
         }catch (Exception e ) {
             e.printStackTrace();
-        }
+        } // try catch
 
         if (!gpsEnabled && !networkEnabled) {
             new AlertDialog.Builder(this.getContext())
-                    .setTitle("Enable GPS Service")
-                    .setCancelable(false)
-                    .setPositiveButton("Enable", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            //this intent redirect us to the location settings when the user has gps disabled
-                            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                        }
-                    }).setNegativeButton("cancel", null).show();
-
-        }
-    }
+                .setTitle("Enable GPS Service")
+                .setCancelable(false)
+                .setPositiveButton("Enable", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //this intent redirect us to the location settings when the user has gps disabled
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                }).setNegativeButton("cancel", null).show();
+        } // if gps not enabled and network not enabled
+    } // checkLocationIsEnabledOrNot()
 
 
     //asks permission
@@ -246,8 +234,8 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
                 ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)  {
 
             ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
-        }
-    }
+        } // if
+    } // grantPermission()
 
 
     //on location change
@@ -261,34 +249,28 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-
-    }
+        } // try catch
+    } // onLocationChanged
 
     @Override
     public void onProviderEnabled(@NonNull String provider) {
         LocationListener.super.onProviderEnabled(provider);
-    }
+    } // onProviderEnabled()
 
     @Override
     public void onProviderDisabled(@NonNull String provider) {
         LocationListener.super.onProviderDisabled(provider);
-    }
-
-
+    } // onProviderEnabled()
 
     @Override
     public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
 
-    }
+    } // onDateChanged()
 
     @Override
     public void onTimeChanged(TimePicker timePicker, int i, int i1) {
 
-    }
-
-
+    } // onTimeChanged()
 
     //when the user clicks submit do a simple if check
     private class SubmitClickListener implements View.OnClickListener {
@@ -324,18 +306,17 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
                 offerCar.setError("Please type in a car description");
                 return;
             }
-
              */
             if(TextUtils.isEmpty(dateView.getText().toString()) ) {
                 dateView.setError("Please type in a date or use the button below");
                 return;
-            }
+            } // if dateView is empty
             else {
                 //Toast.makeText(getActivity(), "Everything is good", Toast.LENGTH_SHORT).show();
                 //Toast.makeText(getActivity(), "City: " + offerCity.getText().toString() + "\n"+  offerState.getText().toString() + "\n" + "Car: " + offerCar.getText().toString() + "\n" + "State: "  , Toast.LENGTH_SHORT).show();
                 //Toast.makeText(getActivity(), "From City:\n " + fromCity + "\nFrom State:  \n " + fromState, Toast.LENGTH_LONG).show();
                 addRideToFirebase();
-            } // if-else
+            } // else (i.e. dateView is not empty)
         } // SubmitClickListener.onClick()
     } // SubmitClickListener
 
@@ -351,7 +332,6 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
         String sourcecityString = startCity.getText().toString();
         String sourcestateString = startState.getText().toString();
         //String car = offerCar.getText().toString();
-
 
         // Create Ride Object
         Ride newRide = new Ride();
@@ -382,28 +362,27 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
         // This listener will be invoked asynchronously, as no need for an AsyncTask, as in
         // the previous apps to maintain job leads.
         myRef.push().setValue( newRide )
-                .addOnSuccessListener( new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        // Show a quick confirmation
-                        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-                        Toast.makeText(getActivity().getApplicationContext(), "Ride Created" + "UID = " + mFirebaseAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
-                        // Clear the EditTexts for next use.
-                        //offerCar.setText("");
-                        destCity.setText("");
-                        destState.setText("");
-                        startCity.setText("");
-                        startState.setText("");
-                        //dateView.setText("");
-
-                    }
-                })
-                .addOnFailureListener( new OnFailureListener() {
-                    @Override
-                    public void onFailure( @NonNull Exception e ) {
-                        Toast.makeText(getActivity().getApplicationContext(), "Failed to create Ride", Toast.LENGTH_SHORT).show();
-                    }
-                }); // .addOnSuccessListener()
+            .addOnSuccessListener( new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    // Show a quick confirmation
+                    FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+                    Toast.makeText(getActivity().getApplicationContext(), "Ride Created" + "UID = " + mFirebaseAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+                    // Clear the EditTexts for next use.
+                    //offerCar.setText("");
+                    destCity.setText("");
+                    destState.setText("");
+                    startCity.setText("");
+                    startState.setText("");
+                    //dateView.setText("");
+                } // onSucess()
+            }) // .addOnSuccessListener()
+            .addOnFailureListener( new OnFailureListener() {
+                @Override
+                public void onFailure( @NonNull Exception e ) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Failed to create Ride", Toast.LENGTH_SHORT).show();
+                } // onFailure()
+            }); // .addOnSuccessListener().addOnFailureListener()
     } // addRideToFirebase()
 
 } // RequestRideFragment

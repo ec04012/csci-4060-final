@@ -25,21 +25,20 @@ public class HomeActivity extends AppCompatActivity {
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
 
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (drawerToggle.onOptionsItemSelected(item )) {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    } // onOptionsItemSelected()
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerToggle.syncState();
-    }
+    } // onPostCreate()
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +52,6 @@ public class HomeActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,10 +60,8 @@ public class HomeActivity extends AppCompatActivity {
         });
         replaceFragment(new ProfileFragment());
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //replaceFragment(new OfferRideFragment());
-
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -98,13 +94,6 @@ public class HomeActivity extends AppCompatActivity {
                         FirebaseUtil.updateRide(updatedRide);
                         break;
                     }
-                    case R.id.nav_offer:
-                    {
-                        Toast.makeText(HomeActivity.this, "offer", Toast.LENGTH_SHORT).show();
-                        //replaceFragment(new ProfileFragment());
-                        replaceFragment(new OfferRideFragment());
-                        break;
-                    }
                     case R.id.nav_browse_offer:
                     {
                         Toast.makeText(HomeActivity.this, "browse offer", Toast.LENGTH_SHORT).show();
@@ -117,6 +106,13 @@ public class HomeActivity extends AppCompatActivity {
                     {
                         Intent myIntent = new Intent(HomeActivity.this, BrowseRideRequestActivity.class);
                         HomeActivity.this.startActivity(myIntent);
+                        break;
+                    }
+                    case R.id.nav_offer:
+                    {
+                        Toast.makeText(HomeActivity.this, "offer", Toast.LENGTH_SHORT).show();
+                        //replaceFragment(new ProfileFragment());
+                        replaceFragment(new OfferRideFragment());
                         break;
                     }
                     case R.id.nav_request:
@@ -143,25 +139,20 @@ public class HomeActivity extends AppCompatActivity {
         else{
             //Toast.makeText(this, "Are you sure you want to log out?",Toast.LENGTH_SHORT).show();
 
-
-
             // TODO: need to implement the log out feature. I guess in theory you can just do the super.onBackPressed.
             LogOutDialog logOutDialog = new LogOutDialog();
             logOutDialog.show(getSupportFragmentManager(), "dialog");
 
-
             //super.onBackPressed();
         }
         //super.onBackPressed();
-    }
+    } // onBackPressed()
 
     private void replaceFragment(Fragment fragment ) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout,fragment);
         fragmentTransaction.commit();
-    }
-
-
+    } // replaceFragment()
 
 } // HomeActivity

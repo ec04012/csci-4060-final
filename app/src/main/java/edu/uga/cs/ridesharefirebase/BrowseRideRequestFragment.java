@@ -68,17 +68,11 @@ public class BrowseRideRequestFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_browse_ride, container, false);
-
-
-
-
-    }
+    } // onCreateView()
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
 
         dataInitialize();
         recyclerView = view.findViewById(R.id.recyclierview);
@@ -95,20 +89,17 @@ public class BrowseRideRequestFragment extends Fragment {
             if (!(rideArrayList.get(i).getRider() == "") && (rideArrayList.get(i).getDriver() == "")) {
                 RequestList.add(rideArrayList.get(i));
 
-            } else {
-
-            }
-        }
+            } // if ride is ride request
+        } // for every ride returned from firebase
 
 
-        recyclerAdapter myAdapter = new recyclerAdapter(getContext(),RequestList);
+        RecyclerAdapter myAdapter = new RecyclerAdapter(getContext(),RequestList);
         recyclerView.setAdapter(myAdapter);
         myAdapter.notifyDataSetChanged();
-    }
+    } // onViewCreated()
 
     private void dataInitialize() {
         rideArrayList = new ArrayList<Ride>();
-
 
         Ride rideOffer = new Ride();
         Ride rideRequest = new Ride();
@@ -159,6 +150,5 @@ public class BrowseRideRequestFragment extends Fragment {
         rideArrayList.add(rideOffer2);
         rideArrayList.add(rideRequest);
         rideArrayList.add(rideRequest2);
-
-    }
-}
+    } // dataInitialize()
+} // BrowseRideRequestFragment

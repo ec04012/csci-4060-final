@@ -44,7 +44,7 @@ public class ProfileFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
+    } // newInstance()
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,8 +52,8 @@ public class ProfileFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+        } // if arguments are not null
+    } // onCreate()
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

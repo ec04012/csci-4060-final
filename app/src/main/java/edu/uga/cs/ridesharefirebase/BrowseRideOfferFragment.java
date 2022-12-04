@@ -8,16 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -37,13 +30,9 @@ public class BrowseRideOfferFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private RecyclerView recyclerView;
-    private recyclerAdapter myAdapter;
+    private RecyclerAdapter myAdapter;
     private ArrayList<Ride> rideArrayList;
     private ArrayList<Ride> RequestList;
-    private static String DEBUG_TAG = "FirebaseUtil";
-
-    FirebaseDatabase database;
-    private DatabaseReference databaseReference;
 
     public BrowseRideOfferFragment() {
         // Required empty public constructor
@@ -65,7 +54,7 @@ public class BrowseRideOfferFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
+    } // newInstance()
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,41 +63,15 @@ public class BrowseRideOfferFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("rides");
-        rideArrayList = new ArrayList<Ride>();
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for( DataSnapshot postSnapshot: snapshot.getChildren() ) {
-                    Ride ride = postSnapshot.getValue(Ride.class);
-                    ride.setKey( postSnapshot.getKey() );
-                    rideArrayList.add( ride );
-                    Log.d( DEBUG_TAG, "ValueEventListener: added: " + ride );
-                    //Log.d( DEBUG_TAG, "ValueEventListener: key: " + postSnapshot.getKey() );
-                    Log.d(DEBUG_TAG, "");
-                }
-
-                myAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-
-    }
+        //dataInitialize();
+    } //  onCreate()
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_browse_ride, container, false);
-
-
-
-
-    }
+    } // onCreateView()
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -117,45 +80,32 @@ public class BrowseRideOfferFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclierview);
         recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
 
-
-
-
+        /*
         RequestList = new ArrayList<Ride>();
         for (int i = 0 ; i < rideArrayList.size(); i++) {
             //in the future this will be if !DRIVE UID == "" but for now if there is no car it means its a request
             if (!(rideArrayList.get(i).getDriver() == "") && (rideArrayList.get(i).getRider() == "")) {
                 RequestList.add(rideArrayList.get(i));
 
-            } else {
-
-            }
-        }
-
-
-
-
-
-         myAdapter = new recyclerAdapter(getContext(),RequestList);
+            } // if ride is rider offer
+        } // for every ride return from firebase
+         */
+        rideArrayList = new ArrayList<Ride>();
+        myAdapter = new RecyclerAdapter(getContext(),rideArrayList);
         recyclerView.setAdapter(myAdapter);
-        myAdapter.notifyDataSetChanged();
-    }
+        FirebaseUtil.getAllRides(myAdapter, rideArrayList);
+        //myAdapter.notifyDataSetChanged();
+    } // onViewCreated()
 
     private void dataInitialize() {
         rideArrayList = new ArrayList<Ride>();
-
-
-
        // rideArrayList = FirebaseUtil.getAllRides(myAdapter);
-
-
-
-
 
         Ride rideOffer = new Ride();
         Ride rideRequest = new Ride();
         Ride rideOffer2 = new Ride();
         Ride rideRequest2 = new Ride();
-        FirebaseUtil.getAllRides();
+        //FirebaseUtil.getAllRides();
 
         rideOffer.setKey("1");
         rideOffer.setDriver("Corey");
@@ -201,9 +151,5 @@ public class BrowseRideOfferFragment extends Fragment {
         rideArrayList.add(rideOffer2);
         rideArrayList.add(rideRequest);
         rideArrayList.add(rideRequest2);
-
-
-
-
-    }
-}
+    } // dataInitialize
+} // BrowseRideOfferFragment

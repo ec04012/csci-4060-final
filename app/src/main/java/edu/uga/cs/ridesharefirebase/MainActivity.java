@@ -48,6 +48,32 @@ public class MainActivity extends AppCompatActivity {
 
         signInButton.setOnClickListener( new SignInButtonClickListener() );
         registerButton.setOnClickListener( new RegisterButtonClickListener() );
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String email = "test@email.com";
+        String password = "password";
+
+        mAuth.signInWithEmailAndPassword( email, password )
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d( DEBUG_TAG, " signInWithEmail:success" );
+                            Toast.makeText( MainActivity.this, "Authentication succeeded.", Toast.LENGTH_SHORT).show();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                        }
+                        else {
+                            // If sign in fails, display a message to the user.
+                            Log.d( DEBUG_TAG, " signInWithEmail:failure", task.getException() );
+                            Toast.makeText( MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+        Intent intent = new Intent(this, HomeActivity.class);
+        this.startActivity(intent);
     } // MainActivity onCreate()
 
     // A button listener class to start a Firebase sign-in process
