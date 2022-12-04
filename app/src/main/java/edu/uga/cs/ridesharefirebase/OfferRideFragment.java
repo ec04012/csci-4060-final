@@ -372,7 +372,7 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
         newRide.setDriver = mFirebaseAuth.getCurrentUser().getUid();
          */
 
-        // Add a new element (Ride) to the list of job leads in Firebase.
+        // Add a new element (Ride) to the list of Rides in Firebase.
 
         DatabaseReference myRef = database.getReference("rides");
 

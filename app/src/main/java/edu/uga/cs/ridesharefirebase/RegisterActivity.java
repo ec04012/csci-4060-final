@@ -1,5 +1,6 @@
 package edu.uga.cs.ridesharefirebase;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,10 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -63,10 +68,16 @@ public class RegisterActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d( DEBUG_TAG, "createUserWithEmail: success" );
 
-                                FirebaseUser user = firebaseAuth.getCurrentUser();
+                                // get current user, and create equivalent User pojo
+                                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                                User userPojo = new User(firebaseUser);
+                                userPojo.setPoints(300);
 
-                                //Intent intent = new Intent( RegisterActivity.this, JobLeadManagementActivity.class );
-                                //startActivity( intent );
+                                // write user and points to firebase
+                                FirebaseUtil.addUserToFirebase(userPojo);
+
+                                Intent intent = new Intent( RegisterActivity.this, HomeActivity.class );
+                                startActivity( intent );
 
                             } else {
                                 // If sign in fails, display a message to the user.

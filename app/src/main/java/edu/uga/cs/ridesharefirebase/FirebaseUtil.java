@@ -1,10 +1,13 @@
 package edu.uga.cs.ridesharefirebase;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -15,7 +18,41 @@ import java.util.ArrayList;
 
 public class FirebaseUtil {
     private static String DEBUG_TAG = "FirebaseUtil";
-    private static FirebaseDatabase database = FirebaseDatabase.getInstance();;
+    private static FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    /**
+     * Add the given user to the Firebase.
+     * @param user
+     */
+    public static void addUserToFirebase(User user) {
+        // Add a new element (User) to the list of Users in Firebase.
+
+        // Get references to firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("users");
+
+        // First, a call to push() appends a new node to the existing list (one is created
+        // if this is done for the first time).  Then, we set the value in the newly created
+        // list node to store the new job lead.
+        // This listener will be invoked asynchronously, as no need for an AsyncTask, as in
+        // the previous apps to maintain job leads.
+        myRef.push().setValue( user )
+                .addOnSuccessListener( new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Show a quick confirmation
+                        //FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+                        //Toast.makeText(getActivity().getApplicationContext(), "User Created" + "UID = " + mFirebaseAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+                        // Clear the EditTexts for next use.
+                    }
+                })
+                .addOnFailureListener( new OnFailureListener() {
+                    @Override
+                    public void onFailure( @NonNull Exception e ) {
+                        // do nothing
+                    }
+                }); // .addOnSuccessListener()
+    } // addUserToFirebase()
 
     /**
      * Returns a list of every ride in the Firebase.

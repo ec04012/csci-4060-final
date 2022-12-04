@@ -1,5 +1,7 @@
 package edu.uga.cs.ridesharefirebase;
 
+import com.google.firebase.auth.FirebaseUser;
+
 public class User {
     private String id;
     private String name;
@@ -8,6 +10,17 @@ public class User {
     private int points;
 
     public User() {
+    }
+
+    /**
+     * Creates a User POJO based on a FirebaseUser.
+     * @param firebaseUser the FirebaseUser from which to create an User POJO.
+     */
+    public User(FirebaseUser firebaseUser) {
+        this.id = firebaseUser.getUid();
+        this.name = firebaseUser.getDisplayName();
+        this.email = firebaseUser.getEmail();
+        this.phoneNumber = firebaseUser.getPhoneNumber();
     }
 
     public String getId() {

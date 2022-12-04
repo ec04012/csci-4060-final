@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.FirebaseUserMetadata;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         signInButton.setOnClickListener( new SignInButtonClickListener() );
         registerButton.setOnClickListener( new RegisterButtonClickListener() );
 
+        /*
+        // Automatically sign-in
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String email = "test@email.com";
         String password = "password";
@@ -74,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, HomeActivity.class);
         this.startActivity(intent);
+         */
     } // MainActivity onCreate()
 
     // A button listener class to start a Firebase sign-in process
@@ -128,11 +132,27 @@ public class MainActivity extends AppCompatActivity {
             }
 
             //Log.d( DEBUG_TAG, "MainActivity.onSignInResult: Signed in as: " + user.getEmail() );
+            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            FirebaseUserMetadata metadata = firebaseUser.getMetadata();
+            if (metadata.getCreationTimestamp() == metadata.getLastSignInTimestamp()) {
+                // The user is new, show them a fancy intro screen!
+                // Show Toast
+                Toast.makeText( getApplicationContext(),
+                        "Thank you for registering!:\nresponse.getEmail(): " + response.getEmail(),
+                        Toast.LENGTH_SHORT).show();
 
-            // Show Toast and start HomeActivity
-            Toast.makeText( getApplicationContext(),
-                    "Sign-in successful:\nresponse.getEmail(): " + response.getEmail(),
-                    Toast.LENGTH_SHORT).show();
+                // Create User and point total, then write to firebase
+                User userPojo = new User(firebaseUser);
+                userPojo.setPoints(300);
+                FirebaseUtil.addUserToFirebase(userPojo);
+            } else {
+                // This is an existing user, show them a welcome back screen.
+                // Show Toast and start HomeActivity
+                Toast.makeText( getApplicationContext(),
+                        "Sign-in successful:\nresponse.getEmail(): " + response.getEmail(),
+                        Toast.LENGTH_SHORT).show();
+            }
+
             Intent intent = new Intent(this, HomeActivity.class);
             this.startActivity(intent);
         }
