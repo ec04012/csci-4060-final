@@ -2,11 +2,24 @@ package edu.uga.cs.ridesharefirebase;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +27,8 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
+
+    String DEBUG_TAG = "ProfileFragment";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,5 +76,39 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
     } // ProfileFragment.onCreateView()
+
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Get references to views
+        Button subtractButton = (Button) view.findViewById(R.id.profile_subtract_points_button);
+        Button addButton = (Button) view.findViewById(R.id.profile_add_points_button);
+        TextView nameTextView = (TextView) view.findViewById(R.id.profile_fullname);
+        TextView emailTextView = (TextView) view.findViewById(R.id.profile_email);
+        TextView pointsTextView = (TextView) view.findViewById(R.id.profile_points);
+
+         FirebaseDatabase database = FirebaseDatabase.getInstance();
+         DatabaseReference myRef = database.getReference( "users" );
+         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+         // Read from the database value for ”message”
+         myRef.orderByChild("id").equalTo(firebaseUser.getUid()).addListenerForSingleValueEvent( new ValueEventListener() {
+            @Override
+            public void onDataChange( DataSnapshot dataSnapshot ) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                User userPojo = dataSnapshot.getChildren().iterator().next().getValue(User.class);
+                Log.d(DEBUG_TAG, userPojo.toString());
+                nameTextView.setText( userPojo.getName() );
+                emailTextView.setText( userPojo.getEmail() );
+                pointsTextView.setText( "Points:" + String.valueOf(userPojo.getPoints()) );
+            } // onDataChange()
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.d( DEBUG_TAG, " Failed to read value.", error.toException() );
+            } // onCancelled()
+        }); // addListenerForSingleValueEvent()
+    } // onViewCreated()
 
 } // ProfileFragment
