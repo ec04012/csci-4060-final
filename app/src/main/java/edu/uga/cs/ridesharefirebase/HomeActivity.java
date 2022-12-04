@@ -97,15 +97,22 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.nav_browse_offer:
                     {
                         Toast.makeText(HomeActivity.this, "browse offer", Toast.LENGTH_SHORT).show();
-                        //replaceFragment(new BrowseRideOfferFragment());
+                        replaceFragment(new BrowseRideOfferFragment());
+                        /*
                         Intent myIntent = new Intent(HomeActivity.this, BrowseRideOfferActivity.class);
                         HomeActivity.this.startActivity(myIntent);
+
+                         */
                         break;
                     }
                     case R.id.nav_browse_request:
                     {
+                        replaceFragment(new BrowseRideRequestFragment());
+                        /*
                         Intent myIntent = new Intent(HomeActivity.this, BrowseRideRequestActivity.class);
-                        HomeActivity.this.startActivity(myIntent);
+                         HomeActivity.this.startActivity(myIntent);
+                         */
+
                         break;
                     }
                     case R.id.nav_offer:

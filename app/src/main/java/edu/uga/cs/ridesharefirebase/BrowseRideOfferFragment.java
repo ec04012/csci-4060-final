@@ -93,7 +93,7 @@ public class BrowseRideOfferFragment extends Fragment {
         rideArrayList = new ArrayList<Ride>();
         myAdapter = new RecyclerAdapter(getContext(),rideArrayList);
         recyclerView.setAdapter(myAdapter);
-        FirebaseUtil.getAllRides(myAdapter, rideArrayList);
+        FirebaseUtil.getAllOffers(myAdapter, rideArrayList);
         //myAdapter.notifyDataSetChanged();
     } // onViewCreated()
 

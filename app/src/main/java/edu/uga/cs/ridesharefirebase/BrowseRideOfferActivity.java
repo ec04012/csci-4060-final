@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class BrowseRideOfferActivity extends AppCompatActivity {
 RecyclerView recyclerView;
 DatabaseReference database;
-recyclerAdapter myAdapter;
+RecyclerAdapter myAdapter;
 ArrayList<Ride> list;
     private static String DEBUG_TAG = "testreview";
     private ArrayList<Ride> RequestList;
@@ -37,7 +37,7 @@ ArrayList<Ride> list;
 
         list = new ArrayList<>();
 
-        myAdapter = new recyclerAdapter(this, list);
+        myAdapter = new RecyclerAdapter(this, list);
         recyclerView.setAdapter(myAdapter);
 
         database.addValueEventListener(new ValueEventListener() {

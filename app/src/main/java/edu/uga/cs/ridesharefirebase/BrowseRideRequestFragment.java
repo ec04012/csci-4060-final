@@ -30,7 +30,9 @@ public class BrowseRideRequestFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private RecyclerView recyclerView;
-    private ArrayList<Ride> rideArrayList, RequestList;
+    private RecyclerAdapter myAdapter;
+    private ArrayList<Ride> rideArrayList;
+    private ArrayList<Ride> RequestList;
 
     public BrowseRideRequestFragment() {
         // Required empty public constructor
@@ -52,7 +54,7 @@ public class BrowseRideRequestFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
+    } // newInstance()
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +63,8 @@ public class BrowseRideRequestFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-    }
+        //dataInitialize();
+    } //  onCreate()
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,37 +77,35 @@ public class BrowseRideRequestFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        dataInitialize();
         recyclerView = view.findViewById(R.id.recyclierview);
         recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
 
-        recyclerView.setHasFixedSize(true);
-
         /*
-        logic to figure out if the available ride is a offer or request
-         */
         RequestList = new ArrayList<Ride>();
         for (int i = 0 ; i < rideArrayList.size(); i++) {
             //in the future this will be if !DRIVE UID == "" but for now if there is no car it means its a request
-            if (!(rideArrayList.get(i).getRider() == "") && (rideArrayList.get(i).getDriver() == "")) {
+            if (!(rideArrayList.get(i).getDriver() == "") && (rideArrayList.get(i).getRider() == "")) {
                 RequestList.add(rideArrayList.get(i));
 
-            } // if ride is ride request
-        } // for every ride returned from firebase
-
-
-        RecyclerAdapter myAdapter = new RecyclerAdapter(getContext(),RequestList);
+            } // if ride is rider offer
+        } // for every ride return from firebase
+         */
+        rideArrayList = new ArrayList<Ride>();
+        myAdapter = new RecyclerAdapter(getContext(),rideArrayList);
         recyclerView.setAdapter(myAdapter);
-        myAdapter.notifyDataSetChanged();
+        FirebaseUtil.getAllRequests(myAdapter, rideArrayList);
+        //myAdapter.notifyDataSetChanged();
     } // onViewCreated()
 
     private void dataInitialize() {
         rideArrayList = new ArrayList<Ride>();
+        // rideArrayList = FirebaseUtil.getAllRides(myAdapter);
 
         Ride rideOffer = new Ride();
         Ride rideRequest = new Ride();
         Ride rideOffer2 = new Ride();
         Ride rideRequest2 = new Ride();
+        //FirebaseUtil.getAllRides();
 
         rideOffer.setKey("1");
         rideOffer.setDriver("Corey");
@@ -150,5 +151,5 @@ public class BrowseRideRequestFragment extends Fragment {
         rideArrayList.add(rideOffer2);
         rideArrayList.add(rideRequest);
         rideArrayList.add(rideRequest2);
-    } // dataInitialize()
+    } // dataInitialize
 } // BrowseRideRequestFragment

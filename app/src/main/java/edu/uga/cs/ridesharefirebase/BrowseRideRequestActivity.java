@@ -21,7 +21,7 @@ public class BrowseRideRequestActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     DatabaseReference database;
-    recyclerAdapter myAdapter;
+    RecyclerAdapter myAdapter;
     ArrayList<Ride> list;
     private static String DEBUG_TAG = "testreview";
     private ArrayList<Ride> RequestList;
@@ -39,7 +39,7 @@ public class BrowseRideRequestActivity extends AppCompatActivity {
 
         list = new ArrayList<>();
 
-        myAdapter = new recyclerAdapter(this, list);
+        myAdapter = new RecyclerAdapter(this, list);
         recyclerView.setAdapter(myAdapter);
 
         database.addValueEventListener(new ValueEventListener() {
