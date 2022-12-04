@@ -23,6 +23,17 @@ public class User {
         this.phoneNumber = firebaseUser.getPhoneNumber();
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", points=" + points +
+                '}';
+    } // toString()
+
     public String getId() {
         return id;
     }
