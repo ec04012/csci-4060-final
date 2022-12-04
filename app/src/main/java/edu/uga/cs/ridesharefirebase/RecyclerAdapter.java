@@ -1,7 +1,6 @@
 package edu.uga.cs.ridesharefirebase;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,23 +9,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
-public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyViewHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
 
     Context context;
     static ArrayList<Ride> rideArrayList;
      static Ride ride;
 
-    public recyclerAdapter(Context context, ArrayList<Ride> list) {
+    public RecyclerAdapter(Context context, ArrayList<Ride> list) {
         this.context = context;
         rideArrayList = list;
     }
@@ -34,11 +29,9 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View v   = LayoutInflater.from(context).inflate(R.layout.list_rides, parent,false);
         return new MyViewHolder(v);
-
-    }
+    } // onCreateViewHolder()
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
@@ -48,9 +41,11 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         holder.rideSourceState.setText(ride.getSourceState());
         holder.rideDestCity.setText(ride.getDestinationCity());
         holder.rideDestState.setText(ride.getDestinationState());
+        holder.rider.setText("Rider:" + ride.getRider());
+        holder.driver.setText("Driver: " +ride.getDriver());
         //holder.rideDate.setText(ride.getDate());
 
-        //bascially a tsudo check to see if the ride is an request since they dont need a car
+        //bascially a pseudo check to see if the ride is an request since they dont need a car
         // would instead on final check to see if driver is null/false/no UID
         if(ride.getCar() == "") {
             holder.carTitle.setVisibility(View.INVISIBLE);
@@ -58,10 +53,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         } else {
             holder.rideCar.setText(ride.getCar());
         }
-
-
-
-    }
+    } // onBindViewHolder()
 
     @Override
     public int getItemCount() {
@@ -70,10 +62,9 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView rideDestCity, rideDestState, rideSourceState, rideSourceCity, rideCar, rideDate, carTitle,rideIdview;
+        TextView rideDestCity, rideDestState, rideSourceState, rideSourceCity, rideCar, rideDate, carTitle,rideIdview , rider, driver;
         Button reserve;
         String rideId;
-
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,7 +77,8 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
             carTitle = itemView.findViewById(R.id.carTitle);
             rideDate = itemView.findViewById(R.id.rideDate);
             reserve = itemView.findViewById(R.id.reserve);
-
+            rider = itemView.findViewById(R.id.rider);
+            driver = itemView.findViewById(R.id.driver);
 
             reserve.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -101,7 +93,6 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
                     fbRideList = rideArrayList;
 
                     for (int i = 0 ; i < fbRideList.size(); i++) {
-
                         //meaning the list of ride's rid matches what we clicked
                         if(fbRideList.get(i).getKey() == rideIdview.getText()) {
                             reserveRide = fbRideList.get(i);
@@ -115,21 +106,15 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
                                 reserveRide.setDriver(mFirebaseAuth.getCurrentUser().getUid());
 
                                 Toast.makeText(view.getContext(), reserveRide.toString(), Toast.LENGTH_LONG).show();
-                            }
-
+                            } // if ride is a request
                             //meaning this is a offer
                             else {
                                 Toast.makeText(view.getContext(), "set a new rider ", Toast.LENGTH_SHORT).show();
                                 reserveRide.setRider(mFirebaseAuth.getCurrentUser().getUid());
                                 Toast.makeText(view.getContext(), reserveRide.toString(), Toast.LENGTH_LONG).show();
-                            }
-
-
-
-
-                        }
-
-                    }
+                            } // if ride is an offer
+                        } // if ride is the ride that we've have clicked
+                    } // for every ride
 
 
                     //bad way but simple fix atm we pass the ride's id from databse here and hide it from user and store into rideId this way we know what the ride id is
@@ -144,15 +129,9 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
                     view.getContext().startActivity(myIntent);
 
                      */
+                } // .onClick()
+            }); // reserveButton.setOnClickListener()
+        } // MyViewHolder() constructor
+    } // MyViewHolder
 
-
-                }
-            });
-
-        }
-    }
-
-
-
-
-}
+} // recyclerAdapter

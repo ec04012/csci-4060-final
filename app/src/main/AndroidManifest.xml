@@ -17,7 +17,21 @@
         android:theme="@style/Theme.RideshareFirebase"
         tools:targetApi="31">
         <activity
-            android:name=".editRideActivity"
+            android:name=".BrowseRideRequestActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".BrowseRideOfferActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".EditRideActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -9,10 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -20,7 +18,6 @@ import android.widget.Toast;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.List;
 import java.util.Random;
 
 public class HomeActivity extends AppCompatActivity {
@@ -28,21 +25,20 @@ public class HomeActivity extends AppCompatActivity {
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
 
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (drawerToggle.onOptionsItemSelected(item )) {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    } // onOptionsItemSelected()
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerToggle.syncState();
-    }
+    } // onPostCreate()
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +52,6 @@ public class HomeActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,10 +60,8 @@ public class HomeActivity extends AppCompatActivity {
         });
         replaceFragment(new ProfileFragment());
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //replaceFragment(new OfferRideFragment());
-
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -101,27 +94,32 @@ public class HomeActivity extends AppCompatActivity {
                         FirebaseUtil.updateRide(updatedRide);
                         break;
                     }
+                    case R.id.nav_browse_offer:
+                    {
+                        Toast.makeText(HomeActivity.this, "browse offer", Toast.LENGTH_SHORT).show();
+                        replaceFragment(new BrowseRideOfferFragment());
+                        /*
+                        Intent myIntent = new Intent(HomeActivity.this, BrowseRideOfferActivity.class);
+                        HomeActivity.this.startActivity(myIntent);
+
+                         */
+                        break;
+                    }
+                    case R.id.nav_browse_request:
+                    {
+                        replaceFragment(new BrowseRideRequestFragment());
+                        /*
+                        Intent myIntent = new Intent(HomeActivity.this, BrowseRideRequestActivity.class);
+                         HomeActivity.this.startActivity(myIntent);
+                         */
+
+                        break;
+                    }
                     case R.id.nav_offer:
                     {
                         Toast.makeText(HomeActivity.this, "offer", Toast.LENGTH_SHORT).show();
                         //replaceFragment(new ProfileFragment());
                         replaceFragment(new OfferRideFragment());
-                        break;
-                    }
-                    case R.id.nav_browse_offer:
-                    {
-                        Toast.makeText(HomeActivity.this, "browse offer", Toast.LENGTH_SHORT).show();
-                        replaceFragment(new BrowseRideOfferFragment());
-                        break;
-                    }
-                    case R.id.nav_browse_request:
-                    {
-                        Toast.makeText(HomeActivity.this, "browse request", Toast.LENGTH_SHORT).show();
-                        replaceFragment(new BrowseRideRequestFragment());
-                        Toast.makeText(HomeActivity.this, "browse", Toast.LENGTH_SHORT).show();
-                        //replaceFragment(new ProfileFragment());
-                        // Test getAllRides
-                        //FirebaseUtil.getAllRides();
                         break;
                     }
                     case R.id.nav_request:
@@ -148,25 +146,20 @@ public class HomeActivity extends AppCompatActivity {
         else{
             //Toast.makeText(this, "Are you sure you want to log out?",Toast.LENGTH_SHORT).show();
 
-
-
             // TODO: need to implement the log out feature. I guess in theory you can just do the super.onBackPressed.
             LogOutDialog logOutDialog = new LogOutDialog();
             logOutDialog.show(getSupportFragmentManager(), "dialog");
 
-
             //super.onBackPressed();
         }
         //super.onBackPressed();
-    }
+    } // onBackPressed()
 
     private void replaceFragment(Fragment fragment ) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout,fragment);
         fragmentTransaction.commit();
-    }
-
-
+    } // replaceFragment()
 
 } // HomeActivity

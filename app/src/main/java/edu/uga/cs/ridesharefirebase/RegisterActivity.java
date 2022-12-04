@@ -38,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
     private class RegisterButtonClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
+            // get Strings from edit texts
             final String email = emailEditText.getText().toString();
             final String password = passwordEditText.getText().toString();
 
@@ -77,4 +78,5 @@ public class RegisterActivity extends AppCompatActivity {
                     }); // firebaseAuth.createUserWithEmailAndPassword( email, password ).addOnCompleteListener
         } // RegisterButtonClickListener.onClick()
     } // RegisterButtonClickListener
+
 } // RegisterActivity

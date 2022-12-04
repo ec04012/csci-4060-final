@@ -145,8 +145,8 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
                 getLocation();
                 startCity.setText(fromCity);
                 startState.setText(fromState);
-            }
-        });
+            } // .onClick()
+        }); // gpsButton.setOnClickListener()
 
         //if the user clicks the gps button under the destination
         gpsButton2.setOnClickListener(new View.OnClickListener() {
@@ -157,8 +157,8 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
                 getLocation();
                 destCity.setText(fromCity);
                 destState.setText(fromState);
-            }
-        });
+            } // .setOnClock()
+        }); //gpsButton2.setOnClickListener()
 
         //if the user clicks the date picker
         datePicker.setOnClickListener(new View.OnClickListener() {
@@ -168,7 +168,6 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
                         getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-
                         date= (i1 + 1) + "/" + i2 + "/" + i;
                         //getDateTimeCalendar();
                         dateView.setText(date);
@@ -177,13 +176,10 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
 
                 datePickerDialog.getDatePicker().setMinDate((System.currentTimeMillis()-1000));
                 datePickerDialog.show();
-            }
-        });
+            } // .onClick()
+        }); // datePicker.setOnClickListener()
 
-
-
-
-/*
+        /*
         // Setup calendar select view
         calendarView.setMinDate(System.currentTimeMillis()-1000);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -193,16 +189,9 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
                 Toast.makeText(getActivity(), date, Toast.LENGTH_SHORT).show();
             } // onSelectedDayChange()
         }); // calendarView.setOnDateChangeListener()
-
-
- */
+        */
         // set listener for submit button
         offerSubmit.setOnClickListener( new SubmitClickListener() );
-
-
-
-
-
     } // OfferRideFragment.onViewCreated()
 
 
@@ -213,9 +202,8 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,500, 5 , (LocationListener) this);
         } catch (SecurityException e) {
             e.printStackTrace();
-        }
-
-    }
+        } // try catch
+    } // getLocation()
 
     //checks to see if location setting is enabled
     private void checkLocationIsEnabledOrNot() {
@@ -247,9 +235,8 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
                             startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                         }
                     }).setNegativeButton("cancel", null).show();
-
-        }
-    }
+        } // if gps not enable and network not enabled
+    } // checkLocationIsEnabledOrNot()
 
 
     //asks permission
@@ -259,7 +246,7 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
 
             ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
         }
-    }
+    } // grantPermission()
 
 
     //on location change
@@ -273,10 +260,8 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-
-    }
+        } // try catch
+    } // onLocationChanged()
 
     @Override
     public void onProviderEnabled(@NonNull String provider) {
@@ -288,8 +273,6 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
         LocationListener.super.onProviderDisabled(provider);
     }
 
-
-
     /*
     private void getDateTimeCalendar() {
         Calendar cal = Calendar.getInstance();
@@ -298,26 +281,19 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
         year = cal.get(Calendar.YEAR);
         hour = cal.get(Calendar.HOUR);
         minuite = cal.get(Calendar.MINUTE);
-
-
-
-
-    }
-
+    } // getDateTimeCalendar()
      */
 
 
     @Override
     public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
 
-    }
+    } // onDateChanged
 
     @Override
     public void onTimeChanged(TimePicker timePicker, int i, int i1) {
 
-    }
-
-
+    } // onTimeChanged
 
     //when the user clicks submit do a simple if check
     private class SubmitClickListener implements View.OnClickListener {
