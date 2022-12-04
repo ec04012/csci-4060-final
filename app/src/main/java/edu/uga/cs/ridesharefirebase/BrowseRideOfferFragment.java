@@ -30,7 +30,7 @@ public class BrowseRideOfferFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private RecyclerView recyclerView;
-    private recyclerAdapter myAdapter;
+    private RecyclerAdapter myAdapter;
     private ArrayList<Ride> rideArrayList;
     private ArrayList<Ride> RequestList;
 
@@ -91,7 +91,7 @@ public class BrowseRideOfferFragment extends Fragment {
         } // for every ride return from firebase
          */
         rideArrayList = new ArrayList<Ride>();
-        myAdapter = new recyclerAdapter(getContext(),rideArrayList);
+        myAdapter = new RecyclerAdapter(getContext(),rideArrayList);
         recyclerView.setAdapter(myAdapter);
         FirebaseUtil.getAllRides(myAdapter, rideArrayList);
         //myAdapter.notifyDataSetChanged();

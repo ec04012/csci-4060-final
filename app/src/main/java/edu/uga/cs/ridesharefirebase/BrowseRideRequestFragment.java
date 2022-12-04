@@ -93,7 +93,7 @@ public class BrowseRideRequestFragment extends Fragment {
         } // for every ride returned from firebase
 
 
-        recyclerAdapter myAdapter = new recyclerAdapter(getContext(),RequestList);
+        RecyclerAdapter myAdapter = new RecyclerAdapter(getContext(),RequestList);
         recyclerView.setAdapter(myAdapter);
         myAdapter.notifyDataSetChanged();
     } // onViewCreated()

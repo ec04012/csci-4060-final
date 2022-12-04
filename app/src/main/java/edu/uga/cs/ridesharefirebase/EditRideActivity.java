@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
-public class editRideActivity extends AppCompatActivity {
+public class EditRideActivity extends AppCompatActivity {
     Ride editingRide;
     ArrayList<Ride> arrayRideList = new ArrayList<Ride>();
     private EditText editdestCity, editdestState, editstartState, editstartCity, editofferCar, editdateView;

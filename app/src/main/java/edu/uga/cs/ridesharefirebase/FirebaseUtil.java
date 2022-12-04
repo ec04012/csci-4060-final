@@ -1,7 +1,6 @@
 package edu.uga.cs.ridesharefirebase;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -13,7 +12,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FirebaseUtil {
     private static String DEBUG_TAG = "FirebaseUtil";
@@ -26,7 +24,7 @@ public class FirebaseUtil {
      * returns its data.
      * @return a list containing every ride in the Firebase.
      */
-    public static ArrayList<Ride> getAllRides(recyclerAdapter myAdapter, ArrayList<Ride>rideList) {
+    public static ArrayList<Ride> getAllRides(RecyclerAdapter myAdapter, ArrayList<Ride>rideList) {
         //ArrayList<Ride> rideList = new ArrayList<>();
 
         // get a Firebase DB instance reference
