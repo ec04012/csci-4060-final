@@ -8,9 +8,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -33,6 +40,10 @@ public class BrowseRideOfferFragment extends Fragment {
     private recyclerAdapter myAdapter;
     private ArrayList<Ride> rideArrayList;
     private ArrayList<Ride> RequestList;
+    private static String DEBUG_TAG = "FirebaseUtil";
+
+    FirebaseDatabase database;
+    private DatabaseReference databaseReference;
 
     public BrowseRideOfferFragment() {
         // Required empty public constructor
@@ -63,7 +74,29 @@ public class BrowseRideOfferFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        dataInitialize();
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("rides");
+        rideArrayList = new ArrayList<Ride>();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for( DataSnapshot postSnapshot: snapshot.getChildren() ) {
+                    Ride ride = postSnapshot.getValue(Ride.class);
+                    ride.setKey( postSnapshot.getKey() );
+                    rideArrayList.add( ride );
+                    Log.d( DEBUG_TAG, "ValueEventListener: added: " + ride );
+                    //Log.d( DEBUG_TAG, "ValueEventListener: key: " + postSnapshot.getKey() );
+                    Log.d(DEBUG_TAG, "");
+                }
+
+                myAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
     }
 
     @Override
@@ -80,9 +113,6 @@ public class BrowseRideOfferFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-
 
         recyclerView = view.findViewById(R.id.recyclierview);
         recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));

@@ -48,6 +48,8 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         holder.rideSourceState.setText(ride.getSourceState());
         holder.rideDestCity.setText(ride.getDestinationCity());
         holder.rideDestState.setText(ride.getDestinationState());
+        holder.rider.setText("Rider:" + ride.getRider());
+        holder.driver.setText("Driver: " +ride.getDriver());
         //holder.rideDate.setText(ride.getDate());
 
         //bascially a tsudo check to see if the ride is an request since they dont need a car
@@ -70,7 +72,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView rideDestCity, rideDestState, rideSourceState, rideSourceCity, rideCar, rideDate, carTitle,rideIdview;
+        TextView rideDestCity, rideDestState, rideSourceState, rideSourceCity, rideCar, rideDate, carTitle,rideIdview , rider, driver;
         Button reserve;
         String rideId;
 
@@ -86,6 +88,8 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
             carTitle = itemView.findViewById(R.id.carTitle);
             rideDate = itemView.findViewById(R.id.rideDate);
             reserve = itemView.findViewById(R.id.reserve);
+            rider = itemView.findViewById(R.id.rider);
+            driver = itemView.findViewById(R.id.driver);
 
 
             reserve.setOnClickListener(new View.OnClickListener() {

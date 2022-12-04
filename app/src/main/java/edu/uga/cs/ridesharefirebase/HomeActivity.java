@@ -9,10 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -20,7 +18,6 @@ import android.widget.Toast;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.List;
 import java.util.Random;
 
 public class HomeActivity extends AppCompatActivity {
@@ -111,17 +108,15 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.nav_browse_offer:
                     {
                         Toast.makeText(HomeActivity.this, "browse offer", Toast.LENGTH_SHORT).show();
-                        replaceFragment(new BrowseRideOfferFragment());
+                        //replaceFragment(new BrowseRideOfferFragment());
+                        Intent myIntent = new Intent(HomeActivity.this, BrowseRideOfferActivity.class);
+                        HomeActivity.this.startActivity(myIntent);
                         break;
                     }
                     case R.id.nav_browse_request:
                     {
-                        Toast.makeText(HomeActivity.this, "browse request", Toast.LENGTH_SHORT).show();
-                        replaceFragment(new BrowseRideRequestFragment());
-                        Toast.makeText(HomeActivity.this, "browse", Toast.LENGTH_SHORT).show();
-                        //replaceFragment(new ProfileFragment());
-                        // Test getAllRides
-                        //FirebaseUtil.getAllRides();
+                        //Intent myIntent = new Intent(HomeActivity.this, BrowseRideRequestActivity.class);
+                       // HomeActivity.this.startActivity(myIntent);
                         break;
                     }
                     case R.id.nav_request:
