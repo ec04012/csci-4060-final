@@ -97,13 +97,6 @@ public class HomeActivity extends AppCompatActivity {
                         FirebaseUtil.updateRide(updatedRide);
                         break;
                     }
-                    case R.id.nav_offer:
-                    {
-                        Toast.makeText(HomeActivity.this, "offer", Toast.LENGTH_SHORT).show();
-                        //replaceFragment(new ProfileFragment());
-                        replaceFragment(new OfferRideFragment());
-                        break;
-                    }
                     case R.id.nav_browse_offer:
                     {
                         Toast.makeText(HomeActivity.this, "browse offer", Toast.LENGTH_SHORT).show();
@@ -118,6 +111,13 @@ public class HomeActivity extends AppCompatActivity {
                         //replaceFragment(new ProfileFragment());
                         // Test getAllRides
                         //FirebaseUtil.getAllRides();
+                        break;
+                    }
+                    case R.id.nav_offer:
+                    {
+                        Toast.makeText(HomeActivity.this, "offer", Toast.LENGTH_SHORT).show();
+                        //replaceFragment(new ProfileFragment());
+                        replaceFragment(new OfferRideFragment());
                         break;
                     }
                     case R.id.nav_request:
