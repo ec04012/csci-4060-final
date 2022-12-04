@@ -63,7 +63,7 @@ public class BrowseRideOfferFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        dataInitialize();
+        //dataInitialize();
     } //  onCreate()
 
     @Override
@@ -80,6 +80,7 @@ public class BrowseRideOfferFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclierview);
         recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
 
+        /*
         RequestList = new ArrayList<Ride>();
         for (int i = 0 ; i < rideArrayList.size(); i++) {
             //in the future this will be if !DRIVE UID == "" but for now if there is no car it means its a request
@@ -88,10 +89,12 @@ public class BrowseRideOfferFragment extends Fragment {
 
             } // if ride is rider offer
         } // for every ride return from firebase
-
-        myAdapter = new recyclerAdapter(getContext(),RequestList);
+         */
+        rideArrayList = new ArrayList<Ride>();
+        myAdapter = new recyclerAdapter(getContext(),rideArrayList);
         recyclerView.setAdapter(myAdapter);
-        myAdapter.notifyDataSetChanged();
+        FirebaseUtil.getAllRides(myAdapter, rideArrayList);
+        //myAdapter.notifyDataSetChanged();
     } // onViewCreated()
 
     private void dataInitialize() {
@@ -102,7 +105,7 @@ public class BrowseRideOfferFragment extends Fragment {
         Ride rideRequest = new Ride();
         Ride rideOffer2 = new Ride();
         Ride rideRequest2 = new Ride();
-        FirebaseUtil.getAllRides();
+        //FirebaseUtil.getAllRides();
 
         rideOffer.setKey("1");
         rideOffer.setDriver("Corey");

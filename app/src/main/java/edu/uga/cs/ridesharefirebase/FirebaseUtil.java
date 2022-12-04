@@ -26,11 +26,12 @@ public class FirebaseUtil {
      * returns its data.
      * @return a list containing every ride in the Firebase.
      */
-    public static ArrayList<Ride> getAllRides() {
-        ArrayList<Ride> rideList = new ArrayList<>();
+    public static ArrayList<Ride> getAllRides(recyclerAdapter myAdapter, ArrayList<Ride>rideList) {
+        //ArrayList<Ride> rideList = new ArrayList<>();
 
         // get a Firebase DB instance reference
         DatabaseReference myRef = database.getReference("rides");
+        Log.d(DEBUG_TAG, "getAllRides called");
 
         // Set up a listener (event handler) to receive a value for the database reference.
         // This type of listener is called by Firebase once by immediately executing its onDataChange method
@@ -52,15 +53,16 @@ public class FirebaseUtil {
                 } // for every element in firebase
                 /* These next two lines update the UI. RN, this method just gets the list of rides. We can handle UI here, or somewhere else. */
                 //Log.d( DEBUG_TAG, "ValueEventListener: notifying recyclerAdapter" );
-                //recyclerAdapter.notifyDataSetChanged();
+                myAdapter.notifyDataSetChanged();
+                Log.d(DEBUG_TAG, "rideList size async: " + String.valueOf(rideList.size()));
             } // onDataChange()
 
             @Override
             public void onCancelled( @NonNull DatabaseError databaseError ) {
-                System.out.println( "ValueEventListener: reading failed: " + databaseError.getMessage() );
+                Log.d( DEBUG_TAG,"ValueEventListener: reading failed: " + databaseError.getMessage() );
             } // onCancelled()
         } ); // DatabaseReference.addValueEventListener()
-        Log.d(DEBUG_TAG, "rideList size: " + String.valueOf(rideList.size()));
+        Log.d(DEBUG_TAG, "rideList size return: " + String.valueOf(rideList.size()));
         return rideList;
     } //getRide
 
