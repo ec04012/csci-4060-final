@@ -115,8 +115,8 @@ public class HomeActivity extends AppCompatActivity {
                     }
                     case R.id.nav_browse_request:
                     {
-                        //Intent myIntent = new Intent(HomeActivity.this, BrowseRideRequestActivity.class);
-                       // HomeActivity.this.startActivity(myIntent);
+                        Intent myIntent = new Intent(HomeActivity.this, BrowseRideRequestActivity.class);
+                        HomeActivity.this.startActivity(myIntent);
                         break;
                     }
                     case R.id.nav_request:
