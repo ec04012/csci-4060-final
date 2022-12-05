@@ -118,31 +118,24 @@ public class FirebaseUtil {
         myRef.addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange( @NonNull DataSnapshot snapshot ) {
-                // Once we have a DataSnapshot object, we need to iterate over the elements and place them on our job lead list.
+                // Get reference to FirebaseAuth for info about current user
+                FirebaseAuth mFirebaseAuth;
+                mFirebaseAuth = FirebaseAuth.getInstance();
+
+                // Once we have a DataSnapshot object, we need to iterate over the elements and place them in a list.
                 for( DataSnapshot postSnapshot: snapshot.getChildren() ) {
                     Ride ride = postSnapshot.getValue(Ride.class);
                     ride.setKey( postSnapshot.getKey() );
 
-
-                    if( !(ride.getDriver().equals("")) && (ride.getRider().equals(""))){
+                    // if ride has all fields, add to our local list
+                    if( !(ride.getDriver().equals("")) && !ride.getDriver().equals(mFirebaseAuth.getCurrentUser().getUid()) && (ride.getRider().equals(""))){
                         rideList.add( ride );
-
                         Log.d( DEBUG_TAG, "ValueEventListener: added: " + ride );
                         //Log.d( DEBUG_TAG, "ValueEventListener: key: " + postSnapshot.getKey() );
                         Log.d(DEBUG_TAG, "");
-                    }
-
-
-
-
-
-
-                    Log.d( DEBUG_TAG, "ValueEventListener: added: " + ride );
-                    //Log.d( DEBUG_TAG, "ValueEventListener: key: " + postSnapshot.getKey() );
-                    Log.d(DEBUG_TAG, "");
+                    } // if ride has all fields
                 } // for every element in firebase
-                /* These next two lines update the UI. RN, this method just gets the list of rides. We can handle UI here, or somewhere else. */
-                //Log.d( DEBUG_TAG, "ValueEventListener: notifying recyclerAdapter" );
+                // Update RecyclerView in UI
                 myAdapter.notifyDataSetChanged();
                 Log.d(DEBUG_TAG, "rideList size async: " + String.valueOf(rideList.size()));
             } // onDataChange()
@@ -173,24 +166,22 @@ public class FirebaseUtil {
         myRef.addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange( @NonNull DataSnapshot snapshot ) {
-                // Once we have a DataSnapshot object, we need to iterate over the elements and place them on our job lead list.
+                // Get reference to FirebaseAuth for info about current user
+                FirebaseAuth mFirebaseAuth;
+                mFirebaseAuth = FirebaseAuth.getInstance();
+
+                // Once we have a DataSnapshot object, we need to iterate over the elements and place them in our list
                 for( DataSnapshot postSnapshot: snapshot.getChildren() ) {
                     Ride ride = postSnapshot.getValue(Ride.class);
                     ride.setKey( postSnapshot.getKey() );
 
-                    if( (ride.getDriver().equals("")) && !(ride.getRider().equals(""))){
+                    // if ride has all fields, add to our local list
+                    if( (ride.getDriver().equals("")) && !ride.getRider().equals(mFirebaseAuth.getCurrentUser().getUid())&& !(ride.getRider().equals(""))){
                         rideList.add( ride );
-
                         Log.d( DEBUG_TAG, "ValueEventListener: added: " + ride );
                         //Log.d( DEBUG_TAG, "ValueEventListener: key: " + postSnapshot.getKey() );
                         Log.d(DEBUG_TAG, "");
-                    }
-
-
-
-                    Log.d( DEBUG_TAG, "ValueEventListener: added: " + ride );
-                    //Log.d( DEBUG_TAG, "ValueEventListener: key: " + postSnapshot.getKey() );
-                    Log.d(DEBUG_TAG, "");
+                    } // if ride has all fields, add to our local list
                 } // for every element in firebase
                 /* These next two lines update the UI. RN, this method just gets the list of rides. We can handle UI here, or somewhere else. */
                 //Log.d( DEBUG_TAG, "ValueEventListener: notifying recyclerAdapter" );
@@ -277,5 +268,47 @@ public class FirebaseUtil {
             } // onCancelled()
         }); // DatabaseReference ref.addListenerForSingleValueEvent
     } // deleteRide()
+
+    /*
+    NOT WORKING
+     */
+    public static ArrayList<User> getAllUsers( ArrayList<User>rideList) {
+        //ArrayList<Ride> rideList = new ArrayList<>();
+
+        // get a Firebase DB instance reference
+        DatabaseReference myRef = database.getReference("rides");
+        Log.d(DEBUG_TAG, "getAllRides called");
+
+        // Set up a listener (event handler) to receive a value for the database reference.
+        // This type of listener is called by Firebase once by immediately executing its onDataChange method
+        // and then each time the value at Firebase changes.
+        //
+        // This listener will be invoked asynchronously, hence no need for an AsyncTask class, as in the previous apps
+        // to maintain job leads.
+        myRef.addValueEventListener( new ValueEventListener() {
+            @Override
+            public void onDataChange( @NonNull DataSnapshot snapshot ) {
+                // Once we have a DataSnapshot object, we need to iterate over the elements and place them on our job lead list.
+                for( DataSnapshot postSnapshot: snapshot.getChildren() ) {
+                    User ride = postSnapshot.getValue(User.class);
+                    ride.setId( postSnapshot.getKey() );
+                    rideList.add( ride );
+                    Log.d( DEBUG_TAG, "ValueEventListener: added: " + ride );
+                    //Log.d( DEBUG_TAG, "ValueEventListener: key: " + postSnapshot.getKey() );
+                    Log.d(DEBUG_TAG, "");
+                } // for every element in firebase
+                /* These next two lines update the UI. RN, this method just gets the list of rides. We can handle UI here, or somewhere else. */
+                //Log.d( DEBUG_TAG, "ValueEventListener: notifying recyclerAdapter" );
+                Log.d(DEBUG_TAG, "rideList size async: " + String.valueOf(rideList.size()));
+            } // onDataChange()
+
+            @Override
+            public void onCancelled( @NonNull DatabaseError databaseError ) {
+                Log.d( DEBUG_TAG,"ValueEventListener: reading failed: " + databaseError.getMessage() );
+            } // onCancelled()
+        } ); // DatabaseReference.addValueEventListener()
+        Log.d(DEBUG_TAG, "rideList size return: " + String.valueOf(rideList.size()));
+        return rideList;
+    } //getRide
 
 } // FirebaseUtil
