@@ -71,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 // get current user, and create equivalent User pojo
                                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                                 User userPojo = new User(firebaseUser);
-                                userPojo.setPoints(300);
+                                userPojo.setPoints(FirebaseUtil.startingPointAmount);
 
                                 // write user and points to firebase
                                 FirebaseUtil.addUserToFirebase(userPojo);

@@ -87,18 +87,18 @@ public class MainActivity extends AppCompatActivity {
             // This is an example of how to use the AuthUI activity for signing in to Firebase.
             // Here, we are just using email/password sign in.
             List<AuthUI.IdpConfig> providers = Arrays.asList(
-                    new AuthUI.IdpConfig.EmailBuilder().build()
+                new AuthUI.IdpConfig.EmailBuilder().build()
             );
 
             Log.d( DEBUG_TAG, "MainActivity.SignInButtonClickListener: Signing in started" );
 
-            // Create an Intent to singin to Firebese.
+            // Create an Intent to sign-in to Firebese.
             Intent signInIntent = AuthUI.getInstance()
-                    .createSignInIntentBuilder()
-                    .setAvailableProviders(providers)
-                    // this sets our own theme (color scheme, sizing, etc.) for the AuthUI's appearance
-                    //.setTheme(R.style.LoginTheme)
-                    .build();
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                // this sets our own theme (color scheme, sizing, etc.) for the AuthUI's appearance
+                //.setTheme(R.style.LoginTheme)
+                .build();
             signInLauncher.launch(signInIntent);
         } //SignInButtonClickListener.onClick()
     } //SignInButtonClickListener
@@ -110,15 +110,15 @@ public class MainActivity extends AppCompatActivity {
     // should return to the MainActivity when completed.  The overridden onActivityResult
     // is then called when the Firebase logging-in process is finished.
     private ActivityResultLauncher<Intent> signInLauncher =
-            registerForActivityResult(
-                    new FirebaseAuthUIActivityResultContract(),
-                    new ActivityResultCallback<FirebaseAuthUIAuthenticationResult>() {
-                        @Override
-                        public void onActivityResult(FirebaseAuthUIAuthenticationResult result) {
-                            onSignInResult(result);
-                        }
-                    }
-            ); // signInLauncher
+        registerForActivityResult(
+            new FirebaseAuthUIActivityResultContract(),
+            new ActivityResultCallback<FirebaseAuthUIAuthenticationResult>() {
+                @Override
+                public void onActivityResult(FirebaseAuthUIAuthenticationResult result) {
+                    onSignInResult(result);
+                }
+            }
+        ); // signInLauncher
 
     // This method is called once the Firebase sign-in activity (launched above) returns (completes).
     // Then, the current (logged-in) Firebase user can be obtained.
@@ -134,35 +134,39 @@ public class MainActivity extends AppCompatActivity {
             //Log.d( DEBUG_TAG, "MainActivity.onSignInResult: Signed in as: " + user.getEmail() );
             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             FirebaseUserMetadata metadata = firebaseUser.getMetadata();
-            if (metadata.getCreationTimestamp() == metadata.getLastSignInTimestamp()) {
+
+            Log.d("TAG", "isNewUser= " + response.isNewUser());
+
+            // Create Firebase entry for user if new user, and show appropriate toasts
+            if (response.isNewUser()) {
                 // The user is new, show them a fancy intro screen!
                 // Show Toast
                 Toast.makeText( getApplicationContext(),
-                        "Thank you for registering!:\nresponse.getEmail(): " + response.getEmail(),
-                        Toast.LENGTH_SHORT).show();
+                    "Thank you for registering!:\nresponse.getEmail(): " + response.getEmail(),
+                    Toast.LENGTH_SHORT).show();
 
                 // Create User and point total, then write to firebase
                 User userPojo = new User(firebaseUser);
-                userPojo.setPoints(300);
+                userPojo.setPoints(FirebaseUtil.startingPointAmount);
                 FirebaseUtil.addUserToFirebase(userPojo);
             } else {
                 // This is an existing user, show them a welcome back screen.
                 // Show Toast and start HomeActivity
                 Toast.makeText( getApplicationContext(),
-                        "Sign-in successful:\nresponse.getEmail(): " + response.getEmail(),
-                        Toast.LENGTH_SHORT).show();
-            }
+                    "Sign-in successful:\nresponse.getEmail(): " + response.getEmail(),
+                    Toast.LENGTH_SHORT).show();
+            } // if-else user is a new user (i.e. just registered)
 
             Intent intent = new Intent(this, HomeActivity.class);
             this.startActivity(intent);
-        }
+        } // if result.getResultCode() == RESULT_OK
         else {
             Log.d( DEBUG_TAG, "MainActivity.onSignInResult: Failed to sign in" );
             // Sign in failed. If response is null the user canceled the
             Toast.makeText( getApplicationContext(),
                     "Sign in failed",
                     Toast.LENGTH_SHORT).show();
-        }
+        } // else (i.e. if result not ok)
     } // onSignInResult()
 
     private class RegisterButtonClickListener implements View.OnClickListener {

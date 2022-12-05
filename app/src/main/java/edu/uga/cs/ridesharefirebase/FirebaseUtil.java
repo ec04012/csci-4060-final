@@ -1,7 +1,6 @@
 package edu.uga.cs.ridesharefirebase;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -17,6 +16,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class FirebaseUtil {
+    public static int startingPointAmount = 300;
+
     private static String DEBUG_TAG = "FirebaseUtil";
     private static FirebaseDatabase database = FirebaseDatabase.getInstance();
 
