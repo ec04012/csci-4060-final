@@ -102,6 +102,53 @@ public class FirebaseUtil {
         return rideList;
     } //getRide
 
+    /**
+     * Updates the specified User in the Firebase.
+     * @param user A User POJO representing the updated user that will be written.
+     */
+    public static void updateUserPoints(User user) {
+        Log.d( DEBUG_TAG, "Updating User: " + user.getEmail() + " " + user.getId() );
+
+        // Update the recycler view to show the changes in the updated job lead in that view
+        //recyclerAdapter.notifyItemChanged( position );
+
+        // Update this job lead in Firebase
+        // Note that we are using a specific key (one child in the list)
+        DatabaseReference ref = database.getReference().child( "users" );
+
+        // This listener will be invoked asynchronously, hence no need for an AsyncTask class, as in the previous apps
+        // to maintain job leads.
+        ref.orderByChild("id").equalTo(user.getId()).addListenerForSingleValueEvent( new ValueEventListener() {
+            @Override
+            public void onDataChange( @NonNull DataSnapshot dataSnapshot ) {
+                for( DataSnapshot postSnapshot: dataSnapshot.getChildren() ) {
+                    // Alternate way to do it. This gets the old point total from the firebase.
+                    // That way, we don't have to read pointTotal from UI and pass it in.
+                    // int oldPointTotal = postSnapshot.getValue(User.class).getPoints();
+                    //
+                    // Update User in Firebase
+                    postSnapshot.getRef().child("points").setValue(user.getPoints());
+                    Log.d( DEBUG_TAG, "user:" + user.getName() + " newPointTotal:" + String.valueOf(user.getPoints()) );
+                } // for every element in firebase
+                /*
+                dataSnapshot.getRef().setValue( user ).addOnSuccessListener( new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d( DEBUG_TAG, "updated ride: " + user.getEmail() + " " + user.getId() );
+                        //Toast.makeText(getApplicationContext(), "Job lead updated for ", Toast.LENGTH_SHORT).show();
+                    } // onSuccess()
+                }); // onSuccessListener()
+                 */
+            } // onDataChange()
+
+            @Override
+            public void onCancelled( @NonNull DatabaseError databaseError ) {
+                Log.d( DEBUG_TAG, "failed to update user: " + user.getName() );
+                //Toast.makeText(getApplicationContext(), "Failed to update ride", Toast.LENGTH_SHORT).show();
+            } // onCancelled()
+        }); // DatabaseReference ref.addListenerForSingleValueEvent
+    } // updateUser()
+
     public static ArrayList<Ride> getAllOffers(RecyclerAdapter myAdapter, ArrayList<Ride>rideList) {
         //ArrayList<Ride> rideList = new ArrayList<>();
 
