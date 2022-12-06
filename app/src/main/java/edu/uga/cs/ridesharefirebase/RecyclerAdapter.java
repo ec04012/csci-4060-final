@@ -48,9 +48,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         holder.rideDestCity.setText(ride.getDestinationCity());
         holder.rideDestState.setText(ride.getDestinationState());
 
-       holder.rider.setText("Rider:" + ride.getRider());
+        holder.rider.setText("Rider:" + ride.getRider());
         holder.driver.setText("Driver: " +ride.getDriver());
-        //holder.rideDate.setText(ride.getDate());
+        holder.rideDate.setText(ride.getDate());
 
         //bascially a pseudo check to see if the ride is an request since they dont need a car
         // would instead on final check to see if driver is null/false/no UID
