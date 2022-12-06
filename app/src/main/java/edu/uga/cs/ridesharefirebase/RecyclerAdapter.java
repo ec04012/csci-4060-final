@@ -42,9 +42,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         holder.rideDestCity.setText(ride.getDestinationCity());
         holder.rideDestState.setText(ride.getDestinationState());
 
-       holder.rider.setText("Rider:" + ride.getRider());
+        holder.rider.setText("Rider:" + ride.getRider());
         holder.driver.setText("Driver: " +ride.getDriver());
-        //holder.rideDate.setText(ride.getDate());
+        holder.rideDate.setText(ride.getDate());
 
         //bascially a pseudo check to see if the ride is an request since they dont need a car
         // would instead on final check to see if driver is null/false/no UID
@@ -80,7 +80,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             rideCar = itemView.findViewById(R.id.rideCar);
             carTitle = itemView.findViewById(R.id.carTitle);
             rideDate = itemView.findViewById(R.id.rideDate);
-            reserve = itemView.findViewById(R.id.editInfomation);
+            reserve = itemView.findViewById(R.id.reserve);
             rider = itemView.findViewById(R.id.rider);
             driver = itemView.findViewById(R.id.driver);
 
@@ -100,11 +100,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                         //meaning the list of ride's rid matches what we clicked
                         if(fbRideList.get(i).getKey() == rideIdview.getText()) {
                             reserveRide = fbRideList.get(i);
-                            Toast.makeText(view.getContext(), "resrveRide rid = " + reserveRide.getKey(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(view.getContext(), "reserveRide rid = " + reserveRide.getKey(), Toast.LENGTH_SHORT).show();
+
                             //meaning its a request
                             if (reserveRide.getDriver().equals("")) {
                                 Toast.makeText(view.getContext(), "set a new driver ", Toast.LENGTH_SHORT).show();
                                 reserveRide.setDriver(mFirebaseAuth.getCurrentUser().getUid());
+                                /**
+                                The below line is used to test whether driverConfirmed is working correctly
+                                In the final version though, we will change driverConfirmed in the "My Rides"
+                                Screen rather than browse requests screen.*/
+                                reserveRide.setDriverConfirmed(true);
                                 FirebaseUtil.updateRide(reserveRide);
                                 Toast.makeText(view.getContext(), reserveRide.toString(), Toast.LENGTH_LONG).show();
                             } // if ride is a request
@@ -112,6 +118,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                             else {
                                 Toast.makeText(view.getContext(), "set a new rider ", Toast.LENGTH_SHORT).show();
                                 reserveRide.setRider(mFirebaseAuth.getCurrentUser().getUid());
+                                /**
+                                 The below line is used to test whether riderConfirmed is working correctly
+                                 In the final version though, we will change riderConfirmed in the "My Rides"
+                                 Screen rather than browser offers screen.*/
+                                reserveRide.setRiderConfirmed(true);
                                 FirebaseUtil.updateRide(reserveRide);
                                 Toast.makeText(view.getContext(), reserveRide.toString(), Toast.LENGTH_LONG).show();
                             } // if ride is an offer
