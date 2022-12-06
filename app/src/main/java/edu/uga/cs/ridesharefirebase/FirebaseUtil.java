@@ -103,8 +103,10 @@ public class FirebaseUtil {
     } //getRide
 
     /**
-     * Updates the specified User in the Firebase.
-     * @param user A User POJO representing the updated user that will be written.
+     * Updates the point total for the specified User in the Firebase.
+     * @param userID A String representing the ID of the User.
+     * @param changeAmount An int representing the amount to change the point total by.
+     *                     Can be positive or negative.
      */
     public static void updateUserPoints(String userID, int changeAmount) {
         //Log.d( DEBUG_TAG, "Updating User: " + user.getEmail() + " " + user.getId() );

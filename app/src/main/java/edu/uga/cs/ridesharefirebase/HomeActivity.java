@@ -83,19 +83,6 @@ public class HomeActivity extends AppCompatActivity {
                     {
                         drawerLayout.closeDrawer(GravityCompat.START);
                         Toast.makeText(HomeActivity.this, "selected Rides", Toast.LENGTH_SHORT).show();
-                        //replaceFragment(new ProfileFragment());
-                        // Test UpdateRides using random floats
-                        /*
-                        Random r = new Random();
-                        Ride updatedRide = new Ride();
-                        updatedRide.setKey("-NIKADSzEFkzmthbxpTZ");
-                        updatedRide.setCar("testUpdateRide");
-                        updatedRide.setDestinationCity(String.valueOf(r.nextFloat()));
-                        updatedRide.setDestinationState(String.valueOf(r.nextFloat()));
-                        FirebaseUtil.updateRide(updatedRide);
-
-                         */
-
                         replaceFragment(new BrowseUnconfirmedRidesFragment());
                         break;
                     }
@@ -104,22 +91,12 @@ public class HomeActivity extends AppCompatActivity {
                         drawerLayout.closeDrawer(GravityCompat.START);
                         Toast.makeText(HomeActivity.this, "browse offer", Toast.LENGTH_SHORT).show();
                         replaceFragment(new BrowseRideOfferFragment());
-                        /*
-                        Intent myIntent = new Intent(HomeActivity.this, BrowseRideOfferActivity.class);
-                        HomeActivity.this.startActivity(myIntent);
-
-                         */
                         break;
                     }
                     case R.id.nav_browse_request:
                     {
                         drawerLayout.closeDrawer(GravityCompat.START);
                         replaceFragment(new BrowseRideRequestFragment());
-                        /*
-                        Intent myIntent = new Intent(HomeActivity.this, BrowseRideRequestActivity.class);
-                         HomeActivity.this.startActivity(myIntent);
-                         */
-
                         break;
                     }
                     case R.id.nav_offer:
@@ -136,11 +113,6 @@ public class HomeActivity extends AppCompatActivity {
                         drawerLayout.closeDrawer(GravityCompat.START);
                         Toast.makeText(HomeActivity.this, "request", Toast.LENGTH_SHORT).show();
                         replaceFragment(new RequestRideFragment());
-                        //replaceFragment(new ProfileFragment());
-                        // Test Delete ride
-                        Ride ride = new Ride();
-                        ride.setKey("-NIKSLXJZK4cOGyCnjr_");
-                        FirebaseUtil.deleteRide(ride);
                         break;
                     }
                 } // switch statement, to handle every item in navigation drawer
