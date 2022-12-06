@@ -76,7 +76,7 @@ public class EditRideActivity extends AppCompatActivity {
         editRide.setDriverName(driverName);
         editRide.setRiderName(riderName);
 
-        Toast.makeText(this, editRide.toString(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, editRide.toString(), Toast.LENGTH_LONG).show();
 
 
         //test.setText(rideID);
