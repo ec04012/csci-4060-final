@@ -1,12 +1,12 @@
 package edu.uga.cs.ridesharefirebase;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,13 +15,13 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
+public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapterYourRides.MyViewHolder> {
 
     Context context;
     static ArrayList<Ride> rideArrayList;
-     static Ride ride;
+    static Ride ride;
 
-    public RecyclerAdapter(Context context, ArrayList<Ride> list) {
+    public RecyclerAdapterYourRides(Context context, ArrayList<Ride> list) {
         this.context = context;
         rideArrayList = list;
     }
@@ -29,9 +29,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v   = LayoutInflater.from(context).inflate(R.layout.list_rides, parent,false);
+        View v   = LayoutInflater.from(context).inflate(R.layout.list_your_rides, parent,false);
         return new MyViewHolder(v);
     } // onCreateViewHolder()
+
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
@@ -42,7 +43,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         holder.rideDestCity.setText(ride.getDestinationCity());
         holder.rideDestState.setText(ride.getDestinationState());
 
-       holder.rider.setText("Rider:" + ride.getRider());
+        holder.rider.setText("Rider:" + ride.getRider());
         holder.driver.setText("Driver: " +ride.getDriver());
         //holder.rideDate.setText(ride.getDate());
 
@@ -67,7 +68,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView rideDestCity, rideDestState, rideSourceState, rideSourceCity, rideCar, rideDate, carTitle,rideIdview , rider, driver;
-        Button reserve;
+        Button editRide;
         String rideId;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -80,11 +81,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             rideCar = itemView.findViewById(R.id.rideCar);
             carTitle = itemView.findViewById(R.id.carTitle);
             rideDate = itemView.findViewById(R.id.rideDate);
-            reserve = itemView.findViewById(R.id.editInfomation);
+            editRide = itemView.findViewById(R.id.editInfomation);
             rider = itemView.findViewById(R.id.rider);
             driver = itemView.findViewById(R.id.driver);
 
-            reserve.setOnClickListener(new View.OnClickListener() {
+            editRide.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
@@ -99,23 +100,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                     for (int i = 0 ; i < fbRideList.size(); i++) {
                         //meaning the list of ride's rid matches what we clicked
                         if(fbRideList.get(i).getKey() == rideIdview.getText()) {
-                            reserveRide = fbRideList.get(i);
-                            Toast.makeText(view.getContext(), "resrveRide rid = " + reserveRide.getKey(), Toast.LENGTH_SHORT).show();
-                            //meaning its a request
-                            if (reserveRide.getDriver().equals("")) {
-                                Toast.makeText(view.getContext(), "set a new driver ", Toast.LENGTH_SHORT).show();
-                                reserveRide.setDriver(mFirebaseAuth.getCurrentUser().getUid());
-                                FirebaseUtil.updateRide(reserveRide);
-                                Toast.makeText(view.getContext(), reserveRide.toString(), Toast.LENGTH_LONG).show();
-                            } // if ride is a request
-                            //meaning this is a offer
-                            else {
-                                Toast.makeText(view.getContext(), "set a new rider ", Toast.LENGTH_SHORT).show();
-                                reserveRide.setRider(mFirebaseAuth.getCurrentUser().getUid());
-                                FirebaseUtil.updateRide(reserveRide);
-                                Toast.makeText(view.getContext(), reserveRide.toString(), Toast.LENGTH_LONG).show();
-                            } // if ride is an offer
-                        } // if ride is the ride that we've have clicked
+                            Intent intent = new Intent(view.getContext(), EditRideActivity.class);
+                            intent.putExtra("rideID", fbRideList.get(i).getKey());
+                            //intent.putExtra("rideID", "Hello");
+
+                            view.getContext().startActivity(intent);
+
+                        }
+
                     } // for every ride
 
 
@@ -135,5 +127,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             }); // reserveButton.setOnClickListener()
         } // MyViewHolder() constructor
     } // MyViewHolder
+
+
+
+
+
 
 } // recyclerAdapter
