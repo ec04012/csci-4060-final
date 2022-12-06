@@ -15,6 +15,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -339,9 +340,13 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
         newRide.setSourceCity(sourcecityString);
         newRide.setSourceState(sourcestateString);
         newRide.setDate(date);
-        mFirebaseAuth = FirebaseAuth.getInstance();
         newRide.setDriver("");
+        newRide.setDriverName("");
+        mFirebaseAuth = FirebaseAuth.getInstance();
         newRide.setRider(mFirebaseAuth.getCurrentUser().getUid());
+        Log.d("RequestRideFragment", mFirebaseAuth.getCurrentUser().toString() );
+        Log.d("RequestRideFragment", mFirebaseAuth.getCurrentUser().getDisplayName() );
+        newRide.setRiderName(mFirebaseAuth.getCurrentUser().getDisplayName());
 
         //when its added it would be
         /*
@@ -361,7 +366,7 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
                 @Override
                 public void onSuccess(Void aVoid) {
                     // Show a quick confirmation
-                    FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+                    //FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
                     Toast.makeText(getActivity().getApplicationContext(), "Ride Created" + "UID = " + mFirebaseAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
                     // Clear the EditTexts for next use.
                     //offerCar.setText("");

@@ -361,10 +361,12 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
         newRide.setSourceCity(sourcecityString);
         newRide.setSourceState(sourcestateString);
         newRide.setCar(car);
+        newRide.setRider("");
+        newRide.setRiderName("");
         newRide.setDate(date);
         mFirebaseAuth = FirebaseAuth.getInstance();
         newRide.setDriver(mFirebaseAuth.getCurrentUser().getUid());
-        newRide.setRider("");
+        newRide.setDriverName(mFirebaseAuth.getCurrentUser().getDisplayName());
         //when its added it would be
         /*
         TODO: methods to implment below these should work just need the database to be updated to take these info.

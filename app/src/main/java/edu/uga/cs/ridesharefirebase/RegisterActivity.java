@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -73,8 +74,23 @@ public class RegisterActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d( DEBUG_TAG, "createUserWithEmail: success" );
 
-                                // get current user, and create equivalent User pojo
+                                // Pass First and Last name into FirebaseAuth (aka Firebase profile)
+                                // This is so that we can always access the logged-user's name elsewhere
                                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(name)
+                                        .build();
+                                firebaseUser.updateProfile(profileUpdates)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d(DEBUG_TAG, "User Firebase profile updated.");
+                                            } // if task.isSuccessful()
+                                        } // onComplete()
+                                    }); // addOnCompleteListener()
+
+                                // Create equivalent User pojo so we can add to Firebase
                                 User userPojo = new User(firebaseUser);
                                 userPojo.setName(name);
                                 userPojo.setPoints(FirebaseUtil.startingPointAmount);

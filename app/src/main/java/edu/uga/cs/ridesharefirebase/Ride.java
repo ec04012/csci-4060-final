@@ -23,6 +23,9 @@ public class Ride {
     private String driver;
     private String rider;
 
+    private String driverName;
+    private String riderName;
+
     private String key; /* A unique key representing the ride form the database */
     private String sourceCity;
     private String sourceState;
@@ -64,6 +67,8 @@ public class Ride {
                 "key='" + key + "\'" +
                 ",\n driver='" + driver + '\'' +
                 ",\n rider='" + rider + '\'' +
+                ",\n driverName='" + driverName + '\'' +
+                ",\n riderName='" + riderName + '\'' +
                 ",\n driverConfirmed='" + driverConfirmed + '\'' +
                 ",\n riderConfirmed='" + riderConfirmed + '\'' +
                 ",\n sourceCity='" + sourceCity + '\'' +
@@ -74,7 +79,6 @@ public class Ride {
                 ",\n destinationZip='" + destinationZip + '\'' +
                 ",\n car='" + car + '\'' +
                 ",\n date='" + date + '\'' +
-
                 '}';
     }
 
@@ -100,6 +104,22 @@ public class Ride {
 
     public void setRider(String driver) {
         this.rider = driver;
+    }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
+
+    public String getRiderName() {
+        return riderName;
+    }
+
+    public void setRiderName(String riderName) {
+        this.riderName = riderName;
     }
 
     public String getSourceCity() {

@@ -46,8 +46,8 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
         holder.rideDestCity.setText(ride.getDestinationCity());
         holder.rideDestState.setText(ride.getDestinationState());
 
-        holder.rider.setText("Rider:" + ride.getRider());
-        holder.driver.setText("Driver: " +ride.getDriver());
+        holder.rider.setText("Rider:" + ride.getRiderName());
+        holder.driver.setText("Driver: " +ride.getDriverName());
         //holder.rideDate.setText(ride.getDate());
 
         //bascially a pseudo check to see if the ride is an request since they dont need a car
@@ -168,6 +168,8 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
                                 intent.putExtra("riderConfirmed", fbRideList.get(i).isRiderConfirmed());
                                 intent.putExtra("driverConfrimed", fbRideList.get(i).isDriverConfirmed());
                                 intent.putExtra("date", fbRideList.get(i).getDate());
+                                intent.putExtra("driverName", fbRideList.get(i).getDriverName());
+                                intent.putExtra("riderName", fbRideList.get(i).getRiderName());
 
 
                                 //intent.putExtra("rideID", "Hello");
