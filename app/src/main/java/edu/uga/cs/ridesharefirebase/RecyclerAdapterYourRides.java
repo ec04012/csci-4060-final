@@ -61,6 +61,8 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
         } else {
             holder.rideCar.setText(ride.getCar());
         }
+
+
     } // onBindViewHolder()
 
     @Override
@@ -88,8 +90,7 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
             rider = itemView.findViewById(R.id.rider);
             driver = itemView.findViewById(R.id.driver);
             confrimedRide = itemView.findViewById(R.id.confirmRide);
-
-
+            
             confrimedRide.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -149,27 +150,36 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
                     fbRideList = rideArrayList;
 
                     for (int i = 0 ; i < fbRideList.size(); i++) {
-                        //meaning the list of ride's rid matches what we clicked
-                        if(fbRideList.get(i).getKey() == rideIdview.getText()) {
-                            Intent intent = new Intent(view.getContext(), EditRideActivity.class);
-                            intent.putExtra("rideID", fbRideList.get(i).getKey());
-                            intent.putExtra("rideDriver", fbRideList.get(i).getDriver());
-                            intent.putExtra("rideRider", fbRideList.get(i).getRider());
-                            intent.putExtra("rideCar", fbRideList.get(i).getCar());
-                            intent.putExtra("rideDestCity", fbRideList.get(i).getDestinationCity());
-                            intent.putExtra("rideDestState", fbRideList.get(i).getDestinationState());
-                            intent.putExtra("rideStartState", fbRideList.get(i).getSourceState());
-                            intent.putExtra("rideStartCity", fbRideList.get(i).getSourceCity());
-                            intent.putExtra("riderConfirmed", fbRideList.get(i).isRiderConfirmed());
-                            intent.putExtra("driverConfrimed", fbRideList.get(i).isDriverConfirmed());
-                            intent.putExtra("date", fbRideList.get(i).getDate());
 
-
-                            //intent.putExtra("rideID", "Hello");
-
-                            view.getContext().startActivity(intent);
-
+                        if (!(fbRideList.get(i).getRider().equals("")) && !(fbRideList.get(i).getDriver().equals(""))) {
+                            //Toast.makeText(view.getContext(), "you cannot edit this ride", Toast.LENGTH_SHORT).show();
                         }
+                        else {
+                            if(fbRideList.get(i).getKey() == rideIdview.getText()) {
+                                Intent intent = new Intent(view.getContext(), EditRideActivity.class);
+                                intent.putExtra("rideID", fbRideList.get(i).getKey());
+                                intent.putExtra("rideDriver", fbRideList.get(i).getDriver());
+                                intent.putExtra("rideRider", fbRideList.get(i).getRider());
+                                intent.putExtra("rideCar", fbRideList.get(i).getCar());
+                                intent.putExtra("rideDestCity", fbRideList.get(i).getDestinationCity());
+                                intent.putExtra("rideDestState", fbRideList.get(i).getDestinationState());
+                                intent.putExtra("rideStartState", fbRideList.get(i).getSourceState());
+                                intent.putExtra("rideStartCity", fbRideList.get(i).getSourceCity());
+                                intent.putExtra("riderConfirmed", fbRideList.get(i).isRiderConfirmed());
+                                intent.putExtra("driverConfrimed", fbRideList.get(i).isDriverConfirmed());
+                                intent.putExtra("date", fbRideList.get(i).getDate());
+
+
+                                //intent.putExtra("rideID", "Hello");
+
+                                view.getContext().startActivity(intent);
+
+                            }
+                        }
+                        
+                        
+                        //meaning the list of ride's rid matches what we clicked
+
 
                     }
                     // for every ride
