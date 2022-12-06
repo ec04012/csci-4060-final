@@ -46,8 +46,13 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
         holder.rideDestCity.setText(ride.getDestinationCity());
         holder.rideDestState.setText(ride.getDestinationState());
 
+
+        //TODO: replace name;
+
         holder.rider.setText("Rider:" + ride.getRider());
         holder.driver.setText("Driver: " +ride.getDriver());
+
+
         //holder.rideDate.setText(ride.getDate());
 
         //bascially a pseudo check to see if the ride is an request since they dont need a car

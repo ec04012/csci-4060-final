@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/profile_fullname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="John Smith "
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.499"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.234" />
+
+        <TextView
+            android:id="@+id/profile_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email: JohnSmith@gmail.com"
+            app:layout_constraintBottom_toTopOf="@+id/profile_points"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_fullname"
+            app:layout_constraintVertical_bias="0.711" />
+
+        <TextView
+            android:id="@+id/profile_points"
+            android:layout_width="102dp"
+            android:layout_height="17dp"
+            android:layout_marginBottom="172dp"
+            android:text="Points: 500"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.499"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/profile_add_points_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="172dp"
+            android:layout_marginBottom="112dp"
+            android:text="Add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_points"
+            app:layout_constraintVertical_bias="0.785" />
+
+        <Button
+            android:id="@+id/profile_subtract_points_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="116dp"
+            android:text="Subtract"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.55"
+            app:layout_constraintStart_toEndOf="@+id/profile_add_points_button"
+            app:layout_constraintTop_toBottomOf="@+id/profile_points"
+            app:layout_constraintVertical_bias="0.846" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

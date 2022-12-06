@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/driver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/rider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/rideId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="From :" />
+
+            <TextView
+                android:id="@+id/rideSourceCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Athens" />
+
+            <TextView
+                android:id="@+id/rideSourceState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Georgia" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Destination : " />
+
+            <TextView
+                android:id="@+id/rideDestCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Atlanta" />
+
+            <TextView
+                android:id="@+id/rideDestState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Georgia" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/carTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="Car Type:" />
+
+        <TextView
+            android:id="@+id/rideCar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Audi Black" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="Date of Ride :" />
+
+        <TextView
+            android:id="@+id/rideDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:paddingBottom="10dp"
+            android:text="12/8/2022" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +43,10 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        if (savedInstanceState == null) {
+            replaceFragment(new ProfileFragment());
+        }
+
         drawerLayout = findViewById(R.id.drawer_layout);
         MaterialToolbar toolbar = findViewById(R.id.topAppBar);
         navigationView = findViewById(R.id.nav_view);
@@ -55,7 +60,7 @@ public class HomeActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
-        replaceFragment(new ProfileFragment());
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //replaceFragment(new OfferRideFragment());
@@ -86,6 +91,14 @@ public class HomeActivity extends AppCompatActivity {
                         replaceFragment(new BrowseUnconfirmedRidesFragment());
                         break;
                     }
+
+                    case R.id.nav_confirmedRide:
+                    {
+
+                        replaceFragment(new ConfrimedRidesFragment());
+                        break;
+                    }
+
                     case R.id.nav_browse_offer:
                     {
                         drawerLayout.closeDrawer(GravityCompat.START);
@@ -144,4 +157,14 @@ public class HomeActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     } // replaceFragment()
 
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged( newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+        }
+    }
 } // HomeActivity
