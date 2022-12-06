@@ -103,8 +103,10 @@ public class FirebaseUtil {
     } //getRide
 
     /**
-     * Updates the specified User in the Firebase.
-     * @param user A User POJO representing the updated user that will be written.
+     * Updates the point total for the specified User in the Firebase.
+     * @param userID A String representing the ID of the User.
+     * @param changeAmount An int representing the amount to change the point total by.
+     *                     Can be positive or negative.
      */
     public static void updateUserPoints(String userID, int changeAmount) {
         //Log.d( DEBUG_TAG, "Updating User: " + user.getEmail() + " " + user.getId() );
@@ -281,10 +283,69 @@ public class FirebaseUtil {
                     // if ride has all fields, add to our local list
                     //
                     if( (ride.getDriver().equals(mFirebaseAuth.getCurrentUser().getUid())) || (ride.getRider().equals(mFirebaseAuth.getCurrentUser().getUid()))){
-                        rideList.add( ride );
-                        Log.d( DEBUG_TAG, "ValueEventListener: added: " + ride );
-                        //Log.d( DEBUG_TAG, "ValueEventListener: key: " + postSnapshot.getKey() );
-                        Log.d(DEBUG_TAG, "");
+
+
+                        if (!(ride.isRiderConfirmed() && ride.isDriverConfirmed())) {
+                            rideList.add( ride );
+                            Log.d( DEBUG_TAG, "ValueEventListener: added: " + ride );
+                            //Log.d( DEBUG_TAG, "ValueEventListener: key: " + postSnapshot.getKey() );
+                            Log.d(DEBUG_TAG, "");
+                        }
+
+                    } // if ride has all fields
+                } // for every element in firebase
+                // Update RecyclerView in UI
+                myAdapter.notifyDataSetChanged();
+                Log.d(DEBUG_TAG, "rideList size async: " + String.valueOf(rideList.size()));
+            } // onDataChange()
+
+            @Override
+            public void onCancelled( @NonNull DatabaseError databaseError ) {
+                Log.d( DEBUG_TAG,"ValueEventListener: reading failed: " + databaseError.getMessage() );
+            } // onCancelled()
+        } ); // DatabaseReference.addValueEventListener()
+        Log.d(DEBUG_TAG, "rideList size return: " + String.valueOf(rideList.size()));
+        return rideList;
+    } //getRide
+
+
+
+
+    public static ArrayList<Ride> getAllYourConfrimedRides(RecyclerAdapterYourConfrimedRides myAdapter, ArrayList<Ride>rideList) {
+        //ArrayList<Ride> rideList = new ArrayList<>();
+
+        // get a Firebase DB instance reference
+        DatabaseReference myRef = database.getReference("rides");
+        Log.d(DEBUG_TAG, "getAllRides called");
+
+        // Set up a listener (event handler) to receive a value for the database reference.
+        // This type of listener is called by Firebase once by immediately executing its onDataChange method
+        // and then each time the value at Firebase changes.
+        //
+        // This listener will be invoked asynchronously, hence no need for an AsyncTask class, as in the previous apps
+        // to maintain job leads.
+        myRef.addValueEventListener( new ValueEventListener() {
+            @Override
+            public void onDataChange( @NonNull DataSnapshot snapshot ) {
+                // Get reference to FirebaseAuth for info about current user
+                FirebaseAuth mFirebaseAuth;
+                mFirebaseAuth = FirebaseAuth.getInstance();
+
+                // Once we have a DataSnapshot object, we need to iterate over the elements and place them in a list.
+                for( DataSnapshot postSnapshot: snapshot.getChildren() ) {
+                    Ride ride = postSnapshot.getValue(Ride.class);
+                    ride.setKey( postSnapshot.getKey() );
+
+                    // if ride has all fields, add to our local list
+                    //
+                    if( (ride.getDriver().equals(mFirebaseAuth.getCurrentUser().getUid())) || (ride.getRider().equals(mFirebaseAuth.getCurrentUser().getUid()))){
+                        if (ride.isRiderConfirmed() && ride.isDriverConfirmed()) {
+                            rideList.add( ride );
+                            Log.d( DEBUG_TAG, "ValueEventListener: added: " + ride );
+                            //Log.d( DEBUG_TAG, "ValueEventListener: key: " + postSnapshot.getKey() );
+                            Log.d(DEBUG_TAG, "");
+                        }
+
                     } // if ride has all fields
                 } // for every element in firebase
                 // Update RecyclerView in UI
