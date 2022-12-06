@@ -159,6 +159,7 @@ public class EditRideActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(EditRideActivity.this, "deleted your ride", Toast.LENGTH_SHORT).show();
+                FirebaseUtil.deleteRide(editRide);
                 finish();
             }
         });

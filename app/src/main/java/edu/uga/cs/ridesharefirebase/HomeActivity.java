@@ -67,18 +67,21 @@ public class HomeActivity extends AppCompatActivity {
                 switch(item.getItemId()) {
                     case R.id.nav_profile:
                     {
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         Toast.makeText(HomeActivity.this, "profile", Toast.LENGTH_SHORT).show();
                         replaceFragment(new ProfileFragment());
                         break;
                     }
                     case R.id.nav_logout:
                     {
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         LogOutDialog logOutDialog = new LogOutDialog();
                         logOutDialog.show(getSupportFragmentManager(), "dialog");
                         break;
                     }
                     case R.id.nav_selectedRides:
                     {
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         Toast.makeText(HomeActivity.this, "selected Rides", Toast.LENGTH_SHORT).show();
                         //replaceFragment(new ProfileFragment());
                         // Test UpdateRides using random floats
@@ -98,6 +101,7 @@ public class HomeActivity extends AppCompatActivity {
                     }
                     case R.id.nav_browse_offer:
                     {
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         Toast.makeText(HomeActivity.this, "browse offer", Toast.LENGTH_SHORT).show();
                         replaceFragment(new BrowseRideOfferFragment());
                         /*
@@ -109,6 +113,7 @@ public class HomeActivity extends AppCompatActivity {
                     }
                     case R.id.nav_browse_request:
                     {
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         replaceFragment(new BrowseRideRequestFragment());
                         /*
                         Intent myIntent = new Intent(HomeActivity.this, BrowseRideRequestActivity.class);
@@ -119,6 +124,7 @@ public class HomeActivity extends AppCompatActivity {
                     }
                     case R.id.nav_offer:
                     {
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         Toast.makeText(HomeActivity.this, "offer", Toast.LENGTH_SHORT).show();
                         //replaceFragment(new ProfileFragment());
                         replaceFragment(new OfferRideFragment());
@@ -126,6 +132,8 @@ public class HomeActivity extends AppCompatActivity {
                     }
                     case R.id.nav_request:
                     {
+
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         Toast.makeText(HomeActivity.this, "request", Toast.LENGTH_SHORT).show();
                         replaceFragment(new RequestRideFragment());
                         //replaceFragment(new ProfileFragment());
