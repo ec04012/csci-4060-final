@@ -94,7 +94,7 @@ public class HomeActivity extends AppCompatActivity {
 
                     case R.id.nav_confirmedRide:
                     {
-
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         replaceFragment(new ConfrimedRidesFragment());
                         break;
                     }
