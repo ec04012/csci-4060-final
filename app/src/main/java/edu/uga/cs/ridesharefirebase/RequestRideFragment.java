@@ -134,13 +134,13 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
         gpsButton2 = view.findViewById(R.id.gpsButton2);
         datePicker = view.findViewById(R.id.datePicker);
         dateView = view.findViewById(R.id.editTextDate);
+        grantPermission();
+        checkLocationIsEnabledOrNot();
 
         //if the user clicks the gps button under the starting destination
         gpsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                grantPermission();
-                checkLocationIsEnabledOrNot();
                 getLocation();
                 startCity.setText(fromCity);
                 startState.setText(fromState);
@@ -151,8 +151,6 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
         gpsButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                grantPermission();
-                checkLocationIsEnabledOrNot();
                 getLocation();
                 destCity.setText(fromCity);
                 destState.setText(fromState);
@@ -347,9 +345,6 @@ public class RequestRideFragment extends Fragment implements LocationListener, D
 
         //when its added it would be
         /*
-        TODO: methods to implment below these should work just need the database to be updated to take these info.
-        newRide.setDate(date);
-        newRide.setDriver = mFirebaseAuth.getCurrentUser().getUid();
          */
 
         // Add a new element (Ride) to the list of job leads in Firebase.

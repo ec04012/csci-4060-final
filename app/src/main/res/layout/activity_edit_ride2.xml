@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,25 +8,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-16dp">
 
         <EditText
-            android:id="@+id/editofferCar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Car Type (Audi Black)"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.467" />
-
-        <EditText
-            android:id="@+id/editdestState"
+            android:id="@+id/destStateEdit"
             android:layout_width="191dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="476dp"
@@ -37,10 +24,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/editstartState" />
+            app:layout_constraintStart_toEndOf="@+id/startStateEdit" />
 
         <EditText
-            android:id="@+id/editdestCity"
+            android:id="@+id/destCityEdit"
             android:layout_width="191dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -48,24 +35,24 @@
             android:hint="City (Athens)"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            app:layout_constraintBottom_toTopOf="@+id/editdestState"
+            app:layout_constraintBottom_toTopOf="@+id/destStateEdit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/editstartCity" />
+            app:layout_constraintStart_toEndOf="@+id/startCityEdit" />
 
         <Button
-            android:id="@+id/editofferSubmit"
+            android:id="@+id/update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
-            android:text="Submit"
+            android:layout_marginBottom="64dp"
+            android:text="Update"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintHorizontal_bias="0.814"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/editstartState"
+            android:id="@+id/startStateEdit"
             android:layout_width="191dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -79,16 +66,16 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/editstartCity"
+            android:id="@+id/startCityEdit"
             android:layout_width="191dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="City(Albany)"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            app:layout_constraintBottom_toTopOf="@+id/editstartState"
+            app:layout_constraintBottom_toTopOf="@+id/startStateEdit"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/editdestCity"
+            app:layout_constraintEnd_toStartOf="@+id/destCity"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,42 +83,43 @@
             app:layout_constraintVertical_bias="0.979" />
 
         <TextView
-            android:id="@+id/edittextView10"
+            android:id="@+id/textView10Edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="52dp"
             android:text="Starting Location"
-            app:layout_constraintBottom_toTopOf="@+id/editstartCity"
+            app:layout_constraintBottom_toTopOf="@+id/startCityEdit"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.981" />
 
         <TextView
-            android:id="@+id/edittextView9"
+            android:id="@+id/textView9Edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Final Destination"
-            app:layout_constraintBottom_toTopOf="@+id/editdestCity"
+            app:layout_constraintBottom_toTopOf="@+id/destCityEdit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.527"
-            app:layout_constraintStart_toEndOf="@+id/edittextView10"
+            app:layout_constraintStart_toEndOf="@+id/textView10Edit"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
         <Button
-            android:id="@+id/editgpsButton"
+            android:id="@+id/gpsButtonEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="GPS"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.154"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editstartState"
+            app:layout_constraintTop_toBottomOf="@+id/startStateEdit"
             app:layout_constraintVertical_bias="0.0" />
 
         <Button
-            android:id="@+id/editdatePicker"
+            android:id="@+id/datePickerEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date of Ride"
@@ -142,41 +130,43 @@
             app:layout_constraintVertical_bias="0.648" />
 
         <EditText
-            android:id="@+id/editeditTextDate"
+            android:id="@+id/editTextDateEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="month/day/year"
             android:inputType="date"
             android:minHeight="48dp"
-            app:layout_constraintBottom_toTopOf="@+id/editdatePicker"
+            app:layout_constraintBottom_toTopOf="@+id/datePickerEdit"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editofferCar" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <Button
-            android:id="@+id/editgpsButton2"
+            android:id="@+id/gpsButton2Edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="GPS"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.764"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editstartState"
+            app:layout_constraintTop_toBottomOf="@+id/startStateEdit"
             app:layout_constraintVertical_bias="0.002" />
 
-        <TextView
-            android:id="@+id/editrid"
+        <Button
+            android:id="@+id/deleteRide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RID"
+            android:layout_marginBottom="64dp"
+            android:text="Delete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.507"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.12" />
+            app:layout_constraintHorizontal_bias="0.183"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

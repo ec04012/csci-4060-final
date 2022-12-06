@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,8 +16,6 @@ import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.Random;
 
 public class HomeActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
@@ -70,21 +67,25 @@ public class HomeActivity extends AppCompatActivity {
                 switch(item.getItemId()) {
                     case R.id.nav_profile:
                     {
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         Toast.makeText(HomeActivity.this, "profile", Toast.LENGTH_SHORT).show();
                         replaceFragment(new ProfileFragment());
                         break;
                     }
                     case R.id.nav_logout:
                     {
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         LogOutDialog logOutDialog = new LogOutDialog();
                         logOutDialog.show(getSupportFragmentManager(), "dialog");
                         break;
                     }
                     case R.id.nav_selectedRides:
                     {
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         Toast.makeText(HomeActivity.this, "selected Rides", Toast.LENGTH_SHORT).show();
                         //replaceFragment(new ProfileFragment());
                         // Test UpdateRides using random floats
+                        /*
                         Random r = new Random();
                         Ride updatedRide = new Ride();
                         updatedRide.setKey("-NIKADSzEFkzmthbxpTZ");
@@ -92,10 +93,15 @@ public class HomeActivity extends AppCompatActivity {
                         updatedRide.setDestinationCity(String.valueOf(r.nextFloat()));
                         updatedRide.setDestinationState(String.valueOf(r.nextFloat()));
                         FirebaseUtil.updateRide(updatedRide);
+
+                         */
+
+                        replaceFragment(new BrowseUnconfirmedRidesFragment());
                         break;
                     }
                     case R.id.nav_browse_offer:
                     {
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         Toast.makeText(HomeActivity.this, "browse offer", Toast.LENGTH_SHORT).show();
                         replaceFragment(new BrowseRideOfferFragment());
                         /*
@@ -107,6 +113,7 @@ public class HomeActivity extends AppCompatActivity {
                     }
                     case R.id.nav_browse_request:
                     {
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         replaceFragment(new BrowseRideRequestFragment());
                         /*
                         Intent myIntent = new Intent(HomeActivity.this, BrowseRideRequestActivity.class);
@@ -117,6 +124,7 @@ public class HomeActivity extends AppCompatActivity {
                     }
                     case R.id.nav_offer:
                     {
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         Toast.makeText(HomeActivity.this, "offer", Toast.LENGTH_SHORT).show();
                         //replaceFragment(new ProfileFragment());
                         replaceFragment(new OfferRideFragment());
@@ -124,6 +132,8 @@ public class HomeActivity extends AppCompatActivity {
                     }
                     case R.id.nav_request:
                     {
+
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         Toast.makeText(HomeActivity.this, "request", Toast.LENGTH_SHORT).show();
                         replaceFragment(new RequestRideFragment());
                         //replaceFragment(new ProfileFragment());

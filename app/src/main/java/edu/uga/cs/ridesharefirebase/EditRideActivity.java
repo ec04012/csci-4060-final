@@ -1,120 +1,178 @@
 package edu.uga.cs.ridesharefirebase;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.ArrayList;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class EditRideActivity extends AppCompatActivity {
-    Ride editingRide;
-    ArrayList<Ride> arrayRideList = new ArrayList<Ride>();
-    private EditText editdestCity, editdestState, editstartState, editstartCity, editofferCar, editdateView;
-    private CalendarView calendarView;
-    private Button offerSubmit;
-    private String editfromState, editfromCity, date;
-    private Button gpsButton, gpsButton2, datePicker;
-    FirebaseAuth mFirebaseAuth;
+    private static String DEBUG_TAG = "FirebaseUtil";
 
-    LocationManager locationManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_ride);
+        setContentView(R.layout.activity_edit_ride2);
 
+        String rideID, rideDriver, rideRider, rideCar, rideDestCity, rideDestState,rideStartCity, rideStartState,date;
+        boolean    riderConfrimed,driverConfirmed;
+        Button datePicker, update, delete;
+
+        int day = 0;
+        int month = 0;
+        int year = 0;
+
+        EditText destStateEdit, destCityEdit, startStateEdit, startCityEdit, dateEdit;
         Intent intent = getIntent();
-        String rideId = intent.getStringExtra("rid");
-        TextView editRid;
-        editRid = this.findViewById(R.id.editrid);
-        editRid.setText(rideId);
+       // test.setText("wow");
 
-        //do somekind of initalization from db get the and set to arrayRideList
-        dataInitialize();
+        rideID = intent.getStringExtra("rideID");
+        rideDriver = intent.getStringExtra("rideDriver");
+        rideRider = intent.getStringExtra("rideRider");
+        rideCar = intent.getStringExtra("rideCar");
+        rideDestCity = intent.getStringExtra("rideDestCity");
+        rideDestState = intent.getStringExtra("rideDestState");
+        rideStartCity = intent.getStringExtra("rideStartCity");
+        rideStartState = intent.getStringExtra("rideStartState");
+        riderConfrimed = Boolean.parseBoolean(intent.getStringExtra("riderConfrimed"));
+        driverConfirmed = Boolean.parseBoolean(intent.getStringExtra("driverConfirmed"));
+        date = intent.getStringExtra("date");
 
-        //do some kind of iteration of the list to check the ride id
-        for (int i = 0 ; i < arrayRideList.size(); i++) {
-            //if the ride id of the list of rides matches the rid of the one we selected
-            if (arrayRideList.get(i).getKey() == rideId) {
-                editingRide = arrayRideList.get(i);
-                Toast.makeText(this, editingRide.getDestinationCity(), Toast.LENGTH_SHORT).show();
-            } // if ride is the ride we are editing
-        } // for every ride
 
-        /*
-        editdestCity = this.findViewById(R.id. editdestCity);
-        editdestState = this.findViewById(R.id. editdestState);
-        editstartCity = this.findViewById(R.id. editstartCity);
-        editstartState = this.findViewById(R.id. editstartState);
-        editofferCar = this.findViewById(R.id. editofferCar);
-        //calendarView = view.findViewById(R.id.calendarView);
-        offerSubmit = this.findViewById(R.id.offerSubmit);
-        gpsButton = this.findViewById(R.id.gpsButton);
-        gpsButton2 = this.findViewById(R.id.gpsButton2);
-        datePicker = this.findViewById(R.id. editdatePicker);
-        editdateView = this.findViewById(R.id. editeditTextDate);
+        Ride editRide = new Ride();
+        editRide.setKey(rideID);
+        editRide.setDriver(rideDriver);
+        editRide.setRider(rideRider);
+        editRide.setDestinationCity(rideDestCity);
+        editRide.setDestinationState(rideDestState);
+        editRide.setCar(rideCar);
+        editRide.setSourceState(rideStartState);
+        editRide.setSourceCity(rideStartCity);
+        editRide.setRiderConfirmed(riderConfrimed);
+        editRide.setDriverConfirmed(driverConfirmed);
+        editRide.setDate(date);
+        editRide.setKey(rideID);
 
-        editdestCity.setText(editingRide.getDestinationCity());
-        editdestState.setText(editingRide.getDestinationState());
-        editstartCity.setText(editingRide.getSourceCity());
-        editstartState.setText(editingRide.getSourceState());
-        editofferCar.setText(editingRide.getCar());
-        */
+        Toast.makeText(this, editRide.toString(), Toast.LENGTH_LONG).show();
+
+
+        //test.setText(rideID);
+        destStateEdit = findViewById(R.id.destStateEdit);
+        destCityEdit = findViewById(R.id.destCityEdit);
+        startStateEdit = findViewById(R.id.startStateEdit);
+        startCityEdit = findViewById(R.id.startCityEdit);
+        dateEdit = findViewById(R.id.editTextDateEdit);
+        datePicker = findViewById(R.id.datePickerEdit);
+        delete = findViewById(R.id.deleteRide);
+        update = findViewById(R.id.update);
+
+
+
+      destStateEdit.setText(editRide.getDestinationState());
+      destCityEdit.setText(editRide.getDestinationCity());
+      startStateEdit.setText(editRide.getSourceState());
+      startCityEdit.setText(editRide.getSourceCity());
+        dateEdit.setText(editRide.getDate());
+
+        datePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        EditRideActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        String dateString= (i1 + 1) + "/" + i2 + "/" + i;
+                        //getDateTimeCalendar();
+                        dateEdit.setText(dateString);
+                    }
+                }, year, month, day);
+
+                datePickerDialog.getDatePicker().setMinDate((System.currentTimeMillis()-1000));
+                datePickerDialog.show();
+
+                //Toast.makeText(EditRideActivity.this, "clicked button", Toast.LENGTH_SHORT).show();
+            } // .onClick()
+        }); // datePicker.setOnClickListener()
+
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(EditRideActivity.this, "clicked update", Toast.LENGTH_SHORT).show();
+
+                if(TextUtils.isEmpty(startCityEdit.getText().toString()) ) {
+                    startCityEdit.setError("Please type in the City you are starting from.");
+                    return;
+                }
+                if(TextUtils.isEmpty(startStateEdit.getText().toString()) ) {
+                    startStateEdit.setError("Please type in the State you are starting from.");
+                    return;
+                }
+                if(TextUtils.isEmpty(destStateEdit.getText().toString()) ) {
+                    destStateEdit.setError("Please type in the state you are traveling to .");
+                    return;
+                }
+                if(TextUtils.isEmpty(destCityEdit.getText().toString()) ) {
+                    destCityEdit.setError("Please type in the city you are traveling to.");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(dateEdit.getText().toString()) ) {
+                    dateEdit.setError("Please type in a date or use the button below");
+                    return;
+                }
+                else {
+                    Toast.makeText(EditRideActivity.this, "Update your ride", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "City: " + offerCity.getText().toString() + "\n"+  offerState.getText().toString() + "\n" + "Car: " + offerCar.getText().toString() + "\n" + "State: "  , Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "From City:\n " + fromCity + "\nFrom State:  \n " + fromState, Toast.LENGTH_LONG).show();
+                    editRide.setDate(dateEdit.getText().toString());
+                    editRide.setSourceCity(startCityEdit.getText().toString());
+                    editRide.setSourceState(startStateEdit.getText().toString());
+                    editRide.setDestinationState(destStateEdit.getText().toString());
+                    editRide.setDestinationCity(destCityEdit.getText().toString());
+                    FirebaseUtil.updateRide(editRide);
+                    finish();
+
+
+                } // if-else
+
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(EditRideActivity.this, "deleted your ride", Toast.LENGTH_SHORT).show();
+                FirebaseUtil.deleteRide(editRide);
+                finish();
+            }
+        });
+
+
+
+
+       // FirebaseUtil.updateRide(ride);
+
+
+
     }
 
 
-    private void dataInitialize() {
-        arrayRideList = new ArrayList<Ride>();
 
-        Ride rideOffer = new Ride();
-        Ride rideRequest = new Ride();
-        Ride rideOffer2 = new Ride();
-        Ride rideRequest2 = new Ride();
-
-        rideOffer.setKey("1");
-        rideOffer.setSourceCity("Athens");
-        rideOffer.setSourceState("Georgia");
-        rideOffer.setDestinationCity("Atlanta");
-        rideOffer.setDestinationState("Georgia");
-        rideOffer.setCar("Black Audi A4");
-        rideOffer.setDate("12/1/2022");
-
-        rideOffer2.setKey("2");
-        rideOffer2.setSourceCity("New York City");
-        rideOffer2.setSourceState("New York");
-        rideOffer2.setDestinationCity("Atlanta");
-        rideOffer2.setDestinationState("Georgia");
-        rideOffer2.setCar("Black Audi A4");
-        rideOffer2.setDate("12/1/2022");
-
-        rideRequest.setKey("3");
-        rideRequest.setSourceCity("Source State REquest ");
-        rideRequest.setSourceState("Source Georgia");
-        rideRequest.setDestinationCity("Source Atlanta");
-        rideRequest.setDestinationState("Source Georgia");
-        rideRequest.setCar("");
-        rideRequest.setDate("12/1/2022");
-
-        rideRequest2.setKey("4");
-        rideRequest2.setSourceCity("Source State REquest2  ");
-        rideRequest2.setSourceState("Source Georgia 2");
-        rideRequest2.setDestinationCity("Source Atlanta 2 ");
-        rideRequest2.setDestinationState("Source Georgia 2 ");
-        rideRequest2.setCar("");
-        rideRequest2.setDate("12/1/2022");
-
-        arrayRideList.add(rideOffer);
-        arrayRideList.add(rideOffer2);
-        arrayRideList.add(rideRequest);
-        arrayRideList.add(rideRequest2);
-    } // dataInitialize()
-} // editRideActivity
+}
