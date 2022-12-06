@@ -283,10 +283,15 @@ public class FirebaseUtil {
                     // if ride has all fields, add to our local list
                     //
                     if( (ride.getDriver().equals(mFirebaseAuth.getCurrentUser().getUid())) || (ride.getRider().equals(mFirebaseAuth.getCurrentUser().getUid()))){
-                        rideList.add( ride );
-                        Log.d( DEBUG_TAG, "ValueEventListener: added: " + ride );
-                        //Log.d( DEBUG_TAG, "ValueEventListener: key: " + postSnapshot.getKey() );
-                        Log.d(DEBUG_TAG, "");
+
+
+                        if (!(ride.isRiderConfirmed() && ride.isDriverConfirmed())) {
+                            rideList.add( ride );
+                            Log.d( DEBUG_TAG, "ValueEventListener: added: " + ride );
+                            //Log.d( DEBUG_TAG, "ValueEventListener: key: " + postSnapshot.getKey() );
+                            Log.d(DEBUG_TAG, "");
+                        }
+
                     } // if ride has all fields
                 } // for every element in firebase
                 // Update RecyclerView in UI

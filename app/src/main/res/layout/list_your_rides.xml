@@ -110,6 +110,7 @@
             android:id="@+id/editInfomation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:text="Edit Infrormation" />
 
         <Button
@@ -117,7 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="Confirm Ride" />
     </LinearLayout>
 
 </LinearLayout>

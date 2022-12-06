@@ -87,7 +87,7 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.nav_selectedRides:
                     {
                         drawerLayout.closeDrawer(GravityCompat.START);
-                        Toast.makeText(HomeActivity.this, "selected Rides", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HomeActivity.this, "selected Rides", Toast.LENGTH_SHORT).show();
                         replaceFragment(new BrowseUnconfirmedRidesFragment());
                         break;
                     }
@@ -102,7 +102,7 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.nav_browse_offer:
                     {
                         drawerLayout.closeDrawer(GravityCompat.START);
-                        Toast.makeText(HomeActivity.this, "browse offer", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HomeActivity.this, "browse offer", Toast.LENGTH_SHORT).show();
                         replaceFragment(new BrowseRideOfferFragment());
                         break;
                     }
@@ -115,7 +115,7 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.nav_offer:
                     {
                         drawerLayout.closeDrawer(GravityCompat.START);
-                        Toast.makeText(HomeActivity.this, "offer", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HomeActivity.this, "offer", Toast.LENGTH_SHORT).show();
                         //replaceFragment(new ProfileFragment());
                         replaceFragment(new OfferRideFragment());
                         break;
@@ -124,7 +124,7 @@ public class HomeActivity extends AppCompatActivity {
                     {
 
                         drawerLayout.closeDrawer(GravityCompat.START);
-                        Toast.makeText(HomeActivity.this, "request", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HomeActivity.this, "request", Toast.LENGTH_SHORT).show();
                         replaceFragment(new RequestRideFragment());
                         break;
                     }

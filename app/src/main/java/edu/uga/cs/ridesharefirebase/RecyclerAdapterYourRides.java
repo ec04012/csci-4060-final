@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -106,27 +107,30 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
 
                     for (int i = 0 ; i < fbRideList.size(); i++) {
                         if(fbRideList.get(i).getKey() == rideIdview.getText()) {
-                            Toast.makeText(view.getContext(), "made it here ride", Toast.LENGTH_SHORT).show();
-                            Toast.makeText(view.getContext(), "first logic " + !(fbRideList.get(i).getRider().equals("")) , Toast.LENGTH_SHORT).show();
-                            Toast.makeText(view.getContext(), "2nd logic " + !(fbRideList.get(i).getDriver().equals("")) , Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(view.getContext(), "made it here ride", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(view.getContext(), "first logic " + !(fbRideList.get(i).getRider().equals("")) , Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(view.getContext(), "2nd logic " + !(fbRideList.get(i).getDriver().equals("")) , Toast.LENGTH_SHORT).show();
                             if (!(fbRideList.get(i).getDriver().equals("")) && !(fbRideList.get(i).getRider().equals(""))) {
-                                Toast.makeText(view.getContext(), "first logic true", Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(view.getContext(), "first logic true", Toast.LENGTH_SHORT).show();
 
 
                                 //user is the Rider
                                 if (fbRideList.get(i).getRider().equals(mFirebaseAuth.getCurrentUser().getUid())) {
                                     fbRideList.get(i).setRiderConfirmed(true);
                                     FirebaseUtil.updateRide(fbRideList.get(i));
+                                    Toast.makeText(view.getContext(), "Thank you for confirming", Toast.LENGTH_LONG).show();
                                     //user is the Driver
                                 }else {
                                     fbRideList.get(i).setDriverConfirmed(true);
                                     FirebaseUtil.updateRide(fbRideList.get(i));
+                                    Toast.makeText(view.getContext(), "Thank you for confirming", Toast.LENGTH_LONG).show();
 
                                 }
 
                                 if (fbRideList.get(i).isDriverConfirmed() && fbRideList.get(i).isRiderConfirmed()) {
                                     FirebaseUtil.updateUserPoints(fbRideList.get(i).getRider(), -50);
                                     FirebaseUtil.updateUserPoints(fbRideList.get(i).getDriver(), 50);
+                                    Toast.makeText(view.getContext(), "Both Rider and Driver have confirmed please look at your confirmed rides to view", Toast.LENGTH_LONG).show();
                                 }
 
 
@@ -138,7 +142,9 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
                             }
                         }//if ride arraylist == id
                     }//iterate through list
+                    ((FragmentActivity)view.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new ProfileFragment()).commit();
                 }//on click
+
             });
 
 
