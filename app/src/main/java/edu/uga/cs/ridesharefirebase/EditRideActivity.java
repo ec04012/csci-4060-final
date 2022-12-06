@@ -31,7 +31,8 @@ public class EditRideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_ride2);
 
-        String rideID, rideDriver, rideRider, rideCar, rideDestCity, rideDestState,rideStartCity, rideStartState,date;
+        String rideID, rideDriver, rideRider, rideCar, rideDestCity, rideDestState,
+                rideStartCity, rideStartState,date, driverName, riderName;
         boolean    riderConfrimed,driverConfirmed;
         Button datePicker, update, delete;
 
@@ -54,6 +55,8 @@ public class EditRideActivity extends AppCompatActivity {
         riderConfrimed = Boolean.parseBoolean(intent.getStringExtra("riderConfrimed"));
         driverConfirmed = Boolean.parseBoolean(intent.getStringExtra("driverConfirmed"));
         date = intent.getStringExtra("date");
+        driverName = intent.getStringExtra("date");
+        riderName = intent.getStringExtra("date");
 
 
         Ride editRide = new Ride();
@@ -69,6 +72,8 @@ public class EditRideActivity extends AppCompatActivity {
         editRide.setDriverConfirmed(driverConfirmed);
         editRide.setDate(date);
         editRide.setKey(rideID);
+        editRide.setDriver(driverName);
+        editRide.setRider(riderName);
 
         Toast.makeText(this, editRide.toString(), Toast.LENGTH_LONG).show();
 

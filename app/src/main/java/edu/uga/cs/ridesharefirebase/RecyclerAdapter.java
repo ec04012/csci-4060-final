@@ -44,14 +44,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         holder.rideDestCity.setText(ride.getDestinationCity());
         holder.rideDestState.setText(ride.getDestinationState());
 
-
-
-
-
-
-
-        holder.rider.setText("Rider:" + ride.getRider());
-        holder.driver.setText("Driver: " +ride.getDriver());
+        holder.rider.setText("Rider:" + ride.getRiderName());
+        holder.driver.setText("Driver: " +ride.getDriverName());
         holder.rideDate.setText(ride.getDate());
 
         //bascially a pseudo check to see if the ride is an request since they dont need a car
@@ -76,7 +70,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
         TextView rideDestCity, rideDestState, rideSourceState, rideSourceCity, rideCar, rideDate, carTitle,rideIdview , rider, driver;
         Button reserve;
-        String rideId, driverName;
+        String rideId;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -114,6 +108,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                             if (reserveRide.getDriver().equals("")) {
                                 //Toast.makeText(view.getContext(), "set a new driver ", Toast.LENGTH_SHORT).show();
                                 reserveRide.setDriver(mFirebaseAuth.getCurrentUser().getUid());
+                                reserveRide.setDriverName(mFirebaseAuth.getCurrentUser().getDisplayName());
                                 /**
                                 The below line is used to test whether driverConfirmed is working correctly
                                 In the final version though, we will change driverConfirmed in the "My Rides"
@@ -127,6 +122,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                             else {
                                 //Toast.makeText(view.getContext(), "set a new rider ", Toast.LENGTH_SHORT).show();
                                 reserveRide.setRider(mFirebaseAuth.getCurrentUser().getUid());
+                                reserveRide.setRiderName(mFirebaseAuth.getCurrentUser().getDisplayName());
                                 /**
                                  The below line is used to test whether riderConfirmed is working correctly
                                  In the final version though, we will change riderConfirmed in the "My Rides"
