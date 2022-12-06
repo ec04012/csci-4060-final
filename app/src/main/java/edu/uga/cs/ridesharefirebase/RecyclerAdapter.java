@@ -110,7 +110,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                                 The below line is used to test whether driverConfirmed is working correctly
                                 In the final version though, we will change driverConfirmed in the "My Rides"
                                 Screen rather than browse requests screen.*/
-                                reserveRide.setDriverConfirmed(true);
+                               // reserveRide.setDriverConfirmed(true);
                                 FirebaseUtil.updateRide(reserveRide);
                                 Toast.makeText(view.getContext(), reserveRide.toString(), Toast.LENGTH_LONG).show();
                             } // if ride is a request
@@ -122,7 +122,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                                  The below line is used to test whether riderConfirmed is working correctly
                                  In the final version though, we will change riderConfirmed in the "My Rides"
                                  Screen rather than browser offers screen.*/
-                                reserveRide.setRiderConfirmed(true);
+                                //reserveRide.setRiderConfirmed(true);
                                 FirebaseUtil.updateRide(reserveRide);
                                 Toast.makeText(view.getContext(), reserveRide.toString(), Toast.LENGTH_LONG).show();
                             } // if ride is an offer

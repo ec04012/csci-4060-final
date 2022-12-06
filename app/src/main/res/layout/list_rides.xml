@@ -102,7 +102,7 @@
         android:text="12/8/2022" />
 
     <Button
-        android:id="@+id/editInfomation"
+        android:id="@+id/reserve"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Reserve" />

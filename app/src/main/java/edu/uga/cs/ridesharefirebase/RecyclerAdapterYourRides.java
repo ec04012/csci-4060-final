@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,8 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
     Context context;
     static ArrayList<Ride> rideArrayList;
     static Ride ride;
+
+
 
     public RecyclerAdapterYourRides(Context context, ArrayList<Ride> list) {
         this.context = context;
@@ -68,7 +71,7 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView rideDestCity, rideDestState, rideSourceState, rideSourceCity, rideCar, rideDate, carTitle,rideIdview , rider, driver;
-        Button editRide;
+        Button editRide, confrimedRide;
         String rideId;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -84,6 +87,50 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
             editRide = itemView.findViewById(R.id.editInfomation);
             rider = itemView.findViewById(R.id.rider);
             driver = itemView.findViewById(R.id.driver);
+            confrimedRide = itemView.findViewById(R.id.confirmRide);
+
+
+            confrimedRide.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FirebaseAuth mFirebaseAuth;
+                    mFirebaseAuth = FirebaseAuth.getInstance();
+                    ArrayList<Ride> fbRideList = new ArrayList<Ride>();
+                    fbRideList = rideArrayList;
+
+                    for (int i = 0 ; i < fbRideList.size(); i++) {
+                        if(fbRideList.get(i).getKey() == rideIdview.getText()) {
+                            Toast.makeText(view.getContext(), "made it here ride", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(view.getContext(), "first logic " + !(fbRideList.get(i).getRider().equals("")) , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(view.getContext(), "2nd logic " + !(fbRideList.get(i).getDriver().equals("")) , Toast.LENGTH_SHORT).show();
+                            if (!(fbRideList.get(i).getDriver().equals("")) && !(fbRideList.get(i).getRider().equals(""))) {
+                                Toast.makeText(view.getContext(), "first logic true", Toast.LENGTH_SHORT).show();
+                                if (fbRideList.get(i).getRider().equals(mFirebaseAuth.getCurrentUser().getUid())) {
+                                    fbRideList.get(i).setRiderConfirmed(true);
+                                    FirebaseUtil.updateRide(fbRideList.get(i));
+                                }else {
+                                    fbRideList.get(i).setDriverConfirmed(true);
+                                    FirebaseUtil.updateRide(fbRideList.get(i));
+                                }
+                            }
+                        }//if ride arraylist == id
+                    }//iterate through list
+                }//on click
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             editRide.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -102,13 +149,26 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
                         if(fbRideList.get(i).getKey() == rideIdview.getText()) {
                             Intent intent = new Intent(view.getContext(), EditRideActivity.class);
                             intent.putExtra("rideID", fbRideList.get(i).getKey());
+                            intent.putExtra("rideDriver", fbRideList.get(i).getDriver());
+                            intent.putExtra("rideRider", fbRideList.get(i).getRider());
+                            intent.putExtra("rideCar", fbRideList.get(i).getCar());
+                            intent.putExtra("rideDestCity", fbRideList.get(i).getDestinationCity());
+                            intent.putExtra("rideDestState", fbRideList.get(i).getDestinationState());
+                            intent.putExtra("rideStartState", fbRideList.get(i).getSourceState());
+                            intent.putExtra("rideStartCity", fbRideList.get(i).getSourceCity());
+                            intent.putExtra("riderConfirmed", fbRideList.get(i).isRiderConfirmed());
+                            intent.putExtra("DriverConfrimed", fbRideList.get(i).isDriverConfirmed());
+                            intent.putExtra("date", fbRideList.get(i).getKey());
+
+
                             //intent.putExtra("rideID", "Hello");
 
                             view.getContext().startActivity(intent);
 
                         }
 
-                    } // for every ride
+                    }
+                    // for every ride
 
 
                     //bad way but simple fix atm we pass the ride's id from databse here and hide it from user and store into rideId this way we know what the ride id is
@@ -125,6 +185,8 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
                      */
                 } // .onClick()
             }); // reserveButton.setOnClickListener()
+
+
         } // MyViewHolder() constructor
     } // MyViewHolder
 
