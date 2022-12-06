@@ -162,7 +162,7 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
                             intent.putExtra("rideStartCity", fbRideList.get(i).getSourceCity());
                             intent.putExtra("riderConfirmed", fbRideList.get(i).isRiderConfirmed());
                             intent.putExtra("driverConfrimed", fbRideList.get(i).isDriverConfirmed());
-                            intent.putExtra("date", fbRideList.get(i).getKey());
+                            intent.putExtra("date", fbRideList.get(i).getDate());
 
 
                             //intent.putExtra("rideID", "Hello");

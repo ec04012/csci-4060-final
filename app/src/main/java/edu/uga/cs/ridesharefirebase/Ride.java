@@ -73,6 +73,8 @@ public class Ride {
                 ",\n destinationState='" + destinationState + '\'' +
                 ",\n destinationZip='" + destinationZip + '\'' +
                 ",\n car='" + car + '\'' +
+                ",\n date='" + date + '\'' +
+
                 '}';
     }
 
