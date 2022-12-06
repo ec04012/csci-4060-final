@@ -55,8 +55,8 @@ public class EditRideActivity extends AppCompatActivity {
         riderConfrimed = Boolean.parseBoolean(intent.getStringExtra("riderConfrimed"));
         driverConfirmed = Boolean.parseBoolean(intent.getStringExtra("driverConfirmed"));
         date = intent.getStringExtra("date");
-        driverName = intent.getStringExtra("date");
-        riderName = intent.getStringExtra("date");
+        driverName = intent.getStringExtra("driverName");
+        riderName = intent.getStringExtra("riderName");
 
 
         Ride editRide = new Ride();
@@ -72,8 +72,8 @@ public class EditRideActivity extends AppCompatActivity {
         editRide.setDriverConfirmed(driverConfirmed);
         editRide.setDate(date);
         editRide.setKey(rideID);
-        editRide.setDriver(driverName);
-        editRide.setRider(riderName);
+        editRide.setDriverName(driverName);
+        editRide.setRiderName(riderName);
 
         Toast.makeText(this, editRide.toString(), Toast.LENGTH_LONG).show();
 
