@@ -105,31 +105,35 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
                             Toast.makeText(view.getContext(), "2nd logic " + !(fbRideList.get(i).getDriver().equals("")) , Toast.LENGTH_SHORT).show();
                             if (!(fbRideList.get(i).getDriver().equals("")) && !(fbRideList.get(i).getRider().equals(""))) {
                                 Toast.makeText(view.getContext(), "first logic true", Toast.LENGTH_SHORT).show();
+
+
+                                //user is the Rider
                                 if (fbRideList.get(i).getRider().equals(mFirebaseAuth.getCurrentUser().getUid())) {
                                     fbRideList.get(i).setRiderConfirmed(true);
                                     FirebaseUtil.updateRide(fbRideList.get(i));
+                                    //user is the Driver
                                 }else {
                                     fbRideList.get(i).setDriverConfirmed(true);
                                     FirebaseUtil.updateRide(fbRideList.get(i));
+
                                 }
+
+                                if (fbRideList.get(i).isDriverConfirmed() && fbRideList.get(i).isRiderConfirmed()) {
+                                    FirebaseUtil.updateUserPoints(fbRideList.get(i).getRider(), -50);
+                                    FirebaseUtil.updateUserPoints(fbRideList.get(i).getDriver(), 50);
+                                }
+
+
+
+
+
+
+
                             }
                         }//if ride arraylist == id
                     }//iterate through list
                 }//on click
             });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             editRide.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +161,7 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
                             intent.putExtra("rideStartState", fbRideList.get(i).getSourceState());
                             intent.putExtra("rideStartCity", fbRideList.get(i).getSourceCity());
                             intent.putExtra("riderConfirmed", fbRideList.get(i).isRiderConfirmed());
-                            intent.putExtra("DriverConfrimed", fbRideList.get(i).isDriverConfirmed());
+                            intent.putExtra("driverConfrimed", fbRideList.get(i).isDriverConfirmed());
                             intent.putExtra("date", fbRideList.get(i).getKey());
 
 

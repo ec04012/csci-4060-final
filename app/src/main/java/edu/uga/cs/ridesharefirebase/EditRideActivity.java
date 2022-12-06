@@ -25,13 +25,14 @@ public class EditRideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_ride2);
 
+        String rideID, rideDriver, rideRider, rideCar, rideDestCity, rideDestState,rideStartCity, rideStartState, riderConfrimed, driverConfirmed;
+
         TextView test;
         Intent intent = getIntent();
-        test = findViewById(R.id.textView2);
-        test.setText("wow");
+       // test.setText("wow");
 
-        String rideID = intent.getStringExtra("rideID");
-        test.setText(rideID);
+         rideID = intent.getStringExtra("rideID");
+        //test.setText(rideID);
 
         Ride ride = new Ride();
         ride.setKey(rideID);
