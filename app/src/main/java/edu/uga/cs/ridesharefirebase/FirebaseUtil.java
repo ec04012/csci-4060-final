@@ -106,8 +106,9 @@ public class FirebaseUtil {
      * Updates the specified User in the Firebase.
      * @param user A User POJO representing the updated user that will be written.
      */
-    public static void updateUserPoints(User user) {
-        Log.d( DEBUG_TAG, "Updating User: " + user.getEmail() + " " + user.getId() );
+    public static void updateUserPoints(String userID, int changeAmount) {
+        //Log.d( DEBUG_TAG, "Updating User: " + user.getEmail() + " " + user.getId() );
+        Log.d( DEBUG_TAG, "Updating User: " + userID );
 
         // Update the recycler view to show the changes in the updated job lead in that view
         //recyclerAdapter.notifyItemChanged( position );
@@ -118,17 +119,19 @@ public class FirebaseUtil {
 
         // This listener will be invoked asynchronously, hence no need for an AsyncTask class, as in the previous apps
         // to maintain job leads.
-        ref.orderByChild("id").equalTo(user.getId()).addListenerForSingleValueEvent( new ValueEventListener() {
+        ref.orderByChild("id").equalTo(userID).addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
             public void onDataChange( @NonNull DataSnapshot dataSnapshot ) {
                 for( DataSnapshot postSnapshot: dataSnapshot.getChildren() ) {
                     // Alternate way to do it. This gets the old point total from the firebase.
                     // That way, we don't have to read pointTotal from UI and pass it in.
-                    // int oldPointTotal = postSnapshot.getValue(User.class).getPoints();
+                    int oldPointTotal = postSnapshot.getValue(User.class).getPoints();
+                    int newPointTotal = oldPointTotal + changeAmount;
                     //
                     // Update User in Firebase
-                    postSnapshot.getRef().child("points").setValue(user.getPoints());
-                    Log.d( DEBUG_TAG, "user:" + user.getName() + " newPointTotal:" + String.valueOf(user.getPoints()) );
+                    postSnapshot.getRef().child("points").setValue(newPointTotal);
+                    //Log.d( DEBUG_TAG, "user:" + user.getName() + " newPointTotal:" + String.valueOf(user.getPoints()) );
+                    Log.d( DEBUG_TAG, "user:" + userID + " newPointTotal:" + String.valueOf(newPointTotal) );
                 } // for every element in firebase
                 /*
                 dataSnapshot.getRef().setValue( user ).addOnSuccessListener( new OnSuccessListener<Void>() {
@@ -143,7 +146,8 @@ public class FirebaseUtil {
 
             @Override
             public void onCancelled( @NonNull DatabaseError databaseError ) {
-                Log.d( DEBUG_TAG, "failed to update user: " + user.getName() );
+                //Log.d( DEBUG_TAG, "failed to update user: " + user.getName() );
+                Log.d( DEBUG_TAG, "failed to update user: " + userID );
                 //Toast.makeText(getApplicationContext(), "Failed to update ride", Toast.LENGTH_SHORT).show();
             } // onCancelled()
         }); // DatabaseReference ref.addListenerForSingleValueEvent

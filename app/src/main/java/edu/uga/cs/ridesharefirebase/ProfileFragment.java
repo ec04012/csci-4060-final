@@ -141,7 +141,7 @@ public class ProfileFragment extends Fragment {
                     // Change point total
                     userPojoMain.setPoints( currentPoints - 50 );
                     // Update firebase (this is asynchronous)
-                    FirebaseUtil.updateUserPoints(userPojoMain);
+                    FirebaseUtil.updateUserPoints(userPojoMain.getId(), -50 );
                     // Update textView
                     pointsTextView.setText( "Points:" + String.valueOf(userPojoMain.getPoints()) );
                 } else {
@@ -161,7 +161,7 @@ public class ProfileFragment extends Fragment {
                 // Change point total
                 userPojoMain.setPoints( currentPoints + 50 );
                 // Update firebase (this is asynchronous)
-                FirebaseUtil.updateUserPoints(userPojoMain);
+                FirebaseUtil.updateUserPoints(userPojoMain.getId(), 50 );
                 // Update textView
                 pointsTextView.setText( "Points:" + String.valueOf(userPojoMain.getPoints()) );
             } // .setOnClick()
