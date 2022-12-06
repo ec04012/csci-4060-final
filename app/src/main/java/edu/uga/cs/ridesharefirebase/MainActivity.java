@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 // The user is new, show them a fancy intro screen!
                 // Show Toast
                 Toast.makeText( getApplicationContext(),
-                    "Thank you for registering!:\nresponse.getEmail(): " + response.getEmail(),
+                    "Thank you for registering!: " + response.getEmail(),
                     Toast.LENGTH_SHORT).show();
 
                 // Create User and point total, then write to firebase
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 // This is an existing user, show them a welcome back screen.
                 // Show Toast and start HomeActivity
                 Toast.makeText( getApplicationContext(),
-                    "Sign-in successful:\nresponse.getEmail(): " + response.getEmail(),
+                    "Sign-in successful: " + response.getEmail(),
                     Toast.LENGTH_SHORT).show();
             } // if-else user is a new user (i.e. just registered)
 

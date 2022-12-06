@@ -120,7 +120,7 @@ public class EditRideActivity extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(EditRideActivity.this, "clicked update", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditRideActivity.this, "Clicked update", Toast.LENGTH_SHORT).show();
 
                 if(TextUtils.isEmpty(startCityEdit.getText().toString()) ) {
                     startCityEdit.setError("Please type in the City you are starting from.");
@@ -144,7 +144,7 @@ public class EditRideActivity extends AppCompatActivity {
                     return;
                 }
                 else {
-                    Toast.makeText(EditRideActivity.this, "Update your ride", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditRideActivity.this, "Updated your ride", Toast.LENGTH_SHORT).show();
                     //Toast.makeText(getActivity(), "City: " + offerCity.getText().toString() + "\n"+  offerState.getText().toString() + "\n" + "Car: " + offerCar.getText().toString() + "\n" + "State: "  , Toast.LENGTH_SHORT).show();
                     //Toast.makeText(getActivity(), "From City:\n " + fromCity + "\nFrom State:  \n " + fromState, Toast.LENGTH_LONG).show();
                     editRide.setDate(dateEdit.getText().toString());
@@ -165,7 +165,7 @@ public class EditRideActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(EditRideActivity.this, "deleted your ride", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditRideActivity.this, "Deleted your ride", Toast.LENGTH_SHORT).show();
                 FirebaseUtil.deleteRide(editRide);
                 finish();
             }

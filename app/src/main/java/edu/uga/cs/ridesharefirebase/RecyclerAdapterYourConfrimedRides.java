@@ -42,7 +42,7 @@ public class RecyclerAdapterYourConfrimedRides extends RecyclerView.Adapter<Recy
         holder.rideDestState.setText(ride.getDestinationState());
         holder.rider.setText("Rider:" + ride.getRiderName());
         holder.driver.setText("Driver: " +ride.getDriverName());
-        //holder.rideDate.setText(ride.getDate());
+        holder.rideDate.setText(ride.getDate());
 
         //bascially a pseudo check to see if the ride is an request since they dont need a car
         // would instead on final check to see if driver is null/false/no UID

@@ -116,7 +116,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                                // reserveRide.setDriverConfirmed(true);
                                 FirebaseUtil.updateRide(reserveRide);
                                 ((FragmentActivity)view.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new ProfileFragment()).commit();
-                                Toast.makeText(view.getContext(), "Thank you for reserving view your rides in the selected rides tab", Toast.LENGTH_LONG).show();
+                                Toast.makeText(view.getContext(), "Thank you for reserving. View your rides in the My Rides.", Toast.LENGTH_LONG).show();
                             } // if ride is a request
                             //meaning this is a offer
                             else {
@@ -130,7 +130,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                                 //reserveRide.setRiderConfirmed(true);
                                 FirebaseUtil.updateRide(reserveRide);
                                 ((FragmentActivity)view.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new ProfileFragment()).commit();
-                                Toast.makeText(view.getContext(), "Thank you for reserving view your rides in the selected rides tab", Toast.LENGTH_LONG).show();
+                                Toast.makeText(view.getContext(), "Thank you for reserving. View your rides in My Rides.", Toast.LENGTH_LONG).show();
                             } // if ride is an offer
                         } // if ride is the ride that we've have clicked
                     } // for every ride

@@ -389,7 +389,7 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
                 public void onSuccess(Void aVoid) {
                     // Show a quick confirmation
                     //FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-                    Toast.makeText(getActivity().getApplicationContext(), "Ride Created" + "UID = " + mFirebaseAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Ride Offer Created", Toast.LENGTH_SHORT).show();
                     // Clear the EditTexts for next use.
                     offerCar.setText("");
                     destCity.setText("");
@@ -403,7 +403,7 @@ public class OfferRideFragment extends Fragment implements LocationListener, Dat
             .addOnFailureListener( new OnFailureListener() {
                 @Override
                 public void onFailure( @NonNull Exception e ) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Failed to create Ride", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Failed to create Ride Offer", Toast.LENGTH_SHORT).show();
                 }
             }); // .addOnSuccessListener()
     } // addRideToFirebase()

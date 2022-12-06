@@ -73,7 +73,7 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.nav_profile:
                     {
                         drawerLayout.closeDrawer(GravityCompat.START);
-                        Toast.makeText(HomeActivity.this, "profile", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeActivity.this, "Profile", Toast.LENGTH_SHORT).show();
                         replaceFragment(new ProfileFragment());
                         break;
                     }
@@ -88,13 +88,15 @@ public class HomeActivity extends AppCompatActivity {
                     {
                         drawerLayout.closeDrawer(GravityCompat.START);
                         //Toast.makeText(HomeActivity.this, "selected Rides", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeActivity.this, "My Rides", Toast.LENGTH_SHORT).show();
                         replaceFragment(new BrowseUnconfirmedRidesFragment());
                         break;
                     }
 
                     case R.id.nav_confirmedRide:
                     {
-
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        Toast.makeText(HomeActivity.this, "Confirmed Rides", Toast.LENGTH_SHORT).show();
                         replaceFragment(new ConfrimedRidesFragment());
                         break;
                     }
@@ -103,19 +105,21 @@ public class HomeActivity extends AppCompatActivity {
                     {
                         drawerLayout.closeDrawer(GravityCompat.START);
                         //Toast.makeText(HomeActivity.this, "browse offer", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeActivity.this, "Browse Ride Offers", Toast.LENGTH_SHORT).show();
                         replaceFragment(new BrowseRideOfferFragment());
                         break;
                     }
                     case R.id.nav_browse_request:
                     {
                         drawerLayout.closeDrawer(GravityCompat.START);
+                        Toast.makeText(HomeActivity.this, "Browse Ride Requests", Toast.LENGTH_SHORT).show();
                         replaceFragment(new BrowseRideRequestFragment());
                         break;
                     }
                     case R.id.nav_offer:
                     {
                         drawerLayout.closeDrawer(GravityCompat.START);
-                        //Toast.makeText(HomeActivity.this, "offer", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HomeActivity.this, "", Toast.LENGTH_SHORT).show();
                         //replaceFragment(new ProfileFragment());
                         replaceFragment(new OfferRideFragment());
                         break;

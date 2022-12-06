@@ -49,7 +49,7 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
 
         holder.rider.setText("Rider:" + ride.getRiderName());
         holder.driver.setText("Driver: " +ride.getDriverName());
-        //holder.rideDate.setText(ride.getDate());
+        holder.rideDate.setText(ride.getDate());
 
         //bascially a pseudo check to see if the ride is an request since they dont need a car
         // would instead on final check to see if driver is null/false/no UID
@@ -113,19 +113,19 @@ public class RecyclerAdapterYourRides extends RecyclerView.Adapter<RecyclerAdapt
                                 if (fbRideList.get(i).getRider().equals(mFirebaseAuth.getCurrentUser().getUid())) {
                                     fbRideList.get(i).setRiderConfirmed(true);
                                     FirebaseUtil.updateRide(fbRideList.get(i));
-                                    Toast.makeText(view.getContext(), "Thank you for confirming", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(view.getContext(), "Thank you for confirming.", Toast.LENGTH_LONG).show();
                                     //user is the Driver
                                 }else {
                                     fbRideList.get(i).setDriverConfirmed(true);
                                     FirebaseUtil.updateRide(fbRideList.get(i));
-                                    Toast.makeText(view.getContext(), "Thank you for confirming", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(view.getContext(), "Thank you for confirming.", Toast.LENGTH_LONG).show();
 
                                 }
 
                                 if (fbRideList.get(i).isDriverConfirmed() && fbRideList.get(i).isRiderConfirmed()) {
                                     FirebaseUtil.updateUserPoints(fbRideList.get(i).getRider(), -50);
                                     FirebaseUtil.updateUserPoints(fbRideList.get(i).getDriver(), 50);
-                                    Toast.makeText(view.getContext(), "Both Rider and Driver have confirmed please look at your confirmed rides to view", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(view.getContext(), "Both Rider and Driver have confirmed. Please look at your confirmed rides to view.", Toast.LENGTH_LONG).show();
                                 }
 
 
