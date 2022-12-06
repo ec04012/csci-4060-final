@@ -17,7 +17,8 @@
 
         <item android:id = "@+id/nav_selectedRides"
             android:icon = "@drawable/ic_baseline_car_notif"
-            android:title="Selected Ride"
+            android:title="My Rides
+"
             />
         <item
             android:id="@+id/nav_confirmedRide"
@@ -42,10 +43,10 @@
 
             <item android:id = "@+id/nav_offer"
                 android:icon = "@drawable/ic_baseline_add_24"
-                android:title = "Offer" />
+                android:title = "Create Offer" />
             <item android:id = "@+id/nav_request"
                 android:icon = "@drawable/ic_baseline_airline_seat_recline_normal_24"
-                android:title = "Request" />
+                android:title = "Create Request" />
         </menu>
     </item>
 
